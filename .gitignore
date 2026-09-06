@@ -1,0 +1,12 @@
+.DS_Store
+*.log
+.env
+__pycache__/
+*.pyc
+.venv/
+
+# Workflowの一時ファイル（コミットしない）
+result.json
+context.json
+issue_body.md
+comment.md

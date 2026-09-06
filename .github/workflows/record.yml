@@ -1,0 +1,85 @@
+name: save-record
+
+# 「記録ブロック」を取り込む。ChatGPTはGitHubへ書き込めないので、ここが唯一の書き込み経路。
+#
+# 2つの投函方法を受け付ける。
+#   A) 常設Issue「記録の投函口」への **コメント**（既定。タイトル入力が要らない）
+#   B) 新しいIssueを立てて本文に貼る（Aが使えないとき / 週次レビューなど）
+#
+# どちらも `type: session` または `type: weekly` の行が無ければ何もしない。
+
+on:
+  issues:
+    types: [opened, edited]
+  issue_comment:
+    types: [created, edited]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: eos-write
+  cancel-in-progress: false
+
+jobs:
+  save:
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event_name == 'issues' &&
+        (contains(github.event.issue.body, 'type: session') ||
+         contains(github.event.issue.body, 'type: weekly'))) ||
+      (github.event_name == 'issue_comment' &&
+        github.event.comment.user.type != 'Bot' &&
+        (contains(github.event.comment.body, 'type: session') ||
+         contains(github.event.comment.body, 'type: weekly')))
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Dump body
+        env:
+          # コメント経由ならコメント本文、Issue経由ならIssue本文
+          BODY: ${{ github.event.comment.body || github.event.issue.body }}
+        run: printf '%s' "$BODY" > issue_body.md
+
+      - name: Parse
+        run: python3 scripts/parse_record.py issue_body.md --out result.json
+
+      - name: Rebuild CONTEXT.md
+        run: python3 scripts/build_context.py > /dev/null
+
+      - name: Commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f issue_body.md
+          git add -A
+          if git diff --cached --quiet; then
+            echo "変更なし"
+            exit 0
+          fi
+          git commit -m "$(python3 -c "import json;print(json.load(open('result.json')).get('commit_message','chore(session): save record'))")"
+          for i in 1 2 3; do
+            git pull --rebase --autostash && git push && exit 0
+            sleep 5
+          done
+          exit 1
+
+      - name: Report
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+          VIA_COMMENT: ${{ github.event_name == 'issue_comment' }}
+        run: |
+          python3 -c "import json;print(json.load(open('result.json'))['comment'])" > comment.md
+          gh issue comment "$ISSUE" --body-file comment.md
+          # 投函口へのコメントの場合は閉じない（毎日ここに貼り続けるため）
+          if [ "$VIA_COMMENT" = "true" ]; then
+            echo "投函口へのコメントのため、Issueは開いたままにする"
+            exit 0
+          fi
+          if python3 -c "import json,sys;sys.exit(0 if json.load(open('result.json'))['ok'] else 1)"; then
+            gh issue close "$ISSUE" --reason completed
+          else
+            echo "::warning::取り込みに失敗したためIssueは開いたままにする"
+          fi

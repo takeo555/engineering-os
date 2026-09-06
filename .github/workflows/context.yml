@@ -1,0 +1,59 @@
+name: build-context
+
+# ChatGPTが毎朝読む CONTEXT.md を再生成する。
+# 出題内容は作らない。Track / Format / Level / 狙う弱点だけを決める。
+
+on:
+  schedule:
+    - cron: "0 21 * * *" # 06:00 JST
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "05-failures/weakness-log.md"
+      - "07-scorecard/scores.csv"
+      - "CURRENT_FOCUS.md"
+      - "eos.config.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: eos-write
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build CONTEXT.md
+        run: python3 scripts/build_context.py | tee context.json
+
+      - name: Commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add CONTEXT.md STATUS.md
+          if git diff --cached --quiet; then
+            echo "変更なし"
+            exit 0
+          fi
+          git commit -m "$(python3 -c "import json;print(json.load(open('context.json'))['commit_message'])")"
+          for i in 1 2 3; do
+            git pull --rebase --autostash && git push && exit 0
+            sleep 5
+          done
+          exit 1
+
+      - name: Summary
+        run: |
+          echo "## 今日の割り当て" >> $GITHUB_STEP_SUMMARY
+          python3 - <<'PY' >> $GITHUB_STEP_SUMMARY
+          import json
+          d = json.load(open("context.json"))
+          print(f"- Track: {d['track']}")
+          print(f"- Format: {d['format']} / Level: {d['level']}（{d['mode']}）")
+          print(f"- 狙う弱点: {', '.join(d['targets']) or 'なし'}")
+          PY

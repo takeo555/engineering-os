@@ -1,0 +1,68 @@
+name: review-facts
+
+# 週次・月次レビュー用の「事実」を書き出す。講評はChatGPTが書く。
+# OpenAI APIは使わない。
+
+on:
+  schedule:
+    - cron: "0 12 * * 0" # 日曜 21:00 JST — 週次
+    - cron: "0 12 1 * *" # 毎月1日 21:00 JST — 月次
+  workflow_dispatch:
+    inputs:
+      period:
+        description: "week または month"
+        required: false
+        default: "week"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: eos-write
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Decide period
+        id: p
+        run: |
+          if [ "${{ github.event.schedule }}" = "0 12 1 * *" ]; then
+            echo "period=month" >> $GITHUB_OUTPUT
+          else
+            echo "period=${{ inputs.period || 'week' }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build facts
+        run: python3 scripts/build_review_context.py --period ${{ steps.p.outputs.period }} | tee result.json
+
+      - name: Commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add WEEKLY_CONTEXT.md MONTHLY_CONTEXT.md STATUS.md eos.config.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "変更なし"
+            exit 0
+          fi
+          git commit -m "$(python3 -c "import json;print(json.load(open('result.json'))['commit_message'])")"
+          for i in 1 2 3; do
+            git pull --rebase --autostash && git push && exit 0
+            sleep 5
+          done
+          exit 1
+
+      - name: Summary
+        run: |
+          python3 - <<'PY' >> $GITHUB_STEP_SUMMARY
+          import json
+          d = json.load(open("result.json"))
+          print(f"## {d['label']}")
+          print(f"- セッション {d['sessions']}回 / 平均 {d['avg']}")
+          print(f"- base_level: {d['base_level']}（{d['level_reason']}）")
+          print("")
+          print("ChatGPTに「週次レビュー」と送ってください。")
+          PY
