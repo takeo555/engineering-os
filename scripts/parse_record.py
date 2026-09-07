@@ -158,20 +158,64 @@ def parse_bank_items(values):
 
 # ---------------------------------------------------------------- 組み立て
 
-def build_score_table(fm):
+# ヘッダのキー名の揺れ。ChatGPTは日によって別名を使う
+MINUTE_KEYS = ["time_spent_min", "duration_minutes", "duration_min", "minutes",
+               "time_spent", "time_spent_minutes", "elapsed_minutes", "所要時間"]
+AXIS_ALIASES = {
+    "correctness": ["correctness", "正確さ", "正確性"],
+    "completeness": ["completeness", "網羅性", "完全性"],
+    "reasoning": ["reasoning", "根拠", "論理性"],
+    "practicality": ["practicality", "実務妥当性", "実務性"],
+    "clarity": ["clarity", "明快さ", "説明の明快さ"],
+}
+
+
+def pick(fm, keys, default=None):
+    for k in keys:
+        if fm.get(k):
+            return fm[k]
+    return default
+
+
+def axis_from_body(body, axis):
+    """ヘッダに点数が無い場合、本文の「Correctness 12/30」から拾う。"""
+    hi = MAXES[axis]
+    for name in AXIS_ALIASES[axis]:
+        m = re.search(rf"{re.escape(name)}\s*[:：]?\s*\n?\s*(\d{{1,3}})\s*/\s*{hi}\b",
+                      body, re.I)
+        if m:
+            return E.parse_int(m.group(1))
+    return 0
+
+
+def total_from_body(body):
+    m = re.search(r"(?:スコア|total|合計)\s*[:：]?\s*(\d{1,3})\s*/\s*100\b", body, re.I)
+    return E.parse_int(m.group(1)) if m else 0
+
+
+def build_score_table(fm, body=""):
+    values, from_body = {}, False
+    for a in AXES:
+        v = E.parse_int(fm.get(a), -1)
+        if v < 0:
+            v, from_body = axis_from_body(body, a), True
+        values[a] = max(0, min(MAXES[a], v))
+
     lines = ["| Axis | Weight | Score | Note |", "|---|---|---|---|"]
     total = 0
     for a in AXES:
-        v = max(0, min(MAXES[a], E.parse_int(fm.get(a), 0)))
-        total += v
-        lines.append(f"| {LABELS[a]} | {MAXES[a]} | {v}/{MAXES[a]} | {fm.get(a + '_note', '')} |")
-    declared = E.parse_int(fm.get("total"), 0)
+        total += values[a]
+        lines.append(f"| {LABELS[a]} | {MAXES[a]} | {values[a]}/{MAXES[a]} | "
+                     f"{fm.get(a + '_note', '')} |")
+
+    declared = E.parse_int(fm.get("total"), 0) or total_from_body(body)
     if total == 0 and declared:
         total = max(0, min(100, declared))
         lines.append(f"| **Total**（軸別の内訳なし） | **100** | **{total}/100** | |")
     else:
         lines.append(f"| **Total** | **100** | **{total}/100** | |")
-    return "\n".join(lines), total
+    note = "本文から点数を拾った（ヘッダに5軸の記載なし）" if from_body and total else ""
+    return "\n".join(lines), total, values, note
 
 
 def append_promotion_queue(d, items):
@@ -213,11 +257,12 @@ def handle_session(fm, body, raw, cfg):
 
     fmt = E.normalize_format(fm.get("format"))
     level = E.normalize_level(fm.get("level"), cfg.get("base_level", "L2"))
-    minutes = max(0, min(600, E.parse_int(fm.get("time_spent_min") or fm.get("minutes"), 0)))
-    title = (fm.get("title") or "").strip() or "（タイトルなし）"
+    minutes = max(0, min(600, E.parse_int(pick(fm, MINUTE_KEYS), 0)))
+    title = re.sub(r"^\d{4}-\d{2}-\d{2}\s*[—\-–]\s*", "",
+                   (fm.get("title") or "").strip()) or "（タイトルなし）"
 
     sections = split_sections(body)
-    score_table, total = build_score_table(fm)
+    score_table, total, axis_values, score_note_extra = build_score_table(fm, body)
 
     # 1) 再テストの合否（先に反映する。passed は Closed へ）
     closed, failed, unknown = E.apply_retests(
@@ -285,15 +330,14 @@ def handle_session(fm, body, raw, cfg):
     overwritten = os.path.exists(path)
     E.write_text(path, "\n".join(out).rstrip() + "\n")
 
-    if not any(r["date"] == d for r in E.read_scores()):
-        E.append_score({
-            "date": d, "track": track, "format": fmt, "level": level,
-            **{a: max(0, min(MAXES[a], E.parse_int(fm.get(a), 0))) for a in AXES},
-            "total": total, "time_spent_min": minutes,
-        })
-        score_note = ""
-    else:
-        score_note = "（同じ日付の行が既にあるため scores.csv には追記しなかった）"
+    replaced = any(r["date"] == d for r in E.read_scores())
+    E.upsert_score({
+        "date": d, "track": track, "format": fmt, "level": level,
+        **axis_values, "total": total, "time_spent_min": minutes,
+    })
+    score_note = "（同じ日付の記録を上書きした）" if replaced else ""
+    if score_note_extra:
+        score_note += f"（{score_note_extra}）"
 
     warnings = E.wip_warnings(cfg)
     status = E.update_status(cfg)
@@ -318,6 +362,23 @@ def handle_session(fm, body, raw, cfg):
         comment += f"\n\n> 不明な弱点ID: {', '.join(unknown)}"
     if warnings:
         comment += "\n\n> " + "\n> ".join(warnings)
+
+    # --- 静かに失敗しているケースを本人に伝える
+    alerts = []
+    if total == 0:
+        alerts.append("**点数が0点です。** ヘッダに `correctness:` `completeness:` `reasoning:` "
+                      "`practicality:` `clarity:` の5行がありません。")
+    if minutes == 0:
+        alerts.append("**所要時間が0分です。** ヘッダの `time_spent_min:` がありません"
+                      "（`duration_minutes` などの別名も読めますが、書かれていませんでした）。")
+    if not added and not bumped and not closed and not failed:
+        alerts.append("**弱点が1件も登録されていません。** ヘッダに `weakness_1: High | 〜できない` "
+                      "の行がありません。これが続くと再テストが回らず、ただの問題演習になります。")
+    if alerts:
+        comment += ("\n\n---\n\n⚠️ **記録ブロックの不備**\n\n"
+                    + "\n".join(f"- {a}" for a in alerts)
+                    + "\n\nChatGPTに「記録ブロックをテンプレート通りに出し直して」と言い、"
+                      "このコメントを**編集**して貼り直すと再実行されます（同じ日付は上書きされます）。")
 
     return {
         "ok": True, "type": "session", "date": d, "path": path, "total": total,

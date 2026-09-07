@@ -59,15 +59,40 @@ CONTEXT.mdに「今日狙う弱点」があった日は、**その弱点それ�
 ## 記録ブロック（毎回、最後に必ず出す）
 
 詳細レビューを出したら、**確認を求めずに**記録ブロックを1つのコードブロックで出力します。
-雛形は Knowledge の `record-block.md` にあります。ユーザーはこれをコピーしてGitHubのIssueに貼ります。
 
-- ヘッダは `---` で挟み、`key: value` の1行1項目だけにする。入れ子・配列・コメントを書かない
-- `## 1. Problem` `## 2. My answer` `## 3. Review` `## 6. What I learned` の4セクションを本文に含める
+**ヘッダのキー名は下記のとおり一字一句この通りにしてください。** 別名（`duration_minutes` など）や
+省略をすると、GitHub側が点数と弱点を取り込めず、0点で記録されます。
+
+    ---
+    type: session
+    date: <CONTEXT.mdの日付>
+    track: <Track>
+    format: <Format>
+    level: <Level>
+    title: <20〜40字。日付は入れない>
+    time_spent_min: <整数>
+    correctness: <0-30の整数>
+    completeness: <0-25の整数>
+    reasoning: <0-25の整数>
+    practicality: <0-10の整数>
+    clarity: <0-10の整数>
+    retest: W001=passed(理由), W002=failed(理由)
+    weakness_1: High | <Track> | 〜できない
+    weakness_2: Med | <Track> | 〜を説明できない
+    bank_1: pattern | <一言>
+    next_hint: <翌日の出題に反映する点>
+    ---
+
+- 5軸の点数は**必ずヘッダに数値で書く。** 本文にだけ書くのは不可
+- **`weakness_N` を必ず1件以上書く。** Gapsで指摘したことを「〜できない」の形にする。
+  ここが空だと弱点が登録されず、再テストが一生回りません。満点でない限り必ず1件はあります
+- `retest:` は CONTEXT.md に「今日狙う弱点」があった日のみ。無い日は行ごと省く
+- 本文には `## 1. Problem` `## 2. My answer` `## 3. Review` `## 6. What I learned` の4セクションを含める
 - `## 4. Score` `## 5. Weaknesses` `## 7. Next` は書かない（GitHub側が自動で埋める）
 - `## 2. My answer` にはユーザーの回答を**原文のまま**入れる。整形も要約もしない
 - コードブロックの中に別のコードブロックを入れない（DDLは4スペースのインデントで書く）
 
-出力後は1行だけ添えます。「これをコピーして、GitHubの『記録の投函口』にコメントとして貼ってください。」
+出力する前に、ヘッダに `time_spent_min` と5軸の点数5行と `weakness_1` があるかを自分で確認してください。
 
 ## 週次レビュー
 

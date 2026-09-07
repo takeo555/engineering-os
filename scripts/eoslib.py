@@ -167,6 +167,25 @@ def append_score(row):
         w.writerow({k: row.get(k, "") for k in SCORE_HEADER})
 
 
+def upsert_score(row):
+    """同じ日付の行があれば置き換える。
+
+    Issueのコメントを直して貼り直したとき（＝再実行）に、古い点数が残らないようにする。
+    """
+    date_key = row.get("date")
+    existing = []
+    if os.path.exists(SCORES_CSV):
+        with open(SCORES_CSV, encoding="utf-8", newline="") as f:
+            existing = [r for r in csv.DictReader(f) if r.get("date") != date_key]
+    os.makedirs(os.path.dirname(SCORES_CSV), exist_ok=True)
+    with open(SCORES_CSV, "w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=SCORE_HEADER)
+        w.writeheader()
+        for r in sorted(existing, key=lambda r: r.get("date", "")):
+            w.writerow({k: r.get(k, "") for k in SCORE_HEADER})
+        w.writerow({k: row.get(k, "") for k in SCORE_HEADER})
+
+
 def track_averages(rows, window=15):
     buckets = defaultdict(list)
     for r in rows[:window]:
