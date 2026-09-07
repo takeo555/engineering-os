@@ -10,7 +10,7 @@
 |---|---|
 | 日付 | 2026-09-07（Mon） |
 | Track | **Layered Architecture** |
-| Format | **Design** |
+| Format | **Review** |
 | Level | **L2** |
 | 回答環境 | キーボード想定 |
 | 想定所要時間 | 30分 |
@@ -21,18 +21,21 @@
 
 - Track: 重み・弱点・連続回避から選択
 - Level: base_level L2 のまま
-- Format: キーボード想定のためDesignを選択
+- Format: キーボード想定のためReviewを選択
 
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
-- なし（今日は新しい題材でよい）
+- `W005` [High] HandlerとDomainの責務境界を正しく分離できない（期限 2026-09-12）
 
 ## 未クローズの弱点（上位8件）
 
 | ID | Priority | Weakness | Track | Retest on |
 |---|---|---|---|---|
+| W005 | High | HandlerとDomainの責務境界を正しく分離できない | Layered Architecture | 2026-09-12 |
+| W006 | High | 具象Repositoryへの依存を依存性逆転として説明できない | Layered Architecture | 2026-09-12 |
 | W002 | High | 複合インデックスの列順を決める基準を説明できない | DB / Table Design | 2026-09-10 |
 | W001 | High | 論理削除と一意制約の衝突に気づけない | DB / Table Design | 2026-09-08 |
+| W007 | Med | Domainに置くべき業務ルールを具体的に切り出せない | Layered Architecture | 2026-09-16 |
 | W003 | Med | 時間帯の重なり判定を構造で表現できない | DB / Table Design | 2026-09-12 |
 | W004 | Low | 状態をBOOLEANで持ち、拡張性を検討しない | DB / Table Design | 2026-09-17 |
 
@@ -40,7 +43,7 @@
 
 | Date | Track | Format | Level | Title |
 |---|---|---|---|---|
-| 2026-09-07 | Layered Architecture | Review | L2 | 2026-09-07 — 2026-09-07 — Layered Archit |
+| 2026-09-07 | Layered Architecture | Design | L2 | 2026-09-07 — 価格計算APIの責務分離と依存方向 |
 | 2026-09-03 | DB / Table Design | Design | L2 | 2026-09-03 — 会議室予約のダブルブッキングを構造で防ぐ |
 
 ## 今の数字
@@ -50,7 +53,7 @@
 | 直近5回の平均スコア | 34.0 |
 | 30分内完了率（直近10回） | 0% |
 | 記録済みセッション数 | 2 |
-| Open弱点 | 4件（High 2件） |
+| Open弱点 | 7件（High 4件） |
 | 再テスト期限切れ | 0件 |
 
 ### Track別平均（直近20回）
@@ -104,5 +107,5 @@
 
 ---
 
-<!-- eos:context date=2026-09-07 track=Layered Architecture format=Design level=L2
-     targets=- -->
+<!-- eos:context date=2026-09-07 track=Layered Architecture format=Review level=L2
+     targets=W005 -->

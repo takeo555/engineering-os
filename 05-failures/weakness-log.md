@@ -8,6 +8,9 @@
 | W002 | 複合インデックスの列順を決める基準を説明できない | DB / Table Design | High | Open | 2026-09-03 | 2026-09-10 | — |
 | W003 | 時間帯の重なり判定を構造で表現できない | DB / Table Design | Med | Open | 2026-09-03 | 2026-09-12 | — |
 | W004 | 状態をBOOLEANで持ち、拡張性を検討しない | DB / Table Design | Low | Open | 2026-09-03 | 2026-09-17 | — |
+| W005 | HandlerとDomainの責務境界を正しく分離できない | Layered Architecture | High | Open | 2026-09-07 | 2026-09-12 | — |
+| W006 | 具象Repositoryへの依存を依存性逆転として説明できない | Layered Architecture | High | Open | 2026-09-07 | 2026-09-12 | — |
+| W007 | Domainに置くべき業務ルールを具体的に切り出せない | Layered Architecture | Med | Open | 2026-09-07 | 2026-09-16 | — |
 
 ## Closed
 

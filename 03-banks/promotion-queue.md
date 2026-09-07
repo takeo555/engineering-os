@@ -9,3 +9,5 @@
 | 2026-09-03 | 複合一意制約による枠の排他（P001） | pattern | Adopted |
 | 2026-09-03 | 論理削除とUNIQUEの衝突（E001） | pitfall | Adopted |
 | 2026-09-03 | 物理削除 vs 論理削除（T002） | tradeoff | Adopted |
+| 2026-09-07 | HTTP固有の処理はHandlerで値に変換してUsecaseへ渡す | pattern | Pending |
+| 2026-09-07 | Usecaseは具象Repositoryではなくinterfaceに依存させる | pattern | Pending |
