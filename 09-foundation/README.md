@@ -1,12 +1,14 @@
 # Foundation
 
-日次セッションとは別枠で、**週1回20分**だけ確保する枠です。2つの役割があります。
+日次セッションとは別枠で、既定は**週1回20分**だけ確保する枠です。2つの役割があります。
+
+**今期（Current horizon）:** 基礎を厚くするため、当面は **週2〜3回** まで増やしてよい。同時に扱う項目は1つのまま。キューの W001 / W002 を前倒しする。
 
 ## 役割1: 実機で確認する（毎週）
 
 設計の答え合わせをLLMだけで済ませていると、インデックスや分離レベルは身につきません。`EXPLAIN` を一度も見ずに複合インデックスの列順を学ぶのは、かなり効率が悪いです。
 
-週1回、実際に動かして数字を見ます。テンプレート: [templates/hands-on-session.md](templates/hands-on-session.md)
+既定は週1回、今期は週2〜3回、実際に動かして数字を見ます。テンプレート: [templates/hands-on-session.md](templates/hands-on-session.md)
 
 ```bash
 docker run --rm -d --name eos-pg \
@@ -35,8 +37,8 @@ docker run --rm -d --name eos-pg \
 
 | Item | Origin weakness | Method | Status | Next |
 |---|---|---|---|---|
-| トランザクション分離レベルと異常現象の対応 | W001系 | 4つの異常を実機で再現するSQLを書く | Queued | 2026-09-13 |
-| 複合インデックスの列順と実行計画 | W002 | 列順を変えて `EXPLAIN ANALYZE` を比較 | Queued | 2026-09-20 |
+| トランザクション分離レベルと異常現象の対応 | W001系 | 4つの異常を実機で再現するSQLを書く | Queued | 2026-09-09 |
+| 複合インデックスの列順と実行計画 | W002 | 列順を変えて `EXPLAIN ANALYZE` を比較 | Queued | 2026-09-11 |
 
 ## Method rules
 
