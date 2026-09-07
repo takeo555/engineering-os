@@ -10,18 +10,18 @@
 |---|---|
 | 日付 | 2026-09-07（Mon） |
 | Track | **Layered Architecture** |
-| Format | **Review** |
+| Format | **Design** |
 | Level | **L2** |
 | 回答環境 | キーボード想定 |
 | 想定所要時間 | 30分 |
 | 今日はセッション日か | はい |
-| 今日の記録 | 未保存 |
+| 今日の記録 | 保存済み。2問目は出さない |
 
 選定理由（本人向け。問題文には書かない）
 
 - Track: 重み・弱点・連続回避から選択
 - Level: base_level L2 のまま
-- Format: キーボード想定のためReviewを選択
+- Format: キーボード想定のためDesignを選択
 
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
@@ -40,15 +40,16 @@
 
 | Date | Track | Format | Level | Title |
 |---|---|---|---|---|
+| 2026-09-07 | Layered Architecture | Review | L2 | 2026-09-07 — 2026-09-07 — Layered Archit |
 | 2026-09-03 | DB / Table Design | Design | L2 | 2026-09-03 — 会議室予約のダブルブッキングを構造で防ぐ |
 
 ## 今の数字
 
 | Metric | Value |
 |---|---|
-| 直近5回の平均スコア | 68.0 |
+| 直近5回の平均スコア | 34.0 |
 | 30分内完了率（直近10回） | 0% |
-| 記録済みセッション数 | 1 |
+| 記録済みセッション数 | 2 |
 | Open弱点 | 4件（High 2件） |
 | 再テスト期限切れ | 0件 |
 
@@ -57,7 +58,7 @@
 | Track | Avg |
 |---|---|
 | DB / Table Design | 68.0 |
-| Layered Architecture | — |
+| Layered Architecture | 0.0 |
 | Web / API / HTTP | — |
 | Network / Infra | — |
 
@@ -103,5 +104,5 @@
 
 ---
 
-<!-- eos:context date=2026-09-07 track=Layered Architecture format=Review level=L2
+<!-- eos:context date=2026-09-07 track=Layered Architecture format=Design level=L2
      targets=- -->

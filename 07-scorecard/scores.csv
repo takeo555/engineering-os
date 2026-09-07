@@ -1,2 +1,3 @@
 date,track,format,level,correctness,completeness,reasoning,practicality,clarity,total,time_spent_min
 2026-09-03,DB / Table Design,Design,L2,18,15,19,8,8,68,32
+2026-09-07,Layered Architecture,Review,L2,0,0,0,0,0,0,0
