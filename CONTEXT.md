@@ -1,4 +1,4 @@
-# CONTEXT — 2026-09-07（Mon）
+# CONTEXT — 2026-09-08（Tue）
 
 > **自動生成。手で編集しないこと。** 毎朝06:00 JSTと、
 > 記録が保存されるたびに再生成されます。
@@ -8,24 +8,24 @@
 
 | 項目 | 値 |
 |---|---|
-| 日付 | 2026-09-07（Mon） |
-| Track | **Layered Architecture** |
-| Format | **Explain** |
+| 日付 | 2026-09-08（Tue） |
+| Track | **DB / Table Design** |
+| Format | **Review** |
 | Level | **L1** |
-| 回答環境 | キーボード想定 |
+| 回答環境 | モバイル想定 |
 | 想定所要時間 | 30分 |
 | 今日はセッション日か | はい |
-| 今日の記録 | 保存済み。2問目は出さない |
+| 今日の記録 | 未保存 |
 
 選定理由（本人向け。問題文には書かない）
 
 - Track: 重み・弱点・連続回避から選択
 - Level: base_level L1 のまま
-- Format: キーボード想定のためExplainを選択
+- Format: モバイル想定のためReviewを選択
 
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
-- `W005` [High] HandlerとDomainの責務境界を正しく分離できない（期限 2026-09-12）
+- `W001` [High] 論理削除と一意制約の衝突に気づけない（期限 2026-09-08）
 
 ## 未クローズの弱点（上位8件）
 
@@ -54,7 +54,7 @@
 | 30分内完了率（直近10回） | 0% |
 | 記録済みセッション数 | 2 |
 | Open弱点 | 7件（High 4件） |
-| 再テスト期限切れ | 0件 |
+| 再テスト期限切れ | 1件 |
 
 ### Track別平均（直近20回）
 
@@ -107,5 +107,5 @@
 
 ---
 
-<!-- eos:context date=2026-09-07 track=Layered Architecture format=Explain level=L1
-     targets=W005 -->
+<!-- eos:context date=2026-09-08 track=DB / Table Design format=Review level=L1
+     targets=W001 -->
