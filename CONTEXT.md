@@ -10,8 +10,8 @@
 |---|---|
 | 日付 | 2026-09-07（Mon） |
 | Track | **Layered Architecture** |
-| Format | **Review** |
-| Level | **L2** |
+| Format | **Explain** |
+| Level | **L1** |
 | 回答環境 | キーボード想定 |
 | 想定所要時間 | 30分 |
 | 今日はセッション日か | はい |
@@ -20,8 +20,8 @@
 選定理由（本人向け。問題文には書かない）
 
 - Track: 重み・弱点・連続回避から選択
-- Level: base_level L2 のまま
-- Format: キーボード想定のためReviewを選択
+- Level: base_level L1 のまま
+- Format: キーボード想定のためExplainを選択
 
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
@@ -73,8 +73,8 @@
 - Primary track: DB / Table Design
 - Secondary track: Web / API / HTTP
 - Cross-cutting track: Layered Architecture
-- Level: L2（若手・1〜3年相当）
-- North Star connection: 要件から30分でテーブル設計を書き、正規化と整合性の根拠を説明できる状態にする
+- Level: L1（基礎の確認）
+- North Star connection: 基礎を材料として厚くし、説明と指摘で使えるようにする。他人の設計をレビューできるのはその先
 
 ## Focus skills
 
@@ -85,8 +85,8 @@
 
 - 第3正規形とその意図的な崩し方
 - 一意制約 vs アプリケーション側チェック
-- 冪等性キーの保存期間
 - READ COMMITTED と REPEATABLE READ の違い
+- 複合インデックスの列順
 - 依存性逆転の原則が守られている状態の見分け方
 
 ## Levelの意味
@@ -107,5 +107,5 @@
 
 ---
 
-<!-- eos:context date=2026-09-07 track=Layered Architecture format=Review level=L2
+<!-- eos:context date=2026-09-07 track=Layered Architecture format=Explain level=L1
      targets=W005 -->
