@@ -1,4 +1,4 @@
-# CONTEXT — 2026-09-08（Tue）
+# CONTEXT — 2026-09-09（Wed）
 
 > **自動生成。手で編集しないこと。** 毎朝06:00 JSTと、
 > 記録が保存されるたびに再生成されます。
@@ -8,24 +8,24 @@
 
 | 項目 | 値 |
 |---|---|
-| 日付 | 2026-09-08（Tue） |
-| Track | **Coding / Go / Next.js** |
+| 日付 | 2026-09-09（Wed） |
+| Track | **DB / Table Design** |
 | Format | **Review** |
 | Level | **L1** |
-| 回答環境 | モバイル想定 |
+| 回答環境 | キーボード想定 |
 | 想定所要時間 | 30分 |
 | 今日はセッション日か | はい |
-| 今日の記録 | 保存済み。2問目は出さない |
+| 今日の記録 | 未保存 |
 
 選定理由（本人向け。問題文には書かない）
 
 - Track: 重み・弱点・連続回避から選択
 - Level: base_level L1 のまま
-- Format: モバイル想定のためReviewを選択
+- Format: キーボード想定のためReviewを選択
 
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
-- なし（今日は新しい題材でよい）
+- `W001` [High] 論理削除と一意制約の衝突に気づけない（期限 2026-09-08）
 
 ## 未クローズの弱点（上位8件）
 
@@ -110,5 +110,5 @@
 
 ---
 
-<!-- eos:context date=2026-09-08 track=Coding / Go / Next.js format=Review level=L1
-     targets=- -->
+<!-- eos:context date=2026-09-09 track=DB / Table Design format=Review level=L1
+     targets=W001 -->
