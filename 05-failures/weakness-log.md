@@ -11,6 +11,8 @@
 | W005 | HandlerとDomainの責務境界を正しく分離できない | Layered Architecture | High | Open | 2026-09-07 | 2026-09-12 | — |
 | W006 | 具象Repositoryへの依存を依存性逆転として説明できない | Layered Architecture | High | Open | 2026-09-07 | 2026-09-12 | — |
 | W007 | Domainに置くべき業務ルールを具体的に切り出せない | Layered Architecture | Med | Open | 2026-09-07 | 2026-09-16 | — |
+| W008 | DomainとUsecaseの責務境界を具体的に説明できない | Layered Architecture | High | Open | 2026-09-08 | 2026-09-13 | — |
+| W009 | interfaceによる依存性逆転がテスト容易性につながる理由を具体的に説明できない | Layered Architecture | Med | Open | 2026-09-08 | 2026-09-17 | — |
 
 ## Closed
 

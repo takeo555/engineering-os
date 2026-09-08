@@ -11,3 +11,4 @@
 | 2026-09-03 | 物理削除 vs 論理削除（T002） | tradeoff | Adopted |
 | 2026-09-07 | HTTP固有の処理はHandlerで値に変換してUsecaseへ渡す | pattern | Pending |
 | 2026-09-07 | Usecaseは具象Repositoryではなくinterfaceに依存させる | pattern | Pending |
+| 2026-09-08 | interfaceを依存する側に定義し、具体的なRepository実装を差し替え可能にする | pattern | Pending |

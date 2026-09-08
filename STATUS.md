@@ -4,12 +4,12 @@
 
 | Metric | Value |
 |---|---|
-| 連続実施 | 1日 |
-| 直近14日のセッション | 2回 |
-| 直近5回の平均スコア | 34.0 |
-| 30分内完了率（直近10回） | 0% |
+| 連続実施 | 2日 |
+| 直近14日のセッション | 3回 |
+| 直近5回の平均スコア | 51.0 |
+| 30分内完了率（直近10回） | 50% |
 | Base level | L1 |
-| Open弱点 | 7件（High 4件） |
+| Open弱点 | 9件（High 5件） |
 | 再テスト期限切れ | 1件 |
 
 ## Track別平均（直近20回）
@@ -17,7 +17,7 @@
 | Track | Avg |
 |---|---|
 | DB / Table Design | 68.0 |
-| Layered Architecture | 0.0 |
+| Layered Architecture | 42.5 |
 | Web / API / HTTP | — |
 | Network / Infra | — |
 
