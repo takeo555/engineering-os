@@ -25,6 +25,8 @@ avg_score: 0
 | Layered Architecture | 0 | — | — |
 | Web / API / HTTP | 0 | — | — |
 | Network / Infra | 0 | — | — |
+| Coding / Go / Next.js | 0 | — | — |
+| AI / LLM | 0 | — | — |
 
 - 最も低いTrack:
 - 翌週の比重調整:

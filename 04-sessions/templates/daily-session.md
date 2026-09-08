@@ -1,6 +1,6 @@
 ---
 date: YYYY-MM-DD
-track: DB / Table Design | Layered Architecture | Web / API / HTTP | Network / Infra
+track: DB / Table Design | Layered Architecture | Web / API / HTTP | Network / Infra | Coding / Go / Next.js | AI / LLM
 format: Design | Review | Debug | Explain
 level: L1 | L2 | L3 | L4
 focus_skills: []

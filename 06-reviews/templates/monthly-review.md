@@ -24,6 +24,8 @@ avg_score: 0
 | Layered Architecture | | | L2 | |
 | Web / API / HTTP | | | L2 | |
 | Network / Infra | | | L2 | |
+| Coding / Go / Next.js | | | L1 | |
+| AI / LLM | | | L1 | |
 
 昇格の条件: 直近5セッションの平均が80点以上、かつそのTrackのOpen High弱点が0件。
 
@@ -65,7 +67,12 @@ avg_score: 0
 
 ## 7. Next month
 
+翌月の Current horizon をここで決める。今月の時点では、先に固定した項目以外は埋めない。
+（2026-10 の AI Track 出口は生成AIパスポート合格が既定。）
+
 - Primary outcome:
+- Horizon tracks（最大2）:
+- 出口:
 - Track weights:
 - Focus skills（最大2）:
 - Level:

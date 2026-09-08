@@ -56,19 +56,20 @@ def pick_track(cfg, rows, sessions, weaknesses, today, rnd):
         if recent.count(t) >= 2 and t in weights:
             weights[t] = 0
 
-    # 週内カバレッジ: 木曜以降は未出題のTrackを優先する
+    # 週内カバレッジ: 木曜以降は、今月の Horizon Track のうち未出題を優先する
     monday = today - timedelta(days=today.weekday())
     this_week = {s["track"] for s in sessions if s["date"] >= monday.isoformat()}
+    horizon = [t for t in cfg.get("horizon_tracks", E.TRACKS) if t in E.TRACKS] or list(E.TRACKS)
     if today.weekday() >= 3:
-        missing = [t for t in E.TRACKS if t not in this_week]
+        missing = [t for t in horizon if t not in this_week]
         if missing:
             due_missing = [w for w in due if w["track"] in missing]
             if due_missing:
                 due_missing.sort(
                     key=lambda w: E.PRIORITIES.index(w["priority"])
                     if w["priority"] in E.PRIORITIES else 1, reverse=True)
-                return due_missing[0]["track"], due, "週内未出題かつ再テスト期限のTrackを優先"
-            return rnd.choice(sorted(missing)), due, "週内未出題のTrackを補完"
+                return due_missing[0]["track"], due, "週内未出題かつ再テスト期限のHorizon Trackを優先"
+            return rnd.choice(sorted(missing)), due, "週内未出題のHorizon Trackを補完"
 
     pool = sorted([t for t, w in weights.items() if w > 0]) or list(E.TRACKS)
     chosen = rnd.choices(pool, weights=[weights[t] for t in pool], k=1)[0]

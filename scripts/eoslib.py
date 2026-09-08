@@ -16,6 +16,8 @@ TRACKS = [
     "Layered Architecture",
     "Web / API / HTTP",
     "Network / Infra",
+    "Coding / Go / Next.js",
+    "AI / LLM",
 ]
 FORMATS = ["Design", "Review", "Debug", "Explain"]
 LEVELS = ["L1", "L2", "L3", "L4"]
@@ -88,6 +90,9 @@ TRACK_ALIASES = {
     "Layered Architecture": ["arch", "architecture", "layered", "アーキテクチャ", "レイヤ"],
     "Web / API / HTTP": ["api", "http", "web", "rest", "エーピーアイ"],
     "Network / Infra": ["network", "infra", "ネットワーク", "インフラ", "infrastructure"],
+    "Coding / Go / Next.js": ["go", "golang", "next", "nextjs", "next.js", "coding",
+                             "コーディング", "実装"],
+    "AI / LLM": ["ai", "llm", "生成ai", "chatgpt", "人工知能"],
 }
 
 

@@ -17,11 +17,17 @@
     "Wed",
     "Fri"
   ],
+  "horizon_tracks": [
+    "Layered Architecture",
+    "Coding / Go / Next.js"
+  ],
   "track_weights": {
-    "DB / Table Design": 35,
-    "Layered Architecture": 25,
-    "Web / API / HTTP": 25,
-    "Network / Infra": 15
+    "DB / Table Design": 10,
+    "Layered Architecture": 35,
+    "Web / API / HTTP": 7,
+    "Network / Infra": 5,
+    "Coding / Go / Next.js": 35,
+    "AI / LLM": 0
   },
   "format_weights": {
     "Design": 20,
@@ -40,7 +46,7 @@
     "Review"
   ],
   "difficulty_rules": {
-    "_note": "base_level は週次レビューだけが書き換える。日次は空白期間による一時的な引き下げのみ行う。2026-09-07 に Current horizon（基礎期間）として L1 へ方針変更した。戻すのは週次の自動昇格か、horizon 見直し。",
+    "_note": "base_level は週次レビューだけが書き換える。日次は空白期間による一時的な引き下げのみ行う。2026-09 の Horizon は Layered Architecture と Coding。戻すのは週次の自動昇格か、月次の horizon 見直し。",
     "level_down_if_gap_days": 3,
     "weekly_level_down_if_ontime_rate_below": 0.5,
     "weekly_level_up_if_avg5_above": 85,

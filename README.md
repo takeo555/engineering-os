@@ -10,7 +10,7 @@
 2. [Status](STATUS.md) — 今の数字（連続実施・平均点・期限切れの弱点）
 3. [Current Focus](CURRENT_FOCUS.md) — 今月・今週の重点
 4. [Skill Map](01-skill-map/README.md) — 優先して鍛える8つの能力
-5. [Track](02-tracks/README.md) — DB / Architecture / Web-API / Network-Infra の到達目標
+5. [Track](02-tracks/README.md) — 6 Track の到達目標
 6. [Daily Session](04-sessions/README.md) — 1日完結型の出題を回す方法
 7. [Automation](10-automation/README.md) — ChatGPT無料プランでの通知・出題・レビュー・保存の構成
 8. [Operating Rules](08-operating-rules/README.md) — 更新頻度と正本のルール
@@ -76,9 +76,11 @@ Repositoryは記録の正本、ChatGPTは出題・レビューを担当するパ
 | Track | 例 |
 |---|---|
 | DB / Table Design | 「予約システムのダブルブッキングを防ぐテーブル設計とロック戦略を書け」 |
-| Architecture | 「このユースケースをレイヤードアーキテクチャで分割し、依存方向を図示せよ」 |
+| Layered Architecture | 「このユースケースをレイヤードアーキテクチャで分割し、依存方向を図示せよ」 |
 | Web / API / HTTP | 「決済APIを冪等にする設計と、リトライ時の挙動を定義せよ」 |
 | Network / Infra | 「特定ユーザーだけ画面が遅い。切り分け手順を上位レイヤーから書け」 |
+| Coding / Go / Next.js | 「小さな機能を Go または Next で動かし、置き場所を説明せよ」 |
+| AI / LLM | 「生成AIの利用で著作・秘密が問題になる条件を説明せよ」（10月は生成AIパスポート。合格後は生成設計のレビュー） |
 
 問題は次の4形式をローテーションします。
 

@@ -26,7 +26,8 @@ Sessionが3回未満の週は、原因（時間・難易度・通知）を1つ�
 - 頻出弱点と、Activeになった資産
 - Core SkillsのScorecard更新
 - 続けること / やめること / 始めること
-- 翌月のPrimary Outcome、Track比率、Focus Skills
+- 翌月のPrimary Outcome（= 翌月の Current horizon）、Track比率、Focus Skills
+- `00-north-star/README.md` の Current horizon を翌月分に書き換える
 
 Scorecardは**出題の証拠がある項目だけ**更新します。記録のない能力を推測で採点しません。
 

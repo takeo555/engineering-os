@@ -2,15 +2,19 @@
 
 日次セッションとは別枠で、既定は**週1回20分**だけ確保する枠です。2つの役割があります。
 
-**今期（Current horizon）:** 基礎を厚くするため、当面は **週2〜3回** まで増やしてよい。同時に扱う項目は1つのまま。キューの W001 / W002 を前倒しする。
+**今月（Current horizon）:** コーディングを厚くするため、当面は **週2回** まで増やしてよい。同時に扱う項目は1つのまま。Go または Next を実際に動かす。
 
 ## 役割1: 実機で確認する（毎週）
 
-設計の答え合わせをLLMだけで済ませていると、インデックスや分離レベルは身につきません。`EXPLAIN` を一度も見ずに複合インデックスの列順を学ぶのは、かなり効率が悪いです。
+設計の答え合わせをLLMだけで済ませていると、層の境界も実行結果も身につきません。
 
-既定は週1回、今期は週2〜3回、実際に動かして数字を見ます。テンプレート: [templates/hands-on-session.md](templates/hands-on-session.md)
+既定は週1回、今月は週2回まで、実際に動かして数字または起動結果を見ます。テンプレート: [templates/hands-on-session.md](templates/hands-on-session.md)
 
 ```bash
+# 例: 小さな Go モジュール
+go run .
+
+# 例: Postgres が必要なとき
 docker run --rm -d --name eos-pg \
   -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:16
 ```
@@ -37,8 +41,10 @@ docker run --rm -d --name eos-pg \
 
 | Item | Origin weakness | Method | Status | Next |
 |---|---|---|---|---|
-| トランザクション分離レベルと異常現象の対応 | W001系 | 4つの異常を実機で再現するSQLを書く | Queued | 2026-09-09 |
-| 複合インデックスの列順と実行計画 | W002 | 列順を変えて `EXPLAIN ANALYZE` を比較 | Queued | 2026-09-11 |
+| GoでHTTPハンドラ1本を動かし、handler/usecaseに分ける | 今月Horizon | `go run` で起動し、置き場所を記録する | Queued | 2026-09-10 |
+| Nextでページ1枚を出し、データ取得の置き場所を説明 | 今月Horizon | ページを表示し、取得処理の場所を記録する | Queued | 2026-09-17 |
+
+DB の分離レベル / インデックス（W001 / W002）は弱点ログに残す。今月の Foundation 本体にはしない。
 
 ## Method rules
 

@@ -4,9 +4,9 @@
 使い方: parse_record.py <issue_body.txt> [--out result.json]
 
 設計方針
-- **絶対に落ちない。** フォーマットが崩れていても、原文は必ず 04-sessions/inbox/ に残す
+- コードフェンスの言語指定や属性（```text、id="..."）は無視して中身を読む
+- 必須キーが欠けていれば取り込まず、どのキーが不足しているかを返す
 - 表記ゆれ（Track名、点数の「18/30」表記、優先度の「高」など）は寄せて受け入れる
-- 必須なのは date と Track だけ。他は欠けても既定値で埋める
 """
 import json
 import os
@@ -16,6 +16,7 @@ from datetime import date
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import eoslib as E  # noqa: E402
+import session_flow as S  # noqa: E402
 
 AXES = ["correctness", "completeness", "reasoning", "practicality", "clarity"]
 MAXES = {"correctness": 30, "completeness": 25, "reasoning": 25,
@@ -32,46 +33,15 @@ SECTION_TITLES = {
     5: "5. Weaknesses", 6: "6. What I learned", 7: "7. Next",
 }
 
-FENCE = re.compile(r"```[a-zA-Z0-9_-]*\n(.*?)```", re.S)
-FM = re.compile(r"^\s*---\s*\n(.*?)\n---\s*(?:\n|$)", re.S)
+FENCE = S.FENCE
+FM = S.FM
 HEADING = re.compile(r"^##\s+(\d)\s*[.．]?\s*(.*)$", re.M)
 
 
 # ---------------------------------------------------------------- 取り出し
 
-def extract_record(raw):
-    """Issue本文から frontmatter 付きの記録ブロックを取り出す。
-
-    戻り値: (frontmatter dict, body markdown) / 見つからなければ (None, None)
-    """
-    candidates = [m.group(1) for m in FENCE.finditer(raw)] + [raw]
-    for c in candidates:
-        c = c.strip("\n")
-        # コードブロックの前に説明文が付いていても拾えるよう、--- の直前まで捨てる
-        idx = c.find("---")
-        if idx > 0 and not c[:idx].strip().startswith("#"):
-            c = c[idx:]
-        m = FM.match(c)
-        if m:
-            return parse_frontmatter(m.group(1)), c[m.end():].strip("\n")
-    return None, None
-
-
-def parse_frontmatter(text):
-    """`key: value` の平坦なfrontmatterを読む。ネストは受け付けない。"""
-    out = {}
-    for line in text.splitlines():
-        line = line.rstrip()
-        if not line.strip() or line.lstrip().startswith("#"):
-            continue
-        if ":" not in line:
-            continue
-        k, v = line.split(":", 1)
-        k = k.strip().lstrip("-").strip().lower().replace(" ", "_")
-        v = v.strip().strip('"').strip("'")
-        if k:
-            out[k] = v
-    return out
+extract_record = S.extract_record
+parse_frontmatter = S.parse_frontmatter
 
 
 def split_sections(body):
@@ -107,7 +77,9 @@ def parse_retests(value):
 
 
 SHORT_TRACK_TOKENS = {"db", "api", "http", "web", "arch", "architecture",
-                      "network", "infra", "rest", "database"}
+                      "network", "infra", "rest", "database",
+                      "go", "golang", "next", "nextjs", "coding",
+                      "ai", "llm"}
 
 
 def _looks_like_track(part):
@@ -464,13 +436,28 @@ def main():
     elif (fm.get("type") or "session").strip().lower().startswith("week"):
         result = handle_weekly(fm, body, cfg)
     else:
-        result = handle_session(fm, body, raw, cfg)
-        if not result.get("ok"):
-            result["comment"] = (
-                "### 取り込めませんでした\n\n"
-                f"理由: {result.get('reason')}\n\n"
-                "原文は `04-sessions/inbox/` に保存しました。ヘッダの `track:` を"
-                "4Trackのいずれかにして、このIssueを編集し直してください。")
+        missing = S.validate_session_record(fm)
+        if missing:
+            reason = S.missing_keys_message(missing)
+            result = {
+                "ok": False,
+                "reason": reason,
+                "missing_keys": missing,
+                "inbox": save_to_inbox(raw, reason),
+                "comment": ("### 取り込めませんでした\n\n"
+                            f"{reason}\n\n"
+                            "記録ブロックのヘッダをテンプレート通りに直し、"
+                            "このIssueを編集して貼り直してください。\n\n"
+                            "見本は [`prompts/record-block.md`](prompts/record-block.md) にあります。"),
+            }
+        else:
+            result = handle_session(fm, body, raw, cfg)
+            if not result.get("ok"):
+                result["comment"] = (
+                    "### 取り込めませんでした\n\n"
+                    f"理由: {result.get('reason')}\n\n"
+                    "原文は `04-sessions/inbox/` に保存しました。ヘッダの `track:` を"
+                    "6Trackのいずれかにして、このIssueを編集し直してください。")
 
     print(json.dumps(result, ensure_ascii=False))
     if out_path:

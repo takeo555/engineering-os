@@ -38,7 +38,8 @@
 
 - 毎月1日21:00にMonthly Reviewが自動生成される
 - 出力を確認し、Track別レベルの推奨を`eos.config.json`へ反映するか判断する
-- North Starとの整合、Track比率、低価値な活動を確認する
+- **Current horizon を翌月分に書き換える。** 翌月の出口はここで決める。先の月は書かない
+- North Star（Mission）との整合、Track比率、低価値な活動を確認する
 
 ## 4. Work-in-progress limits
 
@@ -103,8 +104,9 @@
 
 3か月ごとに確認します。
 
-- North Starは今も正しいか
-- 4 Tracksの比率は現在の実務に合っているか
+- North Star（Mission）は今も正しいか
+- 6 Tracksの比率は現在の実務に合っているか
+- Current horizon を毎月回せているか
 - Core Skillsの追加・統合・卒業が必要か
 - Bankに使われない情報が溜まっていないか
 - 出題形式（Design / Review / Debug / Explain）の比率は適切か

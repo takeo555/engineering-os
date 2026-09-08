@@ -36,7 +36,7 @@
 ## Level definitions
 
 出題難易度はL1〜L4で管理します。現在の基準レベルは`CURRENT_FOCUS.md`にあります。
-当面の出題は L1（基礎期間）。各レベルの到達点の定義は変えない。
+当面の出題は L1（基礎期間）が多め。各レベルの到達点の定義は変えない。
 
 | Level | Target | Example expectation |
 |---|---|---|
