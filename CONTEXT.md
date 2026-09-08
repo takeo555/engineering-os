@@ -9,7 +9,7 @@
 | 項目 | 値 |
 |---|---|
 | 日付 | 2026-09-08（Tue） |
-| Track | **DB / Table Design** |
+| Track | **Coding / Go / Next.js** |
 | Format | **Review** |
 | Level | **L1** |
 | 回答環境 | モバイル想定 |
@@ -25,7 +25,7 @@
 
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
-- `W001` [High] 論理削除と一意制約の衝突に気づけない（期限 2026-09-08）
+- なし（今日は新しい題材でよい）
 
 ## 未クローズの弱点（上位8件）
 
@@ -66,30 +66,31 @@
 | Layered Architecture | 42.5 |
 | Web / API / HTTP | — |
 | Network / Infra | — |
+| Coding / Go / Next.js | — |
+| AI / LLM | — |
 
 ## 今週の重点（CURRENT_FOCUS.md 抜粋）
 
 ## Current cycle
 
-- Period: 2026-09-07 – 2026-09-13
-- Primary track: DB / Table Design
-- Secondary track: Web / API / HTTP
-- Cross-cutting track: Layered Architecture
+- Period: 2026-09-08 – 2026-09-30（今月の Horizon）
+- Primary track: Layered Architecture
+- Secondary track: Coding / Go / Next.js
 - Level: L1（基礎の確認）
-- North Star connection: 基礎を材料として厚くし、説明と指摘で使えるようにする。他人の設計をレビューできるのはその先
+- North Star connection: 依存方向を指摘でき、小さな Go または Next が動く。AI は10月の生成AIパスポート。今月は出題しない
 
 ## Focus skills
 
-1. **Data Modeling:** 要件文から実体と関係を抽出し、第3正規形まで根拠付きで説明する
-2. **Consistency Design:** 一意制約・外部キー・トランザクション境界で不正状態を作れなくする
+1. **Layering:** レイヤーごとの責務と依存方向を図示し、違反を指摘する
+2. **Interface Design:** handler / usecase、またはページ / データ取得の境界を決める
 
 ## Concepts to activate
 
-- 第3正規形とその意図的な崩し方
-- 一意制約 vs アプリケーション側チェック
-- READ COMMITTED と REPEATABLE READ の違い
-- 複合インデックスの列順
-- 依存性逆転の原則が守られている状態の見分け方
+- Presentation / Application / Domain / Infrastructure の責務
+- 依存性逆転が守られている状態の見分け方
+- handler に業務ルールを置かない
+- ページとデータ取得の置き場所
+- エラーを呼び出し側に返す
 
 ## Levelの意味
 
@@ -109,5 +110,5 @@
 
 ---
 
-<!-- eos:context date=2026-09-08 track=DB / Table Design format=Review level=L1
-     targets=W001 -->
+<!-- eos:context date=2026-09-08 track=Coding / Go / Next.js format=Review level=L1
+     targets=- -->

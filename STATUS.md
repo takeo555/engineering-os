@@ -20,6 +20,8 @@
 | Layered Architecture | 42.5 |
 | Web / API / HTTP | — |
 | Network / Infra | — |
+| Coding / Go / Next.js | — |
+| AI / LLM | — |
 
 ## 今すぐ再テストすべき弱点
 
