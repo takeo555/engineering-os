@@ -12,3 +12,4 @@
 | 2026-09-07 | HTTP固有の処理はHandlerで値に変換してUsecaseへ渡す | pattern | Pending |
 | 2026-09-07 | Usecaseは具象Repositoryではなくinterfaceに依存させる | pattern | Pending |
 | 2026-09-08 | interfaceを依存する側に定義し、具体的なRepository実装を差し替え可能にする | pattern | Pending |
+| 2026-09-09 | 論理削除を採用したらUNIQUE制約の対象範囲を確認する | pattern | Pending |

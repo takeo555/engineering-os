@@ -9,41 +9,42 @@
 | 項目 | 値 |
 |---|---|
 | 日付 | 2026-09-09（Wed） |
-| Track | **DB / Table Design** |
-| Format | **Review** |
+| Track | **Layered Architecture** |
+| Format | **Explain** |
 | Level | **L1** |
 | 回答環境 | キーボード想定 |
 | 想定所要時間 | 30分 |
 | 今日はセッション日か | はい |
-| 今日の記録 | 未保存 |
+| 今日の記録 | 保存済み。2問目は出さない |
 
 選定理由（本人向け。問題文には書かない）
 
 - Track: 重み・弱点・連続回避から選択
 - Level: base_level L1 のまま
-- Format: キーボード想定のためReviewを選択
+- Format: キーボード想定のためExplainを選択
 
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
-- `W001` [High] 論理削除と一意制約の衝突に気づけない（期限 2026-09-08）
+- `W005` [High] HandlerとDomainの責務境界を正しく分離できない（期限 2026-09-12）
 
 ## 未クローズの弱点（上位8件）
 
 | ID | Priority | Weakness | Track | Retest on |
 |---|---|---|---|---|
+| W010 | High | 論理削除時に一意制約がどう衝突するかを説明できない | DB / Table Design | 2026-09-14 |
 | W008 | High | DomainとUsecaseの責務境界を具体的に説明できない | Layered Architecture | 2026-09-13 |
+| W001 | High | 論理削除と一意制約の衝突に気づけない | DB / Table Design | 2026-09-12 |
 | W005 | High | HandlerとDomainの責務境界を正しく分離できない | Layered Architecture | 2026-09-12 |
 | W006 | High | 具象Repositoryへの依存を依存性逆転として説明できない | Layered Architecture | 2026-09-12 |
 | W002 | High | 複合インデックスの列順を決める基準を説明できない | DB / Table Design | 2026-09-10 |
-| W001 | High | 論理削除と一意制約の衝突に気づけない | DB / Table Design | 2026-09-08 |
+| W011 | Med | 保持要件とデータ量を踏まえて履歴データの管理方法を説明できない | DB / Table Design | 2026-09-18 |
 | W009 | Med | interfaceによる依存性逆転がテスト容易性につながる理由を具体的に説明できない | Layered Architecture | 2026-09-17 |
-| W007 | Med | Domainに置くべき業務ルールを具体的に切り出せない | Layered Architecture | 2026-09-16 |
-| W003 | Med | 時間帯の重なり判定を構造で表現できない | DB / Table Design | 2026-09-12 |
 
 ## 直近の出題履歴（題材の重複を避ける。同じ題材は10回空ける）
 
 | Date | Track | Format | Level | Title |
 |---|---|---|---|---|
+| 2026-09-09 | DB / Table Design | Review | L1 | 2026-09-09 — 論理削除と一意制約が衝突する貸出管理設計 |
 | 2026-09-08 | Layered Architecture | Design | L2 | 2026-09-08 — 価格計算APIの責務分離と依存方向 |
 | 2026-09-07 | Layered Architecture | Design | L2 | 2026-09-07 — 価格計算APIの責務分離と依存方向 |
 | 2026-09-03 | DB / Table Design | Design | L2 | 2026-09-03 — 会議室予約のダブルブッキングを構造で防ぐ |
@@ -52,17 +53,17 @@
 
 | Metric | Value |
 |---|---|
-| 直近5回の平均スコア | 51.0 |
-| 30分内完了率（直近10回） | 50% |
-| 記録済みセッション数 | 3 |
-| Open弱点 | 9件（High 5件） |
-| 再テスト期限切れ | 1件 |
+| 直近5回の平均スコア | 43.2 |
+| 30分内完了率（直近10回） | 67% |
+| 記録済みセッション数 | 4 |
+| Open弱点 | 11件（High 6件） |
+| 再テスト期限切れ | 0件 |
 
 ### Track別平均（直近20回）
 
 | Track | Avg |
 |---|---|
-| DB / Table Design | 68.0 |
+| DB / Table Design | 44.0 |
 | Layered Architecture | 42.5 |
 | Web / API / HTTP | — |
 | Network / Infra | — |
@@ -110,5 +111,5 @@
 
 ---
 
-<!-- eos:context date=2026-09-09 track=DB / Table Design format=Review level=L1
-     targets=W001 -->
+<!-- eos:context date=2026-09-09 track=Layered Architecture format=Explain level=L1
+     targets=W005 -->

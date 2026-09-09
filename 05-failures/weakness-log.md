@@ -4,7 +4,7 @@
 
 | ID | Weakness | Track | Priority | Status | Detected | Retest on | Retest result |
 |---|---|---|---|---|---|---|---|
-| W001 | 論理削除と一意制約の衝突に気づけない | DB / Table Design | High | Open | 2026-09-03 | 2026-09-08 | — |
+| W001 | 論理削除と一意制約の衝突に気づけない | DB / Table Design | High | Open | 2026-09-03 | 2026-09-12 | 不合格 2026-09-09 論理削除とUNIQUE制約の衝突を指摘できず |
 | W002 | 複合インデックスの列順を決める基準を説明できない | DB / Table Design | High | Open | 2026-09-03 | 2026-09-10 | — |
 | W003 | 時間帯の重なり判定を構造で表現できない | DB / Table Design | Med | Open | 2026-09-03 | 2026-09-12 | — |
 | W004 | 状態をBOOLEANで持ち、拡張性を検討しない | DB / Table Design | Low | Open | 2026-09-03 | 2026-09-17 | — |
@@ -13,6 +13,8 @@
 | W007 | Domainに置くべき業務ルールを具体的に切り出せない | Layered Architecture | Med | Open | 2026-09-07 | 2026-09-16 | — |
 | W008 | DomainとUsecaseの責務境界を具体的に説明できない | Layered Architecture | High | Open | 2026-09-08 | 2026-09-13 | — |
 | W009 | interfaceによる依存性逆転がテスト容易性につながる理由を具体的に説明できない | Layered Architecture | Med | Open | 2026-09-08 | 2026-09-17 | — |
+| W010 | 論理削除時に一意制約がどう衝突するかを説明できない | DB / Table Design | High | Open | 2026-09-09 | 2026-09-14 | — |
+| W011 | 保持要件とデータ量を踏まえて履歴データの管理方法を説明できない | DB / Table Design | Med | Open | 2026-09-09 | 2026-09-18 | — |
 
 ## Closed
 
