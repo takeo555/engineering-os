@@ -1,4 +1,4 @@
-# CONTEXT — 2026-09-10（Thu）
+# CONTEXT — 2026-09-11（Fri）
 
 > **自動生成。手で編集しないこと。** 毎朝06:00 JSTと、
 > 記録が保存されるたびに再生成されます。
@@ -8,11 +8,11 @@
 
 | 項目 | 値 |
 |---|---|
-| 日付 | 2026-09-10（Thu） |
+| 日付 | 2026-09-11（Fri） |
 | Track | **Coding / Go / Next.js** |
-| Format | **Explain** |
+| Format | **Review** |
 | Level | **L1** |
-| 回答環境 | モバイル想定 |
+| 回答環境 | キーボード想定 |
 | 想定所要時間 | 30分 |
 | 今日はセッション日か | はい |
 | 今日の記録 | 未保存 |
@@ -21,7 +21,7 @@
 
 - Track: 週内未出題のHorizon Trackを補完
 - Level: base_level L1 のまま
-- Format: モバイル想定のためExplainを選択
+- Format: キーボード想定のためReviewを選択
 
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
@@ -111,5 +111,5 @@
 
 ---
 
-<!-- eos:context date=2026-09-10 track=Coding / Go / Next.js format=Explain level=L1
+<!-- eos:context date=2026-09-11 track=Coding / Go / Next.js format=Review level=L1
      targets=- -->
