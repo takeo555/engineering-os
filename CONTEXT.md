@@ -9,23 +9,23 @@
 | 項目 | 値 |
 |---|---|
 | 日付 | 2026-09-11（Fri） |
-| Track | **Coding / Go / Next.js** |
+| Track | **Layered Architecture** |
 | Format | **Review** |
 | Level | **L1** |
 | 回答環境 | キーボード想定 |
 | 想定所要時間 | 30分 |
 | 今日はセッション日か | はい |
-| 今日の記録 | 未保存 |
+| 今日の記録 | 保存済み。2問目は出さない |
 
 選定理由（本人向け。問題文には書かない）
 
-- Track: 週内未出題のHorizon Trackを補完
+- Track: 重み・弱点・連続回避から選択
 - Level: base_level L1 のまま
 - Format: キーボード想定のためReviewを選択
 
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
-- なし（今日は新しい題材でよい）
+- `W005` [High] HandlerとDomainの責務境界を正しく分離できない（期限 2026-09-12）
 
 ## 未クローズの弱点（上位8件）
 
@@ -37,13 +37,14 @@
 | W005 | High | HandlerとDomainの責務境界を正しく分離できない | Layered Architecture | 2026-09-12 |
 | W006 | High | 具象Repositoryへの依存を依存性逆転として説明できない | Layered Architecture | 2026-09-12 |
 | W002 | High | 複合インデックスの列順を決める基準を説明できない | DB / Table Design | 2026-09-10 |
-| W011 | Med | 保持要件とデータ量を踏まえて履歴データの管理方法を説明できない | DB / Table Design | 2026-09-18 |
-| W009 | Med | interfaceによる依存性逆転がテスト容易性につながる理由を具体的に説明できない | Layered Architecture | 2026-09-17 |
+| W012 | Med | ページングにおけるOFFSET方式の課題とカーソル方式との使い分けを説明できない | Coding / Go / Next.js | 2026-09-20 |
+| W013 | Med | レイヤー分離の目的を「関数を軽くする」ではなく変更理由と責務の分離として説明できない | Layered Architecture | 2026-09-20 |
 
 ## 直近の出題履歴（題材の重複を避ける。同じ題材は10回空ける）
 
 | Date | Track | Format | Level | Title |
 |---|---|---|---|---|
+| 2026-09-11 | Coding / Go / Next.js | Review | L1 | 2026-09-11 — 備品一覧APIのページングと責務分離 |
 | 2026-09-09 | DB / Table Design | Review | L1 | 2026-09-09 — 論理削除と一意制約が衝突する貸出管理設計 |
 | 2026-09-08 | Layered Architecture | Design | L2 | 2026-09-08 — 価格計算APIの責務分離と依存方向 |
 | 2026-09-07 | Layered Architecture | Design | L2 | 2026-09-07 — 価格計算APIの責務分離と依存方向 |
@@ -53,10 +54,10 @@
 
 | Metric | Value |
 |---|---|
-| 直近5回の平均スコア | 43.2 |
-| 30分内完了率（直近10回） | 67% |
-| 記録済みセッション数 | 4 |
-| Open弱点 | 11件（High 6件） |
+| 直近5回の平均スコア | 49.6 |
+| 30分内完了率（直近10回） | 75% |
+| 記録済みセッション数 | 5 |
+| Open弱点 | 13件（High 6件） |
 | 再テスト期限切れ | 1件 |
 
 ### Track別平均（直近20回）
@@ -67,7 +68,7 @@
 | Layered Architecture | 42.5 |
 | Web / API / HTTP | — |
 | Network / Infra | — |
-| Coding / Go / Next.js | — |
+| Coding / Go / Next.js | 75.0 |
 | AI / LLM | — |
 
 ## 今週の重点（CURRENT_FOCUS.md 抜粋）
@@ -111,5 +112,5 @@
 
 ---
 
-<!-- eos:context date=2026-09-11 track=Coding / Go / Next.js format=Review level=L1
-     targets=- -->
+<!-- eos:context date=2026-09-11 track=Layered Architecture format=Review level=L1
+     targets=W005 -->
