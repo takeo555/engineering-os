@@ -1,4 +1,4 @@
-# CONTEXT — 2026-09-12（Sat）
+# CONTEXT — 2026-09-13（Sun）
 
 > **自動生成。手で編集しないこと。** 毎朝06:00 JSTと、
 > 記録が保存されるたびに再生成されます。
@@ -8,7 +8,7 @@
 
 | 項目 | 値 |
 |---|---|
-| 日付 | 2026-09-12（Sat） |
+| 日付 | 2026-09-13（Sun） |
 | Track | **DB / Table Design** |
 | Format | **Explain** |
 | Level | **L1** |
@@ -59,7 +59,7 @@
 | 30分内完了率（直近10回） | 75% |
 | 記録済みセッション数 | 5 |
 | Open弱点 | 13件（High 6件） |
-| 再テスト期限切れ | 5件 |
+| 再テスト期限切れ | 6件 |
 
 ### Track別平均（直近20回）
 
@@ -113,5 +113,5 @@
 
 ---
 
-<!-- eos:context date=2026-09-12 track=DB / Table Design format=Explain level=L1
+<!-- eos:context date=2026-09-13 track=DB / Table Design format=Explain level=L1
      targets=W001,W002 -->
