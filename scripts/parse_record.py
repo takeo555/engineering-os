@@ -340,9 +340,9 @@ def handle_session(fm, body, raw, cfg):
     if total == 0:
         alerts.append("**点数が0点です。** ヘッダに `correctness:` `completeness:` `reasoning:` "
                       "`practicality:` `clarity:` の5行がありません。")
-    if minutes == 0:
-        alerts.append("**所要時間が0分です。** ヘッダの `time_spent_min:` がありません"
-                      "（`duration_minutes` などの別名も読めますが、書かれていませんでした）。")
+    if not pick(fm, MINUTE_KEYS):
+        alerts.append("**所要時間がありません。** ヘッダの `time_spent_min:` がありません"
+                      "（実測が不明なら `0` と書いてください。問題の制約時間は写さないでください）。")
     if not added and not bumped and not closed and not failed:
         alerts.append("**弱点が1件も登録されていません。** ヘッダに `weakness_1: High | 〜できない` "
                       "の行がありません。これが続くと再テストが回らず、ただの問題演習になります。")

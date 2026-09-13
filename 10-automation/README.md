@@ -48,7 +48,7 @@ ChatGPTが出した「記録ブロック」を**GitHubのIssueに貼る一手**�
              ├─ 狙う弱点の合否を判定（passed / failed）
              └─ 記録ブロックを1つのコードブロックで出力
                                     │
-           自分: 記録ブロックをコピー → GitHubの「記録の投函口」にコメントで貼る（15秒）
+           自分: 記録ブロックをコピー → GitHubの Issue #1「📥 記録の投函口」にコメントで貼る（15秒）。新しいIssueは作らない
                                     │
 自動       Actions: record.yml（issue_comment / issues）
              ├─ 記録ブロックをパース
@@ -144,6 +144,8 @@ https://raw.githubusercontent.com/<OWNER>/<REPO>/main/CONTEXT.md
 指示欄に入り切らない場合は、`project-instructions.md` 自体もファイルとしてアップロードし、
 指示欄には「詳細は `project-instructions.md` に従う」とだけ書けば動きます。
 
+出題・採点・記録のルールを変えたあとは、**指示欄を貼り直し**、Knowledgeの `examiner-manual.md` と `record-block.md` も差し替えてください。gitに書いただけではChatGPT側は変わりません。
+
 ### 5. 定期タスクを登録する
 
 [prompts/chatgpt-tasks.md](../prompts/chatgpt-tasks.md) の本文をコピーして、ChatGPTの定期タスクを2つ作ります。
@@ -159,7 +161,7 @@ https://raw.githubusercontent.com/<OWNER>/<REPO>/main/CONTEXT.md
 
 ### 5.5. 記録の投函口を作る
 
-記録ブロックを毎日貼るための、**開きっぱなしのIssue**を1つ作ります。
+記録ブロックを毎日貼るための、**開きっぱなしのIssue**を1つ作ります。これが Issue #1「📥 記録の投函口」です。日次記録はここにコメントします。新しいIssueは作りません。
 
 ```bash
 gh issue create --title "📥 記録の投函口" --body "ここに記録ブロックをコメントで貼る"
@@ -172,7 +174,7 @@ gh issue pin <番号>
 
 1. Projectを開いて「今日の1問」と送る → CONTEXT.mdの割り当て通りの問題が出るか
 2. 適当な回答を送る → 60秒サマリ → 詳細レビュー → **記録ブロック**が出るか
-3. 記録ブロックをコピーし、「記録の投函口」にコメントとして貼る
+3. 記録ブロックをコピーし、Issue #1「📥 記録の投函口」にコメントとして貼る（新しいIssueは作らない）
 4. 1〜2分後、同じIssueに「記録しました」のコメントが返るか
 5. `04-sessions/daily/` にコミットが入り、`STATUS.md` の数字が動き、`CONTEXT.md` が翌日の割り当てに変わるか
 6. サンプルデータを消す場合は `04-sessions/daily/2026/2026-09-03.md`、`scores.csv` の該当行、
@@ -190,6 +192,9 @@ gh issue pin <番号>
 | 「取り込めませんでした」と返る | ヘッダが崩れている | 原文は `04-sessions/inbox/` に残っている。ヘッダだけ直してIssueを編集する |
 | ChatGPTがCONTEXT.mdを読めない | raw URLの誤り / Privateのまま | URLを開いて確認する。読めなければCONTEXT.mdの中身を会話に貼れば動く |
 | 点数が明らかに甘い | `anchors.md` を参照していない | 「anchors.mdの見本と比べて」と一言送る。頻発するならProjectのファイルを確認する |
+| チャットの点とGitHubの点が違う | 記録時に採点し直している | チャットで確定した5軸をそのまま写す。付け直さない |
+| 所要時間がいつも30分 | 問題の制約時間を実測として書いている | `time_spent_min` は明示された実測だけ。不明なら0 |
+| 記録用の新しいIssueができた | 投函口ではなく新規作成している | そのIssueは使わず、本文を Issue #1 へコメントで移す |
 | 定期タスクが届かない | 無料プランは配信時刻が枠指定 | Projectを開いて「今日の1問」と送る。通知は着火装置にすぎない |
 | Workflowが動かなくなった | 60日以上休止すると自動無効化される | `gh workflow enable context.yml` で戻す |
 
