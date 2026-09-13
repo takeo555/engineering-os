@@ -2,10 +2,11 @@
 
 | Cadence | When | Who runs it | Output |
 |---|---|---|---|
-| Weekly | 毎週日曜 21:00 JST | `weekly-review.yml` | `weekly/YYYY-Www.md`、`CURRENT_FOCUS.md`、`base_level` |
-| Monthly | 毎月1日 21:00 JST | `monthly-review.yml` | `monthly/YYYY-MM.md`、`07-scorecard/skills.md` |
+| Weekly | 日曜 20:45 数字 / 21:00 講評 | `review-facts.yml` + Claude定期タスク | `weekly/YYYY-Www.md`、`CURRENT_FOCUS.md`、`base_level` |
+| Monthly | 毎月1日 21:00 JST | `review-facts.yml` | `MONTHLY_CONTEXT.md`（講評は別） |
 
-日曜21:00にしているのは、English OSの週次レビュー（日曜20:00 JST）と重ならないようにするためです。
+日曜21:00に講評するのは、English OSの週次（日曜20:00 JST）と重ならないようにするためです。
+数字は20:45に出し、21:00の試験官が今週分を読めるようにします。講評は Issue #1 へ自動投稿します。
 
 ## Weekly Review
 

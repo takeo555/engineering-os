@@ -37,6 +37,6 @@
 
 ---
 
-- ChatGPTが毎朝読む入り口: [`CONTEXT.md`](CONTEXT.md)
+- 試験官が毎朝読む入り口: [`CONTEXT.md`](CONTEXT.md)
 - 今週の重点: [`CURRENT_FOCUS.md`](CURRENT_FOCUS.md)
 - 弱点一覧: [`05-failures/weakness-log.md`](05-failures/weakness-log.md)

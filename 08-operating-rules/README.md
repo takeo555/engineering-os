@@ -3,7 +3,7 @@
 ## 1. This repository is the source of truth
 
 - North Star、Skill定義、Track目標、Bank、Session記録、Review、ScorecardはこのRepositoryを正本とする
-- ChatGPTの回答を保存するだけではOSを更新したことにならない
+- 試験官の回答を保存するだけではOSを更新したことにならない
 - 目的や構造を変える場合は[Decision Log](decision-log.md)へ理由を残す
 - 自動生成ファイル（`CONTEXT.md`、`STATUS.md`、`weakness-log.md`、`scores.csv`、`promotion-queue.md`）は手で並べ替えない
 - `07-scorecard/anchors.md`は変更しない。変えると過去のスコアと比較できなくなる
@@ -15,7 +15,7 @@
 - 未完成の課題を翌日へ持ち越さない。持ち越すのは弱点だけ
 - 1日に2問以上やらない。休んだ日の埋め合わせをしない
 - 今は長期プロジェクト型の課題を扱わない
-- レビュー後は記録ブロックをチャットへ出し、Issue #1「📥 記録の投函口」へコメントする。新しいIssueは作らない
+- レビュー後は記録ブロックをチャットへ出し、試験官が Issue #1「📥 記録の投函口」へコメントする。新しいIssueは作らない
 - 問題文の「30分以内」は制約。記録の `time_spent_min` は実測だけを書く
 
 ## 3. Cadence
@@ -23,18 +23,19 @@
 ### Daily（`session_days` に指定した曜日。既定は毎日）
 
 - 06:00 `CONTEXT.md` が再生成される（Track / Format / Level / 狙う弱点。問題文は作らない）
-- 朝 ChatGPT定期タスクが「Projectを開いて『今日の1問』と送って」と通知する
+- 07:00 Claude定期タスクが「Projectを開いて『今日の1問』と送って」と通知する（出題はしない）
 - Projectで出題 → 回答 → 必要ならヒント → レビュー → 採点確定 → 記録ブロック
-- 記録ブロックを Issue #1「📥 記録の投函口」へコメントで貼る（新しいIssueは作らない）
+- 試験官が Issue #1「📥 記録の投函口」へコメントする（コネクタ失敗時だけ手貼り）
 - 朝は60秒サマリだけ読めばよい。詳細レビューは夜に記録ファイルで読んでよい
 
 週5が重い場合は`session_days`を`["Mon","Wed","Fri"]`に落とします。記録が飛び飛びになるより、週3を確実に埋めたほうがスコアの信頼性もBankの質も上がります。
 
 ### Weekly
 
-- 日曜21:00にWeekly Reviewが自動生成される（English OSの週次20:00と重ならない）
-- 出力を5分読み、`CURRENT_FOCUS.md`の書き換え内容を確認する
-- [Bank Promotion Queue](../03-banks/promotion-queue.md)の`adopt`を該当Bankへ書き写し、行を削除する（3分）
+- 日曜20:45 `WEEKLY_CONTEXT.md`（数字だけ）が再生成される
+- 日曜21:00 Claude定期タスクが講評を書き、Issue #1「📥 記録の投函口」へ投稿する（English OSの週次20:00と重ならない）
+- 投函口の「記録しました」と `CURRENT_FOCUS.md` の書き換えを確認する
+- [Bank Promotion Queue](../03-banks/promotion-queue.md)の`adopt`を該当Bankへ書き写し、行を削除する（3分。ここだけ手動）
 - 週1回20分、[Foundation](../09-foundation/README.md)で実機確認を行う
 
 ### Monthly
@@ -126,7 +127,7 @@
 
 ## 11. 今日の1問の終了ルール
 
-試験官（ChatGPT Project）は次の順以外で進めない。詳細は [`prompts/project-instructions.md`](../prompts/project-instructions.md) と [`prompts/examiner-manual.md`](../prompts/examiner-manual.md)。
+試験官（Claude Project）は次の順以外で進めない。詳細は [`prompts/project-instructions.md`](../prompts/project-instructions.md) と [`prompts/examiner-manual.md`](../prompts/examiner-manual.md)。
 
 1. CONTEXT.md 等の必要なルールを確認する
 2. 問題を出す（この時点で評価観点を固定する）
@@ -138,7 +139,7 @@
 8. weakness / 次回課題を決める
 9. [`prompts/record-block.md`](../prompts/record-block.md) に従って記録ブロックを作る
 10. チャット上に記録ブロックを出す
-11. GitHubへ記録する場合は既存の Issue #1「📥 記録の投函口」にコメントする
+11. GitHubコネクタで既存の Issue #1「📥 記録の投函口」にコメントする（失敗時のみ手貼り）
 
 守ること:
 

@@ -1,12 +1,13 @@
 name: save-record
 
-# 「記録ブロック」を取り込む。ChatGPTはGitHubへ書き込めないので、ここが唯一の書き込み経路。
+# 「記録ブロック」を取り込む。試験官（Claude）または本人が Issue に貼った文が入口。
 #
-# 2つの投函方法を受け付ける。
-#   A) 常設Issue「記録の投函口」への **コメント**（既定。タイトル入力が要らない）
-#   B) 新しいIssueを立てて本文に貼る（Aが使えないとき / 週次レビューなど）
+# 受け付けるのは常設Issue「記録の投函口」への **コメント**（既定）。
+# 日次も週次もここ。新しいIssueは使わない。
 #
-# どちらも `type: session` または `type: weekly` の行が無ければ何もしない。
+# `type: session` または `type: weekly` の行が無ければ何もしない。
+# github-actions[bot] の返信は無視する（ループ防止）。
+# Claude のコネクタが Bot 扱いになっても取り込めるよう、Bot 全体は除外しない。
 
 on:
   issues:
@@ -30,7 +31,7 @@ jobs:
         (contains(github.event.issue.body, 'type: session') ||
          contains(github.event.issue.body, 'type: weekly'))) ||
       (github.event_name == 'issue_comment' &&
-        github.event.comment.user.type != 'Bot' &&
+        github.event.comment.user.login != 'github-actions[bot]' &&
         (contains(github.event.comment.body, 'type: session') ||
          contains(github.event.comment.body, 'type: weekly')))
     steps:

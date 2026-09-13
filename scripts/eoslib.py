@@ -83,7 +83,7 @@ def shift_priority(priority, delta):
 
 
 # ------------------------------------------------- 表記ゆれの吸収
-# ChatGPTが返す文字列は日によって揺れる。落とさずに寄せる。
+# 試験官が返す文字列は日によって揺れる。落とさずに寄せる。
 
 TRACK_ALIASES = {
     "DB / Table Design": ["db", "database", "table", "テーブル", "データベース", "dbdesign"],
@@ -550,7 +550,7 @@ def update_status(cfg=None):
         lines += ["", "## WIP上限の警告", ""] + [f"- {w}" for w in warnings]
 
     lines += ["", "---", "",
-              "- ChatGPTが毎朝読む入り口: [`CONTEXT.md`](CONTEXT.md)",
+              "- 試験官が毎朝読む入り口: [`CONTEXT.md`](CONTEXT.md)",
               "- 今週の重点: [`CURRENT_FOCUS.md`](CURRENT_FOCUS.md)",
               "- 弱点一覧: [`05-failures/weakness-log.md`](05-failures/weakness-log.md)",
               ""]

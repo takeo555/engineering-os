@@ -130,7 +130,7 @@ def parse_bank_items(values):
 
 # ---------------------------------------------------------------- 組み立て
 
-# ヘッダのキー名の揺れ。ChatGPTは日によって別名を使う
+# ヘッダのキー名の揺れ。試験官は日によって別名を使う
 MINUTE_KEYS = ["time_spent_min", "duration_minutes", "duration_min", "minutes",
                "time_spent", "time_spent_minutes", "elapsed_minutes", "所要時間"]
 AXIS_ALIASES = {
@@ -349,7 +349,7 @@ def handle_session(fm, body, raw, cfg):
     if alerts:
         comment += ("\n\n---\n\n⚠️ **記録ブロックの不備**\n\n"
                     + "\n".join(f"- {a}" for a in alerts)
-                    + "\n\nChatGPTに「記録ブロックをテンプレート通りに出し直して」と言い、"
+                    + "\n\n試験官に「記録ブロックをテンプレート通りに出し直して」と言い、"
                       "このコメントを**編集**して貼り直すと再実行されます（同じ日付は上書きされます）。")
 
     return {
@@ -429,7 +429,7 @@ def main():
             "comment": ("### 取り込めませんでした\n\n"
                         "`---` で挟んだヘッダ行（date / track / format / level / 各軸の点数）が"
                         "見つかりませんでした。原文は `04-sessions/inbox/` に保存したので、"
-                        "ChatGPTに「記録ブロックをテンプレート通りに出し直して」と言って、"
+                        "試験官に「記録ブロックをテンプレート通りに出し直して」と言って、"
                         "このIssueを編集して貼り直してください。\n\n"
                         "見本は [`prompts/record-block.md`](prompts/record-block.md) にあります。"),
         }

@@ -1,11 +1,14 @@
 name: review-facts
 
-# 週次・月次レビュー用の「事実」を書き出す。講評はChatGPTが書く。
-# OpenAI APIは使わない。
+# 週次・月次レビュー用の「事実」を書き出す。講評は試験官（Claude）が書く。
+# APIキーは使わない。
+#
+# 週次の数字は日曜 20:45 JST。講評の定期タスクは 21:00 JST。
+# 同じ21:00だと、まだ先週の WEEKLY_CONTEXT.md を読んでしまう。
 
 on:
   schedule:
-    - cron: "0 12 * * 0" # 日曜 21:00 JST — 週次
+    - cron: "45 11 * * 0" # 日曜 20:45 JST — 週次の数字
     - cron: "0 12 1 * *" # 毎月1日 21:00 JST — 月次
   workflow_dispatch:
     inputs:
@@ -64,5 +67,5 @@ jobs:
           print(f"- セッション {d['sessions']}回 / 平均 {d['avg']}")
           print(f"- base_level: {d['base_level']}（{d['level_reason']}）")
           print("")
-          print("ChatGPTに「週次レビュー」と送ってください。")
+          print("Claude の日曜21:00タスクが講評を書いて投函口へ投稿する。")
           PY

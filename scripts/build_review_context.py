@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """週次・月次レビュー用の「事実」をMarkdownで書き出す。
 
-講評はChatGPTが書く。ここは数字だけを担当する。OpenAI APIは使わない。
-難易度（base_level）の判定はここで決定論的に行い、ChatGPTには判定させない。
+講評は試験官（Claude）が書く。ここは数字だけを担当する。APIキーは使わない。
+難易度（base_level）の判定はここで決定論的に行い、試験官には判定させない。
 
 使い方: build_review_context.py [--period week|month]
 出力: WEEKLY_CONTEXT.md（週次）/ MONTHLY_CONTEXT.md（月次）
@@ -119,7 +119,7 @@ def main():
 
     body = f"""# {title}
 
-> **自動生成。手で編集しないこと。** レビューの講評はChatGPTが書きます。
+> **自動生成。手で編集しないこと。** レビューの講評は試験官が書きます。
 > ここにあるのは数字だけです。ここに無い事実を推測で補わないでください。
 
 - 期間: {start.isoformat()} – {end.isoformat()}
@@ -169,7 +169,7 @@ def main():
 
 {queue}
 
-## 難易度の判定（決定済み。ChatGPTは変更してはならない）
+## 難易度の判定（決定済み。試験官は変更してはならない）
 
 - **base_level: {new_level}**
 - 理由: {level_reason}

@@ -1,6 +1,6 @@
 name: build-context
 
-# ChatGPTが毎朝読む CONTEXT.md を再生成する。
+# 試験官が毎朝読む CONTEXT.md を再生成する。
 # 出題内容は作らない。Track / Format / Level / 狙う弱点だけを決める。
 
 on:

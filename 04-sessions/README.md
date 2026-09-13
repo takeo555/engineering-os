@@ -19,17 +19,16 @@
 
 | Time | Actor | Action |
 |---|---|---|
-| 06:00 | GitHub Actions | `CONTEXT.md` を再生成（Track / Format / Level / 狙う弱点を決める） |
-| 朝 | ChatGPT 定期タスク | 「Projectを開いて『今日の1問』と送って」と通知する |
+| 06:00 | GitHub Actions（build-context） | `CONTEXT.md` を再生成（Track / Format / Level / 狙う弱点を決める。問題文は作らない） |
+| 07:00 | Claude 定期タスク | 「Projectを開いて『今日の1問』と送って」と通知する（出題しない） |
 | — | You | Projectで「今日の1問」と送る |
-| — | ChatGPT 試験官Project | `CONTEXT.md` を読み、評価観点を固定して1問出題する |
+| — | Claude 試験官Project | `CONTEXT.md` を読み、評価観点を固定して1問出題する |
 | 30分 | You | 解く。終わらなくてもその時点で止め、同じ会話に回答を貼る |
-| — | You / ChatGPT | 必要ならヒント（答えは直接出さない。評価基準は変えない） |
-| — | ChatGPT 試験官Project | 60秒サマリ→詳細レビュー→採点確定（再計算しない）→自力/ヒント後/未到達の区別→再テスト合否→**記録ブロックをチャットへ出力** |
-| — | You | 記録ブロックをコピーし、Issue #1「📥 記録の投函口」にコメントで貼る（15秒）。**新しいIssueは作らない** |
-| 自動 | GitHub Actions | 記録をコミットし、弱点の開閉とScorecardを更新、`CONTEXT.md` を再生成、結果を返す |
+| — | You / Claude | 必要ならヒント（答えは直接出さない。評価基準は変えない） |
+| — | Claude 試験官Project | 60秒サマリ→詳細レビュー→採点確定→記録ブロックをチャットへ出力→**投函口へコメント** |
+| 自動 | GitHub Actions（save-record） | 記録をコミットし、弱点の開閉とScorecardを更新、`CONTEXT.md` を再生成、結果を返す |
 
-**ChatGPTはGitHubへ書き込めません**（コネクタは読み取り専用）。記録ブロックを Issue #1「📥 記録の投函口」へコメントで貼る一手が、唯一の書き込み経路です。新しいIssueは作りません。手順は [10-automation/inbox.md](../10-automation/inbox.md)。
+試験官が GitHub コネクタで Issue #1「📥 記録の投函口」へコメントします。コネクタが落ちたときだけ手貼りします。新しいIssueは作りません。予備の手順は [10-automation/inbox.md](../10-automation/inbox.md)。
 
 問題文の「30分以内」は制約です。`time_spent_min` には実際にかかった時間だけを書きます。分からなければ推測しません。
 
@@ -43,7 +42,7 @@
 - 課題を翌日へ持ち越さない。持ち越すのは弱点だけ
 - 1日に2問以上やらない。埋め合わせをしない
 - ヒントで補えた重要な観点は、最終回答として正しくても弱点として残す
-- その日は記録ブロックをチャットへ出すまで終了しない
+- その日は記録ブロックを投函口へ出すまで終了しない
 
 ## Problem formats
 

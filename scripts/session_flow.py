@@ -1,6 +1,6 @@
 """CONTEXT → 出題 → 採点 → 記録 の状態を一貫して扱う。
 
-ChatGPT側の手順の正本は prompts/ だが、同じ判定をコードでも固定する。
+試験官側の手順の正本は prompts/ だが、同じ判定をコードでも固定する。
 Importer（parse_record.py）とテストがこれを呼ぶ。
 """
 import os
