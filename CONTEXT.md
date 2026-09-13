@@ -1,27 +1,47 @@
-# CONTEXT — 2026-09-13（Sun）
+# CONTEXT — 2026-09-14（Mon）
 
 > **自動生成。手で編集しないこと。** 毎朝06:00 JSTと、
 > 記録が保存されるたびに再生成されます。
 > 試験官はこのファイルだけを読めば出題できます。他のファイルを読みに行く必要はありません。
+> **Drill 8問（30秒・単答）を先に、そのあと Design 1問（15分）。この順を変えないこと。**
 
-## 今日の割り当て（この通りに出題すること）
+## 今日のフェーズ
+
+Phase 1（生成AIパスポート期・2026-09-14〜2026-10-19）
+
+AI ドリルの題材はこのフェーズに従います。詳細は `ROADMAP.md`。
+
+## 今日の Drill 題材枠
+
+| カテゴリ | 問題数 | 分野の枠 | 直近のmiss類題 |
+|---|---|---|---|
+| AI | 3 | 法制度と倫理（EU AI Act, 日本の指針、ガバナンス）；リスク（幻覚、著作権、秘密漏洩、バイアス）；業務利用の注意点 | なし |
+| 言語 | 3 | Go / interface；Next.js / Server Actions；Go / goroutine/channel | なし |
+| ネットワーク | 2 | 1章 Webブラウザがメッセージを作る；4章 アクセス回線とプロバイダ | なし |
+
+（試験官はこの枠に沿って具体的な問題文を生成する。30秒で単答できる形にし、選択肢は出さない。
+「直近のmiss類題」が「あり」のカテゴリは、そのカテゴリの1問を同じ分野の**別問題**に差し替える）
+
+Drill の記録はカテゴリ別正答率のみ。5軸採点も Weakness Log 登録もしない。
+
+## 今日の Design 割り当て（この通りに出題すること）
 
 | 項目 | 値 |
 |---|---|
-| 日付 | 2026-09-13（Sun） |
+| 日付 | 2026-09-14（Mon） |
 | Track | **DB / Table Design** |
 | Format | **Explain** |
 | Level | **L1** |
-| 回答環境 | モバイル想定 |
-| 想定所要時間 | 30分 |
+| 回答環境 | キーボード想定 |
+| 想定所要時間 | 15分 |
 | 今日はセッション日か | はい |
 | 今日の記録 | 未保存 |
 
 選定理由（本人向け。問題文には書かない）
 
 - Track: 重み・弱点・連続回避から選択
-- Level: base_level L1 のまま
-- Format: モバイル想定のためExplainを選択
+- Level: 3日空いたが L1 が最下位のため据え置き
+- Format: キーボード想定のためExplainを選択
 
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
@@ -55,45 +75,41 @@
 
 | Metric | Value |
 |---|---|
-| 直近5回の平均スコア | 49.6 |
-| 30分内完了率（直近10回） | 75% |
+| 直近5回の平均スコア（Design） | 49.6 |
+| 15分内完了率（直近10回） | 50% |
 | 記録済みセッション数 | 5 |
 | Open弱点 | 13件（High 6件） |
-| 再テスト期限切れ | 6件 |
+| 再テスト期限切れ | 7件 |
 
-### Track別平均（直近20回）
+### Design Track別平均（直近20回）
 
 | Track | Avg |
 |---|---|
-| DB / Table Design | 44.0 |
 | Layered Architecture | 42.5 |
+| DB / Table Design | 44.0 |
 | Web / API / HTTP | — |
-| Network / Infra | — |
-| Coding / Go / Next.js | 75.0 |
-| AI / LLM | — |
+| Code Review | — |
 
 ## 今週の重点（CURRENT_FOCUS.md 抜粋）
 
 ## Current cycle
 
-- Period: 2026-09-08 – 2026-09-30（今月の Horizon）
-- Primary track: Layered Architecture
-- Secondary track: Coding / Go / Next.js
-- Level: L1（基礎の確認）
-- North Star connection: 依存方向を指摘でき、小さな Go または Next が動く。AI は10月の生成AIパスポート。今月は出題しない
+- Period: 2026-09-14 – 2026-09-30（Phase 1初週〜9月末）
+- Phase: Phase 1（生成AIパスポート期）
+- North Star connection: ドリルで知識の床を作りながら、Design 15分で設計判断の練習を続ける。生成AIパスポートは10月中旬受験
 
-## Focus skills
+## Focus skills（Design側）
 
-1. **Layering:** レイヤーごとの責務と依存方向を図示し、違反を指摘する
-2. **Interface Design:** handler / usecase、またはページ / データ取得の境界を決める
+1. **Layering**: レイヤーごとの責務と依存方向を図示し、違反を指摘する
+2. **Interface Design**: handler / usecase、page / data fetch の境界を決める
 
 ## Concepts to activate
 
 - Presentation / Application / Domain / Infrastructure の責務
 - 依存性逆転が守られている状態の見分け方
-- handler に業務ルールを置かない
-- ページとデータ取得の置き場所
-- エラーを呼び出し側に返す
+- コードレビューで最初に見るべき3点（責務・命名・境界）
+- 冪等性を実装する定石
+- 論理削除と一意制約の共存パターン
 
 ## Levelの意味
 
@@ -106,6 +122,7 @@
 
 ## Formatの意味
 
+- **Recall:** Drill 専用。30秒で単答できる基礎問題。選択肢は出さない
 - **Design:** 要件を渡し、スキーマ・構成・インターフェースを設計させる
 - **Review:** ありそうな「悪い設計」を提示し、問題点の指摘と修正を求める。悪い設計は自然に見えるものにする
 - **Debug:** 症状と観測できる事実だけを渡し、切り分け手順を書かせる。原因は明かさない
@@ -113,5 +130,6 @@
 
 ---
 
-<!-- eos:context date=2026-09-13 track=DB / Table Design format=Explain level=L1
-     targets=W001,W002 -->
+<!-- eos:context date=2026-09-14 track=DB / Table Design format=Explain level=L1
+     targets=W001,W002
+     phase=1 drill=ai:3,lang:3,network:2 -->

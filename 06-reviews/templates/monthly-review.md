@@ -16,18 +16,26 @@ avg_score: 0
 | Weaknesses closed | 0 | — | 8 |
 | Weaknesses reopened | 0 | — | ≤2 |
 
-## 2. Track outcomes
+## 2. Design Track outcomes
 
 | Track | Sessions | Avg score | Level now | Level next |
 |---|---|---|---|---|
-| DB / Table Design | | | L2 | |
-| Layered Architecture | | | L2 | |
-| Web / API / HTTP | | | L2 | |
-| Network / Infra | | | L2 | |
-| Coding / Go / Next.js | | | L1 | |
-| AI / LLM | | | L1 | |
+| Layered Architecture | | | L1 | |
+| DB / Table Design | | | L1 | |
+| Web / API / HTTP | | | L1 | |
+| Code Review | | | L1 | |
 
 昇格の条件: 直近5セッションの平均が80点以上、かつそのTrackのOpen High弱点が0件。
+
+## 2b. Drill outcomes
+
+| Category | Rate | 題材の広げ方 |
+|---|---|---|
+| AI | | |
+| 言語 | | |
+| ネットワーク | | |
+
+「連続7日で80%以上」のカテゴリは題材ローテを広げる。フェーズ切替の判断は [ROADMAP.md](../../ROADMAP.md) を見る。
 
 ## 3. Core skills scorecard
 

@@ -1,7 +1,8 @@
 {
   "timezone": "Asia/Tokyo",
   "base_level": "L1",
-  "target_minutes": 30,
+  "target_minutes_design": 15,
+  "target_seconds_drill": 30,
   "generate_time_jst": "06:00",
   "session_days": [
     "Mon",
@@ -17,21 +18,26 @@
     "Wed",
     "Fri"
   ],
-  "horizon_tracks": [
-    "Layered Architecture",
-    "Coding / Go / Next.js"
-  ],
-  "track_weights": {
-    "DB / Table Design": 10,
-    "Layered Architecture": 35,
-    "Web / API / HTTP": 7,
-    "Network / Infra": 5,
-    "Coding / Go / Next.js": 35,
-    "AI / LLM": 0
+  "daily_drill": {
+    "ai": 3,
+    "coding_language": 3,
+    "network": 2
+  },
+  "coding_language_weights": {
+    "Go": 35,
+    "Next.js": 35,
+    "Python": 20,
+    "Terraform": 10
+  },
+  "design_track_weights": {
+    "Layered Architecture": 25,
+    "DB / Table Design": 25,
+    "Web / API / HTTP": 25,
+    "Code Review": 25
   },
   "format_weights": {
-    "Design": 20,
-    "Review": 35,
+    "Design": 25,
+    "Review": 30,
     "Debug": 20,
     "Explain": 25
   },
@@ -46,7 +52,7 @@
     "Review"
   ],
   "difficulty_rules": {
-    "_note": "base_level は週次レビューだけが書き換える。日次は空白期間による一時的な引き下げのみ行う。2026-09 の Horizon は Layered Architecture と Coding。戻すのは週次の自動昇格か、月次の horizon 見直し。",
+    "_note": "base_level は週次レビューだけが書き換える。日次は空白期間による一時的な引き下げのみ。",
     "level_down_if_gap_days": 3,
     "weekly_level_down_if_ontime_rate_below": 0.5,
     "weekly_level_up_if_avg5_above": 85,
@@ -64,5 +70,9 @@
       "Low": 14
     },
     "failed_retest_days": 3
+  },
+  "drill": {
+    "miss_reinject_lookback_days": 3,
+    "miss_reinject_per_category": 1
   }
 }

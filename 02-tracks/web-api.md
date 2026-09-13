@@ -1,5 +1,11 @@
 # Track: Web / API / HTTP
 
+## Role in Engineering OS
+
+**Design専用Track（15分・5軸採点）。Drill 出題対象ではない。**
+
+Design 15分問題の4Trackの1つ。weight は 25%。「API設計」の担当Track。エンドポイント設計、冪等性、エラー設計、認可、バージョニング、性能を扱う。
+
 ## Outcome
 
 要件からAPIのエンドポイント・入出力・エラー・認可・冪等性を設計し、クライアントが安全に再送できる契約を書ける。

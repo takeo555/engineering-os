@@ -1,6 +1,6 @@
-date,track,format,level,correctness,completeness,reasoning,practicality,clarity,total,time_spent_min
-2026-09-03,DB / Table Design,Design,L2,18,15,19,8,8,68,32
-2026-09-07,Layered Architecture,Review,L2,0,0,0,0,0,0,0
-2026-09-08,Layered Architecture,Design,L2,26,21,21,9,8,85,15
-2026-09-09,DB / Table Design,Review,L1,5,3,5,2,5,20,10
-2026-09-11,Coding / Go / Next.js,Review,L1,22,16,17,10,10,75,30
+date,track,format,level,correctness,completeness,reasoning,practicality,clarity,total,time_spent_min,drill_ai_correct,drill_ai_total,drill_lang_correct,drill_lang_total,drill_network_correct,drill_network_total
+2026-09-03,DB / Table Design,Design,L2,18,15,19,8,8,68,32,,,,,,
+2026-09-07,Layered Architecture,Review,L2,0,0,0,0,0,0,0,,,,,,
+2026-09-08,Layered Architecture,Design,L2,26,21,21,9,8,85,15,,,,,,
+2026-09-09,DB / Table Design,Review,L1,5,3,5,2,5,20,10,,,,,,
+2026-09-11,Coding / Go / Next.js,Review,L1,22,16,17,10,10,75,30,,,,,,

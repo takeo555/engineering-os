@@ -29,13 +29,18 @@ LABELS = {
     "clarity": "Clarity（説明の明快さ）",
 }
 SECTION_TITLES = {
+    0: "0. Drill",
     1: "1. Problem", 2: "2. My answer", 3: "3. Review", 4: "4. Score",
     5: "5. Weaknesses", 6: "6. What I learned", 7: "7. Next",
 }
+DRILL_KEYS = {"ai": "drill_ai", "lang": "drill_lang", "network": "drill_network"}
+DRILL_DEFAULT_TOTAL = {"ai": 3, "lang": 3, "network": 2}
 
 FENCE = S.FENCE
 FM = S.FM
 HEADING = re.compile(r"^##\s+(\d)\s*[.．]?\s*(.*)$", re.M)
+# 「3/3」「3 / 3」「3問中3問正解」から (correct, total) を拾う
+FRACTION = re.compile(r"(\d+)\s*/\s*(\d+)")
 
 
 # ---------------------------------------------------------------- 取り出し
@@ -84,7 +89,7 @@ SHORT_TRACK_TOKENS = {"db", "api", "http", "web", "arch", "architecture",
 
 def _looks_like_track(part):
     """弱点の本文をTrack名と取り違えないよう、厳しめに判定する。"""
-    if any(E._normalize(part) == E._normalize(t) for t in E.TRACKS):
+    if any(E._normalize(part) == E._normalize(t) for t in E.KNOWN_TRACKS):
         return True
     return part.strip().lower() in SHORT_TRACK_TOKENS
 
@@ -126,6 +131,76 @@ def parse_bank_items(values):
         if summary:
             out.append({"summary": summary, "bank": bank})
     return out[:3]
+
+
+# ---------------------------------------------------------------- drill
+
+def parse_drill_scores(fm):
+    """ヘッダの drill_ai / drill_lang / drill_network を (correct, total) で返す。
+
+    行が無い、または数値として読めないカテゴリは入れない（0件として記録しない）。
+    """
+    out = {}
+    for key, header in DRILL_KEYS.items():
+        raw = (fm.get(header) or "").strip()
+        if not raw or raw in ("-", "—", "なし"):
+            continue
+        m = FRACTION.search(raw)
+        if m:
+            correct, total = int(m.group(1)), int(m.group(2))
+        else:
+            n = re.search(r"\d+", raw)
+            if not n:
+                continue
+            correct, total = int(n.group(0)), DRILL_DEFAULT_TOTAL[key]
+        total = max(total, correct)
+        out[key] = (correct, total)
+    return out
+
+
+def parse_drill_section(body):
+    """記録ブロック本文の ## 0. Drill セクションから間違い項目を抽出する。
+
+    戻り値: [{'category','language','subtopic','theme','answer'}]
+    """
+    sections = split_sections(body)
+    sec = sections.get(0, "")
+    if not sec.strip():
+        return []
+    # 「間違えた分野:」より下だけを読む。無ければセクション全体の箇条書きを見る
+    m = re.search(r"間違えた分野\s*[:：]?", sec)
+    target = sec[m.end():] if m else sec
+    out = []
+    for line in target.splitlines():
+        st = line.strip()
+        if st.startswith("## "):
+            break
+        if re.search(r"(なし|全問正解)", st) and not st.startswith(("-", "*")):
+            continue
+        hit = E.DRILL_MISS_LINE.match(st)
+        if not hit:
+            continue
+        theme = hit.group("theme").strip()
+        answer = ""
+        am = re.search(r"[（(]\s*正解\s*[:：]\s*(.+?)\s*[)）]\s*$", theme)
+        if am:
+            answer = am.group(1).strip()
+            theme = theme[:am.start()].strip()
+        cat_raw = hit.group("cat").strip()
+        lang = E.LANG_IN_CAT.search(cat_raw)
+        out.append({
+            "category": E.normalize_drill_category(cat_raw, cat_raw),
+            "language": lang.group(1).strip() if lang else "",
+            "subtopic": hit.group("sub").strip(),
+            "theme": theme,
+            "answer": answer,
+        })
+    return out
+
+
+def append_to_drill_misses(date_str, misses):
+    """drill-misses.md にその日の間違いを追記する。戻り値: 書き込んだ件数"""
+    return E.append_drill_misses(date_str, misses)
 
 
 # ---------------------------------------------------------------- 組み立て
@@ -236,6 +311,11 @@ def handle_session(fm, body, raw, cfg):
     sections = split_sections(body)
     score_table, total, axis_values, score_note_extra = build_score_table(fm, body)
 
+    # 0) Drill（Design より先に処理する。弱点登録とは独立）
+    drill_scores = parse_drill_scores(fm)
+    drill_misses = parse_drill_section(body)
+    drill_written = append_to_drill_misses(d, drill_misses)
+
     # 1) 再テストの合否（先に反映する。passed は Closed へ）
     closed, failed, unknown = E.apply_retests(
         parse_retests(fm.get("retest") or fm.get("retests")), d, cfg)
@@ -272,6 +352,20 @@ def handle_session(fm, body, raw, cfg):
         + "\n- 再テスト予定: "
         + (", ".join(f"{w['id']} → {w['retest_on']}" for w in added + bumped + failed) or "—"))
 
+    if 0 not in sections and (drill_scores or drill_misses):
+        # ヘッダにだけ書かれていた場合でも、保存側には本文を残す
+        rate_line = "正答率: " + ", ".join(
+            f"{label} {drill_scores[k][0]}/{drill_scores[k][1]}"
+            for k, label in (("ai", "AI"), ("lang", "言語"), ("network", "ネットワーク"))
+            if k in drill_scores) or "正答率: —"
+        miss_lines = "\n".join(
+            f"- {m['category']}"
+            + (f"({m['language']})" if m["language"] else "")
+            + f" × {m['subtopic']}: {m['theme']}"
+            + (f"（正解: {m['answer']}）" if m["answer"] else "")
+            for m in drill_misses) or "- なし"
+        sections[0] = f"{rate_line}\n\n間違えた分野:\n{miss_lines}"
+
     sections[4] = score_table
     sections[5] = ("### 再テスト結果\n\n" + ("\n".join(retest_lines) or "- 今日は再テスト対象なし")
                    + "\n\n### 今日の弱点\n\n" + "\n".join(weak_lines))
@@ -286,6 +380,7 @@ def handle_session(fm, body, raw, cfg):
         f"weakness_targets: [{', '.join(w['id'] for w in closed + failed)}]",
         f"time_spent_min: {minutes}",
         f"score_total: {total}",
+        *[f"drill_{k}: {v[0]}/{v[1]}" for k, v in drill_scores.items()],
         "status: done",
         "---",
         "",
@@ -293,6 +388,8 @@ def handle_session(fm, body, raw, cfg):
         "",
     ]
     for n in sorted(SECTION_TITLES):
+        if n == 0 and not sections.get(0):
+            continue  # ドリル未実施の日に空の見出しを作らない
         out.append(f"## {SECTION_TITLES[n]}")
         out.append("")
         out.append(sections.get(n, "（記載なし）"))
@@ -303,16 +400,25 @@ def handle_session(fm, body, raw, cfg):
     E.write_text(path, "\n".join(out).rstrip() + "\n")
 
     replaced = any(r["date"] == d for r in E.read_scores())
-    E.upsert_score({
+    score_row = {
         "date": d, "track": track, "format": fmt, "level": level,
         **axis_values, "total": total, "time_spent_min": minutes,
-    })
+    }
+    for key, (correct, tot) in drill_scores.items():
+        score_row[f"drill_{key}_correct"] = correct
+        score_row[f"drill_{key}_total"] = tot
+    E.upsert_score(score_row)
     score_note = "（同じ日付の記録を上書きした）" if replaced else ""
     if score_note_extra:
         score_note += f"（{score_note_extra}）"
 
     warnings = E.wip_warnings(cfg)
     status = E.update_status(cfg)
+
+    drill_summary = ", ".join(
+        f"{label} {drill_scores[k][0]}/{drill_scores[k][1]}"
+        for k, label in (("ai", "AI"), ("lang", "言語"), ("network", "ネットワーク"))
+        if k in drill_scores)
 
     comment = "\n".join([
         f"### 記録しました — {d}",
@@ -326,6 +432,8 @@ def handle_session(fm, body, raw, cfg):
         f"| 新規の弱点 | {', '.join(w['id'] for w in added) or '—'} |",
         f"| 再発（優先度+1） | {', '.join(w['id'] for w in bumped) or '—'} |",
         f"| Bank昇格候補 | {len(banks)}件 |",
+        f"| Drill 正答率 | {drill_summary or '—（drill ヘッダなし）'} |",
+        f"| Drill 間違いの記録 | {drill_written}件を drill-misses.md に追記 |",
         f"| 連続実施 | {status['streak']}日 |",
         "",
         f"記録: [`{os.path.relpath(path, E.ROOT)}`]({os.path.relpath(path, E.ROOT)})",
@@ -346,6 +454,19 @@ def handle_session(fm, body, raw, cfg):
     if not added and not bumped and not closed and not failed:
         alerts.append("**弱点が1件も登録されていません。** ヘッダに `weakness_1: High | 〜できない` "
                       "の行がありません。これが続くと再テストが回らず、ただの問題演習になります。")
+    missing_drill = [DRILL_KEYS[k] for k in ("ai", "lang", "network")
+                     if k not in drill_scores]
+    if missing_drill:
+        alerts.append("**Drill の正答率が記録されていません**（"
+                      + ", ".join(f"`{k}:`" for k in missing_drill)
+                      + "）。Design 分は取り込みましたが、ドリルの傾向が追えません。"
+                      "試験官に `drill_ai: 3/3` の形式で書かせてください。")
+    elif not drill_misses and not any(
+            drill_scores[k][0] < drill_scores[k][1] for k in drill_scores):
+        pass  # 全問正解。`## 0. Drill` に間違いが無いのは正しい
+    elif not drill_misses:
+        alerts.append("**Drill に間違いがあるのに `## 0. Drill` の「間違えた分野」が空です。** "
+                      "翌日の類題が出せません。")
     if alerts:
         comment += ("\n\n---\n\n⚠️ **記録ブロックの不備**\n\n"
                     + "\n".join(f"- {a}" for a in alerts)
@@ -357,6 +478,8 @@ def handle_session(fm, body, raw, cfg):
         "closed": [w["id"] for w in closed], "failed": [w["id"] for w in failed],
         "added": [w["id"] for w in added], "bumped": [w["id"] for w in bumped],
         "unknown_retest_ids": unknown, "overwritten": overwritten,
+        "drill_scores": {k: list(v) for k, v in drill_scores.items()},
+        "drill_misses_written": drill_written,
         "warnings": warnings, "comment": comment,
         "commit_message": f"feat(session): record {d} {track} ({total}/100)",
     }
@@ -457,7 +580,8 @@ def main():
                     "### 取り込めませんでした\n\n"
                     f"理由: {result.get('reason')}\n\n"
                     "原文は `04-sessions/inbox/` に保存しました。ヘッダの `track:` を"
-                    "6Trackのいずれかにして、このIssueを編集し直してください。")
+                    "Design 4Track のいずれか（Layered Architecture / DB / Table Design / "
+                    "Web / API / HTTP / Code Review）にして、このIssueを編集し直してください。")
 
     print(json.dumps(result, ensure_ascii=False))
     if out_path:

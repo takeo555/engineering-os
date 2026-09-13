@@ -4,49 +4,62 @@
 
 ## Current cycle
 
-- Period: 2026-09-08 – 2026-09-30（今月の Horizon）
-- Primary track: Layered Architecture
-- Secondary track: Coding / Go / Next.js
+- Period: 2026-09-14 – 2026-09-30（Phase 1初週〜9月末）
+- Phase: Phase 1（生成AIパスポート期）
+- North Star connection: ドリルで知識の床を作りながら、Design 15分で設計判断の練習を続ける。生成AIパスポートは10月中旬受験
+
+## Study structure
+
+日次は Drill 4分 + Design 15分 の二層構造。
+
+### Drill（毎日8問・30秒・単答）
+- AI 3問: 生成AIパスポート範囲（GUGAシラバス）
+- コーディング言語 3問: Go 35% / Next.js 35% / Python 20% / Terraform 10%
+- ネットワーク 2問: 『ネットワークはなぜつながるのか』の読了章まで
+
+### Design（毎日1問・15分・5軸採点）
+- Layered Architecture 25% / DB / Table Design 25% / Web / API / HTTP 25% / Code Review 25%
 - Level: L1（基礎の確認）
-- North Star connection: 依存方向を指摘でき、小さな Go または Next が動く。AI は10月の生成AIパスポート。今月は出題しない
 
-## Focus skills
+## Focus skills（Design側）
 
-1. **Layering:** レイヤーごとの責務と依存方向を図示し、違反を指摘する
-2. **Interface Design:** handler / usecase、またはページ / データ取得の境界を決める
+1. **Layering**: レイヤーごとの責務と依存方向を図示し、違反を指摘する
+2. **Interface Design**: handler / usecase、page / data fetch の境界を決める
 
-## This week's plan
+## This week's plan（Design側の狙い）
 
-| Day | Track | Format | Target |
+| Day | Design Track | Format | Target |
 |---|---|---|---|
-| Tue | Layered Architecture | Review | 与えられた設計の依存方向違反を指摘する（W005 / W006） |
-| Wed | Coding / Go / Next.js | Explain | 小さな機能の置き場所を後輩に3分で説明させる |
-| Thu | Layered Architecture | Review | Domain に置くべきルールを切り出せるか（W007） |
-| Fri | Coding / Go / Next.js | Design | Go または Next で最小の動く骨格を書く |
-| Sat | Layered Architecture | Explain | 依存性逆転が必要な箇所を状況付きで説明する |
-| Sun | Coding / Go / Next.js | Review | 与えられたコードの責務混在を指摘して分ける |
+| Mon | Layered Architecture | Review | 与えられた設計の依存方向違反を指摘（W005 / W006） |
+| Tue | DB / Table Design | Explain | 論理削除と一意制約の衝突を後輩に3分で説明（W001） |
+| Wed | Web / API / HTTP | Design | 冪等キーの保存期間と衝突時の挙動を定義 |
+| Thu | Code Review | Review | 与えられたGoコードの責務混在を指摘して分ける |
+| Fri | Layered Architecture | Design | 小さなユースケースをレイヤー分割して図示 |
+| Sat | DB / Table Design | Design | 複合インデックスの列順を根拠付きで設計 |
+| Sun | Code Review | Explain | コードレビューで見るべき観点を5つ挙げて説明 |
 
-用語の穴埋めは出さない。期限の来た弱点は Horizon 外でも出題される。
+## Weaknesses in retest queue（Designのみ）
 
-## Weaknesses in retest queue
-
+- W001 — 論理削除と一意制約の衝突に気づけない（retest: 2026-09-12・期限到来）
+- W002 — 複合インデックスの列順を決める基準が言えない（retest: 2026-09-10）
 - W005 — HandlerとDomainの責務境界を正しく分離できない（retest: 2026-09-12）
 - W006 — 具象Repositoryへの依存を依存性逆転として説明できない（retest: 2026-09-12）
-- W001 — 論理削除と一意制約の衝突に気づけない（retest: 2026-09-08）※期限到来。出たら片付ける
-- W002 — 複合インデックスの列順を決める基準が言えない（retest: 2026-09-10）
+
+## Drill miss recent（直近3日、翌日類題投入用）
+
+（`05-failures/drill-misses.md` の直近3日分をここに転記する運用にする。build_context.py が自動で埋める）
 
 ## Concepts to activate
 
 - Presentation / Application / Domain / Infrastructure の責務
 - 依存性逆転が守られている状態の見分け方
-- handler に業務ルールを置かない
-- ページとデータ取得の置き場所
-- エラーを呼び出し側に返す
+- コードレビューで最初に見るべき3点（責務・命名・境界）
+- 冪等性を実装する定石
+- 論理削除と一意制約の共存パターン
 
-## Exit criteria
+## Exit criteria（今週）
 
-- Layered Architecture のセッションを2回以上
-- Coding のセッションを2回以上（うち1回はコードを書く）
+- Drill を7日連続で記録
+- Design を4回以上完了（うち1回はコードを書く）
 - W005 または W006 を自分の言葉で30秒
-- Foundation を1回以上（Go または Next を動かす）
 - Weekly Review を完了する

@@ -17,6 +17,8 @@
 - 弱点は `weakness_1:` `weakness_2:` と番号を振る。最大5件
 - 「なし」の項目は行ごと省いてよい
 - `## 2. My answer` はユーザー回答の原文。改変・要約・省略しない
+- **Drill ヘッダは必須。** `drill_ai:` `drill_lang:` `drill_network:` `drill_misses:` の4行はドリルを実施した日は必ず書く。全問正解でも `drill_ai: 3/3` のように書く
+- Drill 本文の `## 0. Drill` セクションは必須
 
 ## 日次セッション
 
@@ -24,23 +26,35 @@
 ```
 ---
 type: session
-date: 2026-09-07
+date: 2026-09-14
 track: DB / Table Design
 format: Design
-level: L2
-title: 予約システムの重複予約を防ぐテーブル設計
-time_spent_min: 32
+level: L1
+title: 貸出管理の論理削除設計
+time_spent_min: 14
 correctness: 18
 completeness: 15
 reasoning: 19
 practicality: 8
 clarity: 8
+drill_ai: 3/3
+drill_lang: 2/3
+drill_network: 1/2
+drill_misses: 言語(Go):goroutine, ネットワーク:DNS
 retest: W001=passed, W002=failed(同じ誤りを繰り返した)
 weakness_1: High | DB / Table Design | 論理削除と一意制約の衝突に気づけない
 weakness_2: Med | DB / Table Design | 時間帯の重なり判定を構造で表現できない
 bank_1: pattern | 排他制約で時間帯の重複を防ぐ
 next_hint: 次はロックの粒度を問う
 ---
+
+## 0. Drill
+
+正答率: AI 3/3, 言語 2/3, ネットワーク 1/2
+
+間違えた分野:
+- 言語(Go) × goroutine: leaked goroutine の検出方法（正解: `context.WithCancel` などでキャンセル可能にする）
+- ネットワーク × DNS: DNSキャッシュのTTL挙動（正解: TTLの残り時間まで再解決しない）
 
 ## 1. Problem
 
@@ -96,15 +110,19 @@ next_hint: 次はロックの粒度を問う
 |---|---|---|
 | `type` | ✓ | `session` 固定 |
 | `date` | ✓ | CONTEXT.mdの日付（Asia/Tokyo） |
-| `track` | ✓ | 6Trackのいずれか。`DB` `Go` `AI` のような略称でも読める |
+| `track` | ✓ | Design 4Track のいずれか（`Layered Architecture` `DB / Table Design` `Web / API / HTTP` `Code Review`）。`DB` `API` のような略称でも読める |
 | `format` / `level` | ✓ | SESSION（出題時のCONTEXT）をそのまま。採点時に読み直さない |
 | `title` | ✓ | 20〜40字。体言止め。日付は入れない |
-| `time_spent_min` | ✓ | ユーザーが明示した実測時間（整数）。問題の制約時間（例: 30分以内）は写さない。不明なら `0`。推測しない |
+| `time_spent_min` | ✓ | Design にかかった実測時間（整数）。問題の制約時間（例: 15分以内）や Drill の4分は写さない。不明なら `0`。推測しない |
 | 5軸の点数 | ✓ | レビュー時に確定した `correctness` `completeness` `reasoning` `practicality` `clarity`。再計算しない |
 | `retest` | 狙う弱点がある日は✓ | `W001=passed, W002=failed(理由)` |
 | `weakness_1` | ✓ | `優先度 \| Track \| 〜できない`。「知識不足」のような抽象語は禁止。ヒントで補った重要な弱点も含める |
 | `bank_N` | | `pattern\|pitfall\|tradeoff\|term \| 一言` |
 | `next_hint` | | 翌日の出題に反映してほしい点。ヒント後到達の再テストも含めてよい |
+| `drill_ai` | ✓ | AI ドリルの正答数 `N/3` |
+| `drill_lang` | ✓ | 言語ドリルの正答数 `N/3` |
+| `drill_network` | ✓ | ネットワーク ドリルの正答数 `N/2` |
+| `drill_misses` | ✓ | 間違えた分野の要約。全問正解なら `なし` |
 
 ## 週次レビュー
 
@@ -114,6 +132,9 @@ next_hint: 次はロックの粒度を問う
 type: weekly
 week: 2026-W37
 base_level: L2
+drill_ai_avg: 78%
+drill_lang_avg: 65%
+drill_network_avg: 50%
 ---
 
 ## 1. 今週の事実

@@ -17,19 +17,30 @@ avg_score: 0
 - Average score: 0
 - 30分内完了率: 0%
 
-## 2. Track performance
+## 2. Design Track performance
 
 | Track | Sessions | Avg score | Trend |
 |---|---|---|---|
-| DB / Table Design | 0 | — | — |
 | Layered Architecture | 0 | — | — |
+| DB / Table Design | 0 | — | — |
 | Web / API / HTTP | 0 | — | — |
-| Network / Infra | 0 | — | — |
-| Coding / Go / Next.js | 0 | — | — |
-| AI / LLM | 0 | — | — |
+| Code Review | 0 | — | — |
 
 - 最も低いTrack:
 - 翌週の比重調整:
+
+## 2b. Drill 正答率
+
+| Category | Correct / Total | Rate |
+|---|---|---|
+| AI | / | — |
+| 言語 | / | — |
+| ネットワーク | / | — |
+
+- 最も低いカテゴリ:
+- 翌週の題材調整:
+
+Drill は5軸採点の対象外。正答率の低いカテゴリを Design Track に格上げしない。
 
 ## 3. Weaknesses
 

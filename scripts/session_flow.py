@@ -15,12 +15,22 @@ REQUIRED_CONTEXT_FIELDS = [
     "answer_environment", "expected_time",
     "is_session_day", "record_status",
     "target_weaknesses", "recent_history",
+    "drill_plan", "phase",
 ]
 
 REQUIRED_RECORD_KEYS = [
     "date", "track", "format", "level", "title", "time_spent_min",
     *AXES, "weakness_1",
 ]
+
+# Drill のヘッダは「必須だが、欠けても記録全体は弾かない」。
+# 試験官が1行書き忘れただけで、その日の Design 採点・レビュー・弱点まで失うほうが損失が大きい。
+# 欠落は parse_record.py の警告としてIssueコメントに出す。
+DRILL_RECORD_KEYS = ["drill_ai", "drill_lang", "drill_network", "drill_misses"]
+
+# 日次の状態遷移。Drill を飛ばして design_out へ進めない
+STATES = ["idle", "drill_out", "drill_answered", "design_out", "design_answered",
+          "reviewed", "recorded", "posted"]
 
 # ``` の情報文字列（text / yaml / id="..."）を無視して中身だけ取る
 FENCE = re.compile(r"```[^\n]*\n(.*?)```", re.S)
@@ -86,13 +96,15 @@ def parse_context(text):
     ctx = {k: "" for k in REQUIRED_CONTEXT_FIELDS}
     ctx["target_weaknesses"] = []
     ctx["recent_history"] = []
+    ctx["drill_plan"] = []
     if not text or not text.strip():
         return ctx
 
     in_assign = False
     for line in text.splitlines():
         if line.startswith("## "):
-            in_assign = "今日の割り当て" in line
+            # 見出しは「今日の Design 割り当て」。Drill 題材枠の表は読まない
+            in_assign = "割り当て" in line and "Drill" not in line
             continue
         if not in_assign:
             continue
@@ -119,6 +131,8 @@ def parse_context(text):
     ctx["target_weaknesses"] = _parse_target_weaknesses(weak_sec)
     hist_sec = _section(text, "直近の出題履歴")
     ctx["recent_history"] = _parse_history(hist_sec)
+    ctx["drill_plan"] = _parse_drill_plan(_section(text, "Drill 題材枠"))
+    ctx["phase"] = _parse_phase(_section(text, "今日のフェーズ"))
     ctx["_raw"] = text
     return ctx
 
@@ -144,6 +158,37 @@ def _parse_target_weaknesses(sec):
         if wid not in ids:
             ids.append(wid)
     return ids
+
+
+DRILL_ROW_LABELS = {"ai": "AI", "言語": "Coding Language", "ネットワーク": "Network"}
+
+
+def _parse_drill_plan(sec):
+    """「今日の Drill 題材枠」の表を [{'category','count','slots','miss'}] で返す。"""
+    rows = []
+    for line in sec.splitlines():
+        st = line.strip()
+        if not st.startswith("|"):
+            continue
+        cells = [c.strip() for c in st.strip("|").split("|")]
+        if len(cells) < 4:
+            continue
+        if cells[0] in ("カテゴリ", "---") or set(cells[0]) <= {"-", ":"}:
+            continue
+        category = DRILL_ROW_LABELS.get(cells[0].lower(),
+                                        DRILL_ROW_LABELS.get(cells[0], cells[0]))
+        rows.append({
+            "category": category,
+            "count": E.parse_int(cells[1], 0),
+            "slots": [x.strip() for x in cells[2].split("；") if x.strip()],
+            "miss": not cells[3].startswith("なし"),
+        })
+    return rows
+
+
+def _parse_phase(sec):
+    m = re.search(r"Phase\s*(\d+)", sec or "")
+    return m.group(0) if m else ""
 
 
 def _parse_history(sec):
@@ -184,6 +229,10 @@ def context_errors(ctx):
     for key, label in labels.items():
         if not (ctx.get(key) or "").strip():
             errors.append(f"{label} が取得できない")
+    if not ctx.get("drill_plan"):
+        errors.append("drill 題材枠（AI / 言語 / ネットワークの表）が取得できない")
+    if not (ctx.get("phase") or "").strip():
+        errors.append("phase（今日のフェーズ）が取得できない")
     if "target_weaknesses" not in ctx:
         errors.append("today's target weakness が取得できない")
     if "recent_history" not in ctx:
@@ -209,6 +258,76 @@ def should_generate_question(ctx):
     return True, ""
 
 
+# ---------------------------------------------------------------- 状態遷移
+
+# Drill → Design の順を固定する。前の状態からしか進めない
+_NEXT_STATE = {
+    "idle": "drill_out",
+    "drill_out": "drill_answered",
+    "drill_answered": "design_out",
+    "design_out": "design_answered",
+    "design_answered": "reviewed",
+    "reviewed": "recorded",
+    "recorded": "posted",
+    "posted": None,
+}
+
+
+def next_state(state):
+    """その状態の次に来るべき状態。終端なら None。"""
+    return _NEXT_STATE.get(state)
+
+
+def can_advance(state, target):
+    """state から target へ進んでよいか。不可なら (False, reason)。"""
+    if state not in STATES:
+        return False, f"未知の状態: {state}"
+    if target not in STATES:
+        return False, f"未知の状態: {target}"
+    expected = next_state(state)
+    if target == expected:
+        return True, ""
+    if STATES.index(target) <= STATES.index(state):
+        return False, f"{state} から {target} へは戻れない"
+    skipped = STATES[STATES.index(state) + 1:STATES.index(target)]
+    if "drill_out" in skipped or "drill_answered" in skipped:
+        return False, ("Drill を飛ばして Design に進めない"
+                       f"（飛ばした: {', '.join(skipped)}）")
+    return False, f"{state} の次は {expected}。{target} へは飛べない"
+
+
+def drill_is_complete(drill_plan, drill_scores):
+    """CONTEXT の題材枠どおりにドリルを消化したか。不足があれば理由のリスト。"""
+    errors = []
+    by_key = {"AI": "ai", "Coding Language": "lang", "Network": "network"}
+    for row in drill_plan or []:
+        key = by_key.get(row["category"])
+        if key is None:
+            continue
+        got = (drill_scores or {}).get(key)
+        if not got:
+            errors.append(f"{row['category']} の正答率が無い")
+            continue
+        correct, total = got
+        if row["count"] and total != row["count"]:
+            errors.append(
+                f"{row['category']} の出題数が CONTEXT と違う"
+                f"（CONTEXT {row['count']}問 / 記録 {total}問）")
+        if correct > total:
+            errors.append(f"{row['category']} の正答数が出題数を超えている")
+    return errors
+
+
+def check_design_can_start(state, drill_plan, drill_scores):
+    """Design 出題に進んでよいか。Drill が未消化なら (False, reason)。"""
+    if state not in ("drill_answered",):
+        return False, f"Drill が終わっていない（現在: {state}）"
+    errors = drill_is_complete(drill_plan, drill_scores)
+    if errors:
+        return False, "Drill が CONTEXT どおりに消化されていない: " + " / ".join(errors)
+    return True, ""
+
+
 def session_from_context(ctx, title="", problem=""):
     """出題時点で凍結するセッション。採点・記録はこれを正本にする。"""
     return {
@@ -221,6 +340,10 @@ def session_from_context(ctx, title="", problem=""):
         "target_weaknesses": list(ctx.get("target_weaknesses") or []),
         "answer_environment": ctx.get("answer_environment", ""),
         "expected_time": ctx.get("expected_time", ""),
+        "drill_plan": list(ctx.get("drill_plan") or []),
+        "drill_scores": {},
+        "drill_misses": [],
+        "phase": ctx.get("phase", ""),
         "context": {
             "date": ctx.get("date", ""),
             "track": ctx.get("track", ""),
@@ -229,6 +352,8 @@ def session_from_context(ctx, title="", problem=""):
             "target_weaknesses": list(ctx.get("target_weaknesses") or []),
             "recent_history": list(ctx.get("recent_history") or []),
             "record_status": ctx.get("record_status", ""),
+            "drill_plan": list(ctx.get("drill_plan") or []),
+            "phase": ctx.get("phase", ""),
         },
     }
 
@@ -255,8 +380,8 @@ def check_problem_matches_session(session, problem):
     gaps = problem.get("embedded_requirement_gaps")
     if gaps is not None and gaps != 1:
         errors.append("要件の意図的な矛盾/不足が1つではない")
-    if problem.get("fits_30min") is False:
-        errors.append("30分で回答可能な分量ではない")
+    if problem.get("fits_15min") is False:
+        errors.append("15分で回答可能な分量ではない")
     return errors
 
 

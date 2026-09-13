@@ -1,16 +1,26 @@
 ---
 date: YYYY-MM-DD
-track: DB / Table Design | Layered Architecture | Web / API / HTTP | Network / Infra | Coding / Go / Next.js | AI / LLM
+track: Layered Architecture | DB / Table Design | Web / API / HTTP | Code Review
 format: Design | Review | Debug | Explain
 level: L1 | L2 | L3 | L4
 focus_skills: []
 weakness_targets: []
 time_spent_min: 0
 score_total: 0
+drill_ai: 0/3
+drill_lang: 0/3
+drill_network: 0/2
 status: open
 ---
 
 # YYYY-MM-DD — <問題タイトル>
+
+## 0. Drill
+
+正答率: AI N/3, 言語 N/3, ネットワーク N/2
+
+間違えた分野:
+- <カテゴリ> × <分野>: <問題テーマ>（正解: <正答>）
 
 ## 1. Problem
 
@@ -64,6 +74,8 @@ status: open
 | Practicality（実務妥当性） | 10 | /10 | |
 | Clarity（説明の明快さ） | 10 | /10 | |
 | **Total** | **100** | **/100** | |
+
+※Drill は正答率のみ、5軸採点の対象外。
 
 ## 5. Weaknesses
 

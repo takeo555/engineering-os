@@ -11,7 +11,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def sample_context(*, track="DB / Table Design", fmt="Review", level="L1",
-                   weakness="W001", saved=False, history=True):
+                   weakness="W001", saved=False, history=True, drill=True):
     record = "保存済み。2問目は出さない" if saved else "未保存"
     weak = (f"- `{weakness}` [High] 論理削除と一意制約の衝突に気づけない（期限 2026-09-08）"
             if weakness else "- なし（今日は新しい題材でよい）")
@@ -22,9 +22,22 @@ def sample_context(*, track="DB / Table Design", fmt="Review", level="L1",
 |---|---|---|---|---|
 | — | — | — | — | 履歴なし（初回） |
 """
+    drill_sec = """## 今日のフェーズ
+
+Phase 1（生成AIパスポート期・2026-09-14〜2026-10-19）
+
+## 今日の Drill 題材枠
+
+| カテゴリ | 問題数 | 分野の枠 | 直近のmiss類題 |
+|---|---|---|---|
+| AI | 3 | リスク；法制度；業務利用 | なし |
+| 言語 | 3 | Go / interface；Next.js / Server Actions；Python / generator | あり: Go/goroutine（2026-09-07 miss） |
+| ネットワーク | 2 | 3章 ハブ・スイッチ・ルータ；4章 アクセス回線とプロバイダ | なし |
+""" if drill else ""
     return f"""# CONTEXT — 2026-09-08（Tue）
 
-## 今日の割り当て（この通りに出題すること）
+{drill_sec}
+## 今日の Design 割り当て（この通りに出題すること）
 
 | 項目 | 値 |
 |---|---|
@@ -33,7 +46,7 @@ def sample_context(*, track="DB / Table Design", fmt="Review", level="L1",
 | Format | **{fmt}** |
 | Level | **{level}** |
 | 回答環境 | キーボード想定 |
-| 想定所要時間 | 30分 |
+| 想定所要時間 | 15分 |
 | 今日はセッション日か | はい |
 | 今日の記録 | {record} |
 
@@ -61,10 +74,22 @@ VALID_FM = {
     "practicality": "5",
     "clarity": "6",
     "weakness_1": "High | DB / Table Design | 論理削除と一意制約の衝突に気づけない",
+    "drill_ai": "3/3",
+    "drill_lang": "2/3",
+    "drill_network": "1/2",
+    "drill_misses": "言語(Go):goroutine, ネットワーク:DNS",
     "next_hint": "次は制約の衝突を問う",
 }
 
 RECORD_BODY = """
+## 0. Drill
+
+正答率: AI 3/3, 言語 2/3, ネットワーク 1/2
+
+間違えた分野:
+- 言語(Go) × goroutine: leaked goroutine の検出方法（正解: context.WithCancel でキャンセル可能にする）
+- ネットワーク × DNS: DNSキャッシュのTTL挙動（正解: TTLの残り時間まで再解決しない）
+
 ## 1. Problem
 
 与えられたスキーマをレビューせよ。
@@ -106,7 +131,7 @@ class TestARejectWrongAssignment(unittest.TestCase):
             "surfaces_target_weakness": True,
             "duplicates_recent_topic": False,
             "embedded_requirement_gaps": 1,
-            "fits_30min": True,
+            "fits_15min": True,
         })
         self.assertTrue(errors)
         self.assertTrue(any("track" in e for e in errors))
@@ -207,9 +232,100 @@ class TestContextParse(unittest.TestCase):
         self.assertEqual(ctx["format"], "Review")
         self.assertEqual(ctx["level"], "L1")
         self.assertEqual(ctx["answer_environment"], "キーボード想定")
-        self.assertEqual(ctx["expected_time"], "30分")
+        self.assertEqual(ctx["expected_time"], "15分")
         self.assertEqual(ctx["target_weaknesses"], ["W001"])
         self.assertTrue(ctx["recent_history"])
+
+
+class TestDrillPlanInContext(unittest.TestCase):
+    def test_drill_plan_is_parsed(self):
+        ctx = S.parse_context(sample_context())
+        plan = {r["category"]: r for r in ctx["drill_plan"]}
+        self.assertEqual(sorted(plan), ["AI", "Coding Language", "Network"])
+        self.assertEqual(plan["AI"]["count"], 3)
+        self.assertEqual(plan["Network"]["count"], 2)
+        self.assertEqual(len(plan["Coding Language"]["slots"]), 3)
+        self.assertTrue(plan["Coding Language"]["miss"])
+        self.assertFalse(plan["AI"]["miss"])
+        self.assertEqual(ctx["phase"], "Phase 1")
+
+    def test_missing_drill_plan_blocks_question(self):
+        ctx = S.parse_context(sample_context(drill=False))
+        ok, reason = S.should_generate_question(ctx)
+        self.assertFalse(ok)
+        self.assertIn("drill", reason)
+
+
+class TestDrillBeforeDesign(unittest.TestCase):
+    def test_cannot_skip_drill(self):
+        ok, reason = S.can_advance("idle", "design_out")
+        self.assertFalse(ok)
+        self.assertIn("Drill を飛ばして", reason)
+
+    def test_normal_order_advances(self):
+        state = "idle"
+        for expected in ["drill_out", "drill_answered", "design_out",
+                         "design_answered", "reviewed", "recorded", "posted"]:
+            ok, reason = S.can_advance(state, expected)
+            self.assertTrue(ok, reason)
+            state = expected
+        self.assertIsNone(S.next_state("posted"))
+
+    def test_design_blocked_until_all_categories_answered(self):
+        ctx = S.parse_context(sample_context())
+        ok, reason = S.check_design_can_start(
+            "drill_answered", ctx["drill_plan"], {"ai": (3, 3)})
+        self.assertFalse(ok)
+        self.assertIn("Coding Language", reason)
+
+        ok, reason = S.check_design_can_start(
+            "drill_answered", ctx["drill_plan"],
+            {"ai": (3, 3), "lang": (2, 3), "network": (1, 2)})
+        self.assertTrue(ok, reason)
+
+    def test_question_count_mismatch_is_rejected(self):
+        ctx = S.parse_context(sample_context())
+        ok, reason = S.check_design_can_start(
+            "drill_answered", ctx["drill_plan"],
+            {"ai": (2, 2), "lang": (2, 3), "network": (1, 2)})
+        self.assertFalse(ok)
+        self.assertIn("出題数", reason)
+
+
+class TestDrillRecordParsing(unittest.TestCase):
+    def test_headers_and_section_are_parsed(self):
+        import parse_record as P
+        fm, body = S.extract_record(fence("text"))
+        scores = P.parse_drill_scores(fm)
+        self.assertEqual(scores["ai"], (3, 3))
+        self.assertEqual(scores["lang"], (2, 3))
+        self.assertEqual(scores["network"], (1, 2))
+        misses = P.parse_drill_section(body)
+        self.assertEqual(len(misses), 2)
+        self.assertEqual(misses[0]["category"], "Coding Language")
+        self.assertEqual(misses[0]["language"], "Go")
+        self.assertEqual(misses[0]["subtopic"], "goroutine")
+        self.assertIn("context.WithCancel", misses[0]["answer"])
+        self.assertEqual(misses[1]["category"], "Network")
+
+    def test_missing_drill_headers_do_not_reject_the_record(self):
+        fm = dict(VALID_FM)
+        for k in ("drill_ai", "drill_lang", "drill_network", "drill_misses"):
+            del fm[k]
+        self.assertEqual(S.validate_session_record(fm), [])
+
+
+class TestPhaseFromRoadmap(unittest.TestCase):
+    def test_phase_boundaries(self):
+        import eoslib as E
+        from datetime import date
+        self.assertEqual(E.current_phase(date(2026, 9, 14))["phase"], 1)
+        self.assertEqual(E.current_phase(date(2026, 10, 19))["phase"], 1)
+        self.assertEqual(E.current_phase(date(2026, 10, 20))["phase"], 2)
+        self.assertEqual(E.current_phase(date(2027, 2, 1))["phase"], 3)
+        far = E.current_phase(date(2028, 1, 1))
+        self.assertEqual(far["phase"], 3)
+        self.assertFalse(far["in_range"])
 
 
 if __name__ == "__main__":
