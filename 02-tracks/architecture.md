@@ -1,5 +1,13 @@
 # Track: Layered Architecture
 
+## Role in Engineering OS
+
+**Design専用Track（15分・5軸採点）。Drill 出題対象ではない。**
+
+Design 15分問題の4Track の1つ。weight は 25%。ローテーションで週2回程度出題される。
+
+言語（Go / Next.js等）を材料に使うが、言語文法の細かい問題は Coding Language ドリルの担当。ここは「責務・依存方向・境界」の判断力を鍛える。
+
 ## Outcome
 
 ユースケースを渡されたら、レイヤー分割・依存方向・各層の責務を図と文章で示し、なぜその境界にしたかを説明できる。

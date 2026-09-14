@@ -22,7 +22,7 @@ def decide_base_level(cfg, rows, period_rows):
     base = cfg.get("base_level", "L2")
     rules = cfg.get("difficulty_rules", {})
     min_sessions = rules.get("weekly_min_sessions_to_adjust", 3)
-    target = cfg.get("target_minutes", 30)
+    target = E.design_target_minutes(cfg)
 
     if len(period_rows) < min_sessions:
         return base, (f"今週のセッションが{len(period_rows)}回（{min_sessions}回未満）のため"
@@ -78,7 +78,7 @@ def main():
         level_reason = "難易度を動かすのは週次だけ。月次では変更しない"
     closed_in_period = [w for w in all_weak if w["status"] == "Closed"]
 
-    target = cfg.get("target_minutes", 30)
+    target = E.design_target_minutes(cfg)
     avg = (sum(r["total"] for r in period_rows) / len(period_rows)) if period_rows else None
     ontime = (sum(1 for r in period_rows
                   if r["time_spent_min"] and r["time_spent_min"] <= target)
@@ -95,7 +95,8 @@ def main():
 
     track_lines = "\n".join(
         f"| {t} | {f'{sum(per_track[t])/len(per_track[t]):.1f}' if per_track.get(t) else '—'} "
-        f"| {len(per_track.get(t, []))} |" for t in E.TRACKS)
+        f"| {len(per_track.get(t, []))} |"
+        for t in list(E.DESIGN_TRACKS) + [t for t in E.LEGACY_TRACKS if per_track.get(t)])
 
     weak_lines = "\n".join(
         f"| {w['id']} | {w['priority']} | {w['weakness']} | {w['track']} | "
@@ -116,6 +117,23 @@ def main():
                        for s in sessions[:15]) or "- なし"
 
     queue = E.read_text(E.PROMOTION_QUEUE).strip() or "（空）"
+
+    # Drill は5軸採点の対象外。カテゴリ別正答率だけを渡す
+    drill = E.drill_rates(period_rows, window=len(period_rows) or 1)
+    drill_lines = "\n".join(
+        f"| {label} | {drill[k][0]}/{drill[k][1]}（{drill[k][0] / drill[k][1]:.0%}） |"
+        if k in drill else f"| {label} | — |"
+        for k, label in (("ai", "AI"), ("lang", "言語"), ("network", "ネットワーク")))
+    drill_avgs = " / ".join(
+        f"drill_{k}_avg: {drill[k][0] / drill[k][1]:.0%}" for k in ("ai", "lang", "network")
+        if k in drill) or "記録なし"
+    recent_misses = E.parse_drill_misses()
+    miss_lines = "\n".join(
+        f"- {m['date']} {m['category']}"
+        + (f"({m['language']})" if m["language"] else "")
+        + f" × {m['subtopic']}: {m['theme']}"
+        for m in recent_misses
+        if start.isoformat() <= m["date"] <= end.isoformat()) or "- なし"
 
     body = f"""# {title}
 
@@ -141,11 +159,25 @@ def main():
 |---|---|---|---|---|---|
 {session_lines}
 
-## Track別
+## Design Track別
 
 | Track | Avg（期間内） | 回数 |
 |---|---|---|
 {track_lines}
+
+## Drill 正答率（期間内・5軸採点の対象外）
+
+| Category | Rate |
+|---|---|
+{drill_lines}
+
+記録ブロックにはこの値を書く: `{drill_avgs}`
+
+正答率の低いカテゴリを Design Track に格上げしないこと。目的が違う（Drill=知識、Design=判断）。
+
+## Drill の間違い（期間内）
+
+{miss_lines}
 
 ## Open弱点（全件）
 

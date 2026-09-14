@@ -1,23 +1,42 @@
 # Tracks
 
-6つのTrackを持つ。出題比率は`eos.config.json`の `track_weights` と、今月の `horizon_tracks` で決まる。
-毎週6本全部は出さない。今月の出口がある Track を厚くする。
+Engineering OS は **Drill 3カテゴリ** と **Design 4Track** を持つ。両者は別モードであり、記録・採点・弱点管理も分離されている。
 
-| Track | File | Default weight | Primary skills |
+## Drill categories（30秒・単答・カテゴリ別正答率のみ記録）
+
+| Category | File | 1日の出題数 | 内容 |
 |---|---|---|---|
-| DB / Table Design | [db-design.md](db-design.md) | 10% | Data Modeling, Consistency Design |
-| Layered Architecture | [architecture.md](architecture.md) | 35% | Layering, Trade-off Articulation |
-| Web / API / HTTP | [web-api.md](web-api.md) | 7% | Interface Design, Requirement Reading |
-| Network / Infra | [network-infra.md](network-infra.md) | 5% | Failure Analysis, Performance Reasoning |
-| Coding / Go / Next.js | [coding.md](coding.md) | 35% | Layering, Interface Design |
-| AI / LLM | [ai.md](ai.md) | 0% | Requirement Reading, Trade-off Articulation |
+| AI | [ai.md](ai.md) | 3問 | 現フェーズの AI 資格範囲 |
+| Coding Language | [coding-language.md](coding-language.md) | 3問 | Go 35% / Next.js 35% / Python 20% / Terraform 10% |
+| Network | [network-infra.md](network-infra.md) | 2問 | 『ネットワークはなぜつながるのか』の読了章まで |
 
-Default weight は 2026-09 の Horizon に合わせた値。AI は10月の生成AIパスポートまで日次に出さない（weight 0）。月次レビューで書き換える。
+## Design tracks（15分・5軸100点採点・Weakness Log登録）
+
+| Track | File | Weight | Primary skills |
+|---|---|---|---|
+| Layered Architecture | [architecture.md](architecture.md) | 25% | Layering, Trade-off Articulation |
+| DB / Table Design | [db-design.md](db-design.md) | 25% | Data Modeling, Consistency Design |
+| Web / API / HTTP | [web-api.md](web-api.md) | 25% | Interface Design, Idempotency Design |
+| Code Review | [code-review.md](code-review.md) | 25% | Review Prioritization, Trade-off Articulation |
+
+Design tracks の weight は `eos.config.json` の `design_track_weights` に定義されている。
 
 ## Rotation rules
 
+### Drill
+- カテゴリごとに毎日固定本数（AI 3・言語 3・ネットワーク 2）
+- 言語ドリルは `coding_language_weights` に従ってランダムに3問選ぶ
+- **直近3日のドリル間違いから、カテゴリ内で1問だけ類題を混ぜる**（`drill-misses.md` を参照）
+
+### Design
 - 同じTrackを3日連続で出さない
-- Weakness Logに未クローズの高優先項目があるTrackを優先する
 - 平均スコアが最も低いTrackの比重を翌週+10%する
-- 木曜以降は、`horizon_tracks` のうちその週まだ出ていないものを補完する
-- 6Track全てを1週間で出す必要はない
+- 木曜以降は、今週まだ出ていない Design Track を優先する
+
+## 廃止したもの
+
+- 旧 `Coding / Go / Next.js` Track: ファイルごと削除。役割が Coding Language ドリル と Code Review Track に分割吸収された
+- 旧 `Network / Infra` の Design Track 扱い: ネットワークはドリル専用になった（Design で出題しない）
+- 旧 `AI / LLM` の Design Track 扱い: 同上
+
+過去の記録（`04-sessions/daily/`, `07-scorecard/scores.csv`）には旧Track名が残る。集計側は旧Track名を読めるままにしてあるので、過去の点数は消えない。**新しい出題では使わない。**

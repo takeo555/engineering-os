@@ -6,22 +6,30 @@
 |---|---|
 | 連続実施 | 0日 |
 | 直近14日のセッション | 5回 |
-| 直近5回の平均スコア | 49.6 |
-| 30分内完了率（直近10回） | 75% |
+| 直近5回の平均スコア（Design） | 49.6 |
+| 15分内完了率（直近10回） | 50% |
 | Base level | L1 |
+| Phase | Phase 1（生成AIパスポート期） |
 | Open弱点 | 13件（High 6件） |
 | 再テスト期限切れ | 7件 |
 
-## Track別平均（直近20回）
+## Design Track別平均（直近20回）
 
 | Track | Avg |
 |---|---|
-| DB / Table Design | 44.0 |
 | Layered Architecture | 42.5 |
+| DB / Table Design | 44.0 |
 | Web / API / HTTP | — |
-| Network / Infra | — |
-| Coding / Go / Next.js | 75.0 |
-| AI / LLM | — |
+| Code Review | — |
+| Coding / Go / Next.js（旧Track・参考） | 75.0 |
+
+## Drill 正答率（直近14回）
+
+| Category | Rate |
+|---|---|
+| AI | — |
+| 言語 | — |
+| ネットワーク | — |
 
 ## 今すぐ再テストすべき弱点
 
@@ -40,3 +48,5 @@
 - 試験官が毎朝読む入り口: [`CONTEXT.md`](CONTEXT.md)
 - 今週の重点: [`CURRENT_FOCUS.md`](CURRENT_FOCUS.md)
 - 弱点一覧: [`05-failures/weakness-log.md`](05-failures/weakness-log.md)
+- ドリルの間違い: [`05-failures/drill-misses.md`](05-failures/drill-misses.md)
+- 学習フェーズ: [`ROADMAP.md`](ROADMAP.md)

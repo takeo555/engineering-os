@@ -4,7 +4,7 @@
 
 | File | Content | Updated by |
 |---|---|---|
-| [scores.csv](scores.csv) | 全セッションの点数（5軸 + 合計） | 日次Workflow |
+| [scores.csv](scores.csv) | 全セッションの点数（Design 5軸 + 合計、Drill のカテゴリ別正答数） | 日次Workflow |
 | [anchors.md](anchors.md) | **採点基準の見本（50 / 70 / 85点）** | 変更しない |
 | [skills.md](skills.md) | Core Skills 8項目の到達度 | 月次Workflow |
 
@@ -19,8 +19,11 @@ LLMの採点基準は数週間で自然にドリフトします。9月の68点�
 ## scores.csv の列
 
 ```text
-date,track,format,level,correctness,completeness,reasoning,practicality,clarity,total,time_spent_min
+date,track,format,level,correctness,completeness,reasoning,practicality,clarity,total,time_spent_min,drill_ai_correct,drill_ai_total,drill_lang_correct,drill_lang_total,drill_network_correct,drill_network_total
 ```
+
+`drill_*` 列は二層構造に切り替えた 2026-09-14 以降の行だけが埋まる。それ以前の行は空欄のまま残す
+（0件と空欄を混ぜないため。集計は空欄をスキップする）。
 
 ## Reading rules
 
@@ -40,3 +43,15 @@ date,track,format,level,correctness,completeness,reasoning,practicality,clarity,
 | 5 | 他人の設計をレビューし、判断を教えられる |
 
 推測で採点しません。証拠となるセッション日付を必ず添えます。
+
+## Drill 正答率の集計
+
+Drill は5軸100点採点の対象外。カテゴリ別正答率のみを追う。
+
+- 日次: `drill_ai`, `drill_lang`, `drill_network` を `scores.csv` に記録
+- 週次: 週内平均を `06-reviews/weekly/YYYY-Wnn.md` に集計
+- 月次: カテゴリ別に「連続7日で80%以上」を達成したら、Weekly Review でその分野の題材ローテを広げる（新しい分野を追加）
+
+Drill の正答率が低いカテゴリを Design 15分の Track に格上げしない。両者は目的が違う（Drill=知識、Design=判断）。
+
+Drill で間違えた分野そのものは [`05-failures/drill-misses.md`](../05-failures/drill-misses.md) に残る。scores.csv には件数だけを持つ。

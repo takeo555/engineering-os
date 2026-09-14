@@ -1,4 +1,17 @@
-# Weaknesses
+# Failures
+
+Engineering OS の「失敗」は2種類ある。**混同しない。**
+
+| 種別 | ファイル | 対象 | 管理 |
+|---|---|---|---|
+| Design 弱点 | [weakness-log.md](weakness-log.md) | 15分設計問題で明らかになった弱点 | W番号・優先度・再テスト期限あり |
+| Drill 間違い | [drill-misses.md](drill-misses.md) | 30秒ドリルで間違えた分野 | 追記式、W番号なし、翌日類題投入のみ |
+
+Drill 間違いは Weakness Log に登録しない。Drill を Weakness に格上げすると WIP 上限（Open 15件）が即破綻し、Design の弱点管理が機能しなくなるため。
+
+Drill で「これは重要」と判断した間違いは、Weekly Review で該当分野を Design 15分問題として扱うことを検討する。
+
+## Weaknesses（Design側）
 
 解けなかった・説明できなかった点を、次の出題と再テスト予定へ変える場所です。
 
