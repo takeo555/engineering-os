@@ -46,7 +46,6 @@ Drill の記録はカテゴリ別正答率のみ。5軸採点も Weakness Log �
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
 - `W001` [High] 論理削除と一意制約の衝突に気づけない（期限 2026-09-12）
-- `W002` [High] 複合インデックスの列順を決める基準を説明できない（期限 2026-09-10）
 
 ## 未クローズの弱点（上位8件）
 
@@ -131,5 +130,5 @@ Drill の記録はカテゴリ別正答率のみ。5軸採点も Weakness Log �
 ---
 
 <!-- eos:context date=2026-09-14 track=DB / Table Design format=Explain level=L1
-     targets=W001,W002
+     targets=W001
      phase=1 drill=ai:3,lang:3,network:2 -->

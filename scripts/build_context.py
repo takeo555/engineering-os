@@ -211,7 +211,8 @@ def main():
     lang_slots, lang_miss = pick_language_drill(cfg, misses, rnd)
     net_slots, net_miss = pick_network_drill(cfg, misses, rnd)
 
-    targets = [w for w in due if w["track"] == track][:2]
+    # 1日1件に絞る。15分の問題で2つの弱点を同時に狙うと難度が跳ね上がる
+    targets = [w for w in due if w["track"] == track][:1]
     if not targets:
         targets = [w for w in weaknesses
                    if w["priority"] == "High" and w["track"] == track][:1]
