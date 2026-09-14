@@ -16,14 +16,15 @@ URL は `takeo555/engineering-os`。リポジトリを変えたら置き換え�
 出題はしない。着火だけ。「今日の1問」と送るよう促す。問題文は作らない。
 
 ```text
-「Engineering OS の時間です。Project『Engineering OS 試験官』を開いて『今日の1問』と送ってください。」
+「Engineering OS の時間です。Project『Engineering OS 試験官』を開いて『今日の1問』と送ってください。
+Drill 8問（4分）→ Design 1問（15分）の順で、合計20分です。」
 と一言だけ日本語で伝えてください。
 
 そのあと https://raw.githubusercontent.com/takeo555/engineering-os/main/STATUS.md を開いて、
-連続実施日数・直近5回の平均スコア・再テスト期限切れの件数の3つだけを1行で添えてください。
+連続実施日数・直近5回の平均スコア（Design）・再テスト期限切れの件数の3つだけを1行で添えてください。
 読めなければ、その行は省いて構いません。
 
-問題は出さないでください。出題はProject側で行います。
+問題は出さないでください。Drill も Design も出題はProject側で行います。
 ```
 
 ---
@@ -63,7 +64,9 @@ https://raw.githubusercontent.com/takeo555/engineering-os/main/WEEKLY_CONTEXT.md
 - 励ましを書かない。事実と次の行動だけ
 - `base_level` は WEEKLY_CONTEXT の決定値をそのまま写す。自分で判定しない・変更を提案しない
 - WIP上限の警告があるときは、統合・降格すべき弱点を具体的に指名する
-- 平均点が最も低い Track を翌週の Primary Track にする。2週連続で同じ Track が Primary なら Format を変える
+- 平均点が最も低い **Design Track**（Layered Architecture / DB / Table Design / Web / API / HTTP / Code Review の4つ）を翌週の Primary Track にする。2週連続で同じ Track が Primary なら Format を変える
+- Drill はカテゴリ別正答率（`## Drill 正答率` の表）をそのまま写す。**正答率の低いカテゴリを Design Track に格上げしない。** 目的が違う（Drill=知識、Design=判断）
+- `## Drill の間違い` に項目があるときは、翌週どの分野を厚くするかを1行だけ書く
 
 ## 3. 記録ブロックを1つのコードブロックで出す
 
@@ -73,10 +76,13 @@ https://raw.githubusercontent.com/takeo555/engineering-os/main/WEEKLY_CONTEXT.md
 type: weekly
 week: <WEEKLY_CONTEXTの週。例: 2026-W37>
 base_level: <WEEKLY_CONTEXTの決定値>
+drill_ai_avg: <WEEKLY_CONTEXTの Drill 正答率。例: 78%>
+drill_lang_avg: <同上>
+drill_network_avg: <同上>
 ---
 
 ## 1. 今週の事実
-（集計とセッションを短く）
+（Design の集計とセッション、Drill の正答率を短く）
 
 ## 2. 詰まった原因（1つだけ）
 …
