@@ -30,7 +30,7 @@
 - [ ] 4. ファイルに `02-tracks/code-review.md` をアップロード
 - [ ] 4. ファイルに `01-skill-map/README.md` をアップロード（任意）
 - [ ] 4. `weakness-log.md` `scores.csv` `drill-misses.md` は **入れていない**（日々変わるので CONTEXT.md から取る）
-- [ ] 4. GitHub コネクタを ON にした
+- [ ] 4. GitHub コネクタは **ON にしない**（読み取り専用でIssueに書けない。投函は手貼り）
 
 ## 定期タスク
 

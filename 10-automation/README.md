@@ -7,7 +7,7 @@ Claude Code は使いません。Anthropic API も使いません。
 
 | 項目 | 本構成での前提 |
 |---|---|
-| 試験官 | **Claude.ai Pro**（Project ＋ 定期タスク ＋ GitHub コネクタ） |
+| 試験官 | **Claude.ai Pro**（Project ＋ 定期タスク） |
 | Repository | **Public**（raw URL で CONTEXT.md を読める） |
 | スマホ | Claude アプリ |
 | 追加の課金 | Anthropic API は使わない |
@@ -41,7 +41,7 @@ Claude Code は使いません。Anthropic API も使いません。
              │        ↓（自分: 30分で解いて、同じ会話に回答を貼る）
              ├─ anchors.md を参照して5軸採点
              ├─ 60秒サマリ → 詳細レビュー → 記録ブロック
-             └─ GitHub コネクタで Issue #1 へコメント
+             └─ 記録ブロックを自分で Issue #1 へコメント（手貼り）
                                     │
 自動       Actions: save-record（record.yml）
              ├─ 記録ブロックをパース
@@ -55,7 +55,7 @@ Claude Code は使いません。Anthropic API も使いません。
 ```
 
 手で残るのは **「今日の1問」と送る / 解いて回答を貼る / 週1回 Bank の adopt を書き写す** です。
-コネクタが落ちたときだけ、記録ブロックを投函口へ手貼りします。予備は [inbox.md](inbox.md)。
+記録ブロックは自分で投函口へ貼ります（**これが標準**）。手順は [inbox.md](inbox.md)。
 
 ## なぜ出題内容は試験官、割り当てはActionsなのか
 
@@ -74,7 +74,7 @@ Claude Code は使いません。Anthropic API も使いません。
 
 既にある場合は飛ばす。ブランチ名は `main`。
 
-Publicにするのは、試験官がコネクタ無しでも raw URL で `CONTEXT.md` を読めるようにするためです。
+Publicにするのは、試験官が raw URL で `CONTEXT.md` を読めるようにするためです。これが唯一の GitHub → Claude の経路です。
 会社の情報は書かないでください。
 
 ### 2. Actionsの書き込み権限を有効にする
@@ -102,7 +102,7 @@ gh run watch
    - `prompts/record-block.md`
    - `01-skill-map/README.md`
 3. **入れないもの**: `weakness-log.md`、`scores.csv`
-4. **GitHub コネクタを ON** にする（Issue へのコメント用）
+4. GitHub コネクタは不要（読み取り専用でIssueに書けないため使わない）
 
 ルールを変えたあとは、指示欄と Knowledge を差し替える。git に書いただけでは Claude 側は変わりません。
 
@@ -148,12 +148,12 @@ gh issue pin <番号>
 | 所要時間がいつも30分 | 制約時間を実測として書いている | 明示された実測だけ。不明なら0 |
 | 記録用の新しいIssueができた | 投函口ではなく新規作成している | 本文を Issue #1 へ移す |
 | 定期タスクが届かない | タスク未登録 / 通知オフ | Projectを開いて「今日の1問」と送る |
-| コネクタ投稿に失敗する | GitHub コネクタが切れている | 手貼りする。Settings でコネクタを繋ぎ直す |
+| 試験官が「投稿できません」と言う | 投稿を試みる古い指示が残っている | 指示欄と examiner-manual を最新版に差し替える。投函は手貼りが標準 |
 | Workflowが動かなくなった | 60日以上休止すると自動無効化 | `gh workflow enable context.yml` で戻す |
 
 ## この構成が失うもの
 
-- コネクタが切れると、投稿だけ手貼りに戻る
+- 投函は常に手貼り（1日30秒）
 - 定期タスクが Project の Knowledge を読めないことがあるので、日次の出題は Project 側に残している
 
 失わないものは、**記録すべて**です。Claude 側が使えなくなっても、GitHub にある学習資産は残ります。

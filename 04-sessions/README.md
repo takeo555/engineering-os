@@ -27,12 +27,13 @@
 | — | Claude 試験官 | Drill 正誤判定、1行フィードバック、続けて Design 15分問題を出題 |
 | 約15分 | You | 解く。終わらなくてもその時点で止めて回答を貼る |
 | — | You / Claude | 必要ならヒント |
-| — | Claude 試験官 | 30秒サマリ→詳細レビュー→採点確定→**Drill と Design を統合した1つの記録ブロック**をチャットへ出力→投函口へコメント |
+| — | Claude 試験官 | 30秒サマリ→詳細レビュー→採点確定→**Drill と Design を統合した1つの記録ブロック**をチャットへ出力 |
+| 約30秒 | You | 記録ブロックをコピーして投函口 Issue #1 へコメント |
 | 自動 | GitHub Actions | 記録をコミット、drill-misses.md 追記、弱点の開閉、Scorecard更新、CONTEXT.md 再生成 |
 
 **合計約20分**。Drill 4分 + Design 15分 + やり取りのオーバーヘッド1分。
 
-試験官が GitHub コネクタで Issue #1「📥 記録の投函口」へコメントします。コネクタが落ちたときだけ手貼りします。新しいIssueは作りません。予備の手順は [10-automation/inbox.md](../10-automation/inbox.md)。
+記録ブロックは**自分で** Issue #1「📥 記録の投函口」へコメントとして貼ります。claude.ai の GitHub 連携は読み取り専用なので、試験官は投稿できません（試験官側も投稿を試みない設定にしてあります）。新しいIssueは作りません。手順は [10-automation/inbox.md](../10-automation/inbox.md)。
 
 問題文の「15分以内」は制約です。`time_spent_min` には Design に実際にかかった時間だけを書きます。分からなければ推測しません。
 
