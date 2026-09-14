@@ -1,4 +1,4 @@
-# CONTEXT — 2026-09-14（Mon）
+# CONTEXT — 2026-09-15（Tue）
 
 > **自動生成。手で編集しないこと。** 毎朝06:00 JSTと、
 > 記録が保存されるたびに再生成されます。
@@ -15,9 +15,9 @@ AI ドリルの題材はこのフェーズに従います。詳細は `ROADMAP.m
 
 | カテゴリ | 問題数 | 分野の枠 | 直近のmiss類題 |
 |---|---|---|---|
-| AI | 3 | 法制度と倫理（EU AI Act, 日本の指針、ガバナンス）；リスク（幻覚、著作権、秘密漏洩、バイアス）；業務利用の注意点 | なし |
-| 言語 | 3 | Go / interface；Next.js / Server Actions；Go / goroutine/channel | なし |
-| ネットワーク | 2 | 1章 Webブラウザがメッセージを作る；4章 アクセス回線とプロバイダ | なし |
+| AI | 3 | 法制度と倫理（EU AI Act, 日本の指針、ガバナンス）；リスク（幻覚、著作権、秘密漏洩、バイアス）；生成AIの仕組み概要（Transformer, LLM, RAG, ファインチューニング） | なし |
+| 言語 | 3 | Next.js / fetch のキャッシュ；Terraform / workspace；Next.js / Server Actions | なし |
+| ネットワーク | 2 | 2章 プロトコル・スタックとLANアダプタ；5章 ファイアウォール・キャッシュ・負荷分散 | なし |
 
 （試験官はこの枠に沿って具体的な問題文を生成する。30秒で単答できる形にし、選択肢は出さない。
 「直近のmiss類題」が「あり」のカテゴリは、そのカテゴリの1問を同じ分野の**別問題**に差し替える）
@@ -28,11 +28,11 @@ Drill の記録はカテゴリ別正答率のみ。5軸採点も Weakness Log �
 
 | 項目 | 値 |
 |---|---|
-| 日付 | 2026-09-14（Mon） |
-| Track | **DB / Table Design** |
-| Format | **Explain** |
+| 日付 | 2026-09-15（Tue） |
+| Track | **Layered Architecture** |
+| Format | **Debug** |
 | Level | **L1** |
-| 回答環境 | キーボード想定 |
+| 回答環境 | モバイル想定 |
 | 想定所要時間 | 15分 |
 | 今日はセッション日か | はい |
 | 今日の記録 | 未保存 |
@@ -40,12 +40,12 @@ Drill の記録はカテゴリ別正答率のみ。5軸採点も Weakness Log �
 選定理由（本人向け。問題文には書かない）
 
 - Track: 重み・弱点・連続回避から選択
-- Level: 3日空いたが L1 が最下位のため据え置き
-- Format: キーボード想定のためExplainを選択
+- Level: 4日空いたが L1 が最下位のため据え置き
+- Format: モバイル想定のためDebugを選択
 
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
-- `W001` [High] 論理削除と一意制約の衝突に気づけない（期限 2026-09-12）
+- `W005` [High] HandlerとDomainの責務境界を正しく分離できない（期限 2026-09-12）
 
 ## 未クローズの弱点（上位8件）
 
@@ -129,6 +129,6 @@ Drill の記録はカテゴリ別正答率のみ。5軸採点も Weakness Log �
 
 ---
 
-<!-- eos:context date=2026-09-14 track=DB / Table Design format=Explain level=L1
-     targets=W001
+<!-- eos:context date=2026-09-15 track=Layered Architecture format=Debug level=L1
+     targets=W005
      phase=1 drill=ai:3,lang:3,network:2 -->
