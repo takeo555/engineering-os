@@ -9,25 +9,43 @@ URL は `takeo555/engineering-os`。リポジトリを変えたら置き換え�
 定期タスクは Project の指示欄も Knowledge も読めないことがある。
 **週次はここで講評まで完結させる。** 日次の出題は Project 側に残す。
 
+タスク1は CONTEXT.md の取得を **Project側のチャットに任せない。** タスク自身が取得して
+本文にそのまま貼る（Web searchがオンでも、Project側がURL取得を試みずKnowledge検索だけで
+「CONTEXT.mdが無い」と誤答する事例が実際にあったため）。
+
 ---
 
 ## タスク1: 朝のリマインド（毎日 07:00 JST）
 
 名前の例: `Engineering OS 今日の1問`
 
-出題はしない。着火だけ。「今日の1問」と送るよう促す。問題文は作らない。
+出題はしない。着火だけ。**ただし CONTEXT.md はこのタスク自身が取得し、全文をそのまま貼る。**
+Project側のチャットが「Web search」を使うかどうかに賭けない（オンにしていても実行時にURL取得を
+試みずKnowledge検索だけで済ませ、「CONTEXT.mdが無い」と誤答することがあるため）。
 
 ```text
-「Engineering OS の時間です。Project『Engineering OS 試験官』を開いて『今日の1問』と送ってください。
+次の手順を順番に実行してください。
+
+1. https://raw.githubusercontent.com/takeo555/engineering-os/main/CONTEXT.md を開いて全文を取得する。
+   開けない・404・空の場合は https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/CONTEXT.md を試す。
+
+2. 取得できたら、次の形式で1メッセージを日本語で送ってください（要約しない。取得した内容を改変せずそのまま貼る）。
+
+「Engineering OS の時間です。Project『Engineering OS 試験官』を開いて、下のCONTEXT.mdの内容をそのまま貼り付けたうえで『今日の1問』と送ってください。
 Drill 8問（4分）→ Design 1問（15分）の順で、合計20分です。」
-と一言だけ日本語で伝えてください。
 
-そのあと https://raw.githubusercontent.com/takeo555/engineering-os/main/STATUS.md を開いて、
-連続実施日数・直近5回の平均スコア（Design）・再テスト期限切れの件数の3つだけを1行で添えてください。
-開けなければ https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/STATUS.md を試してください（jsDelivr ミラー）。
-それでも読めなければ、その行は省いて構いません。
+---CONTEXT.md（そのまま貼ってください）---
+（ここに手順1で取得した CONTEXT.md の全文をコードブロックで貼る）
+---
 
-問題は出さないでください。Drill も Design も出題はProject側で行います。
+3. 取得したCONTEXT.mdの「今の数字」表から、連続実施日数・直近5回の平均スコア（Design）・
+   再テスト期限切れの件数の3つだけを、メッセージの最後に1行で添えてください。
+
+4. 両方のURLが開けなかった場合は、CONTEXT.mdの貼付を省き、
+   「CONTEXT.mdを取得できませんでした。Projectで直接 https://raw.githubusercontent.com/takeo555/engineering-os/main/CONTEXT.md を確認してください」
+   とだけ伝えてください。内容を推測で作らない。
+
+出題は行わないでください。Drill も Design の問題文もこのタスクでは作りません（Project側の役割）。
 ```
 
 ---
