@@ -24,7 +24,8 @@ Drill 8問（4分）→ Design 1問（15分）の順で、合計20分です。�
 
 そのあと https://raw.githubusercontent.com/takeo555/engineering-os/main/STATUS.md を開いて、
 連続実施日数・直近5回の平均スコア（Design）・再テスト期限切れの件数の3つだけを1行で添えてください。
-読めなければ、その行は省いて構いません。
+開けなければ https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/STATUS.md を試してください（jsDelivr ミラー）。
+それでも読めなければ、その行は省いて構いません。
 
 問題は出さないでください。Drill も Design も出題はProject側で行います。
 ```
@@ -47,7 +48,8 @@ Drill 8問（4分）→ Design 1問（15分）の順で、合計20分です。�
 
 次のURLを開いて全文を読む。推測で埋めない。
 
-https://raw.githubusercontent.com/takeo555/engineering-os/main/WEEKLY_CONTEXT.md
+1. まず https://raw.githubusercontent.com/takeo555/engineering-os/main/WEEKLY_CONTEXT.md
+2. 開けなければ https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/WEEKLY_CONTEXT.md （jsDelivr ミラー）
 
 次が1つでも欠けていたら、講評も投稿もしない。次の1文だけ返す。
 

@@ -49,11 +49,15 @@ Projectには次の7ファイルをアップロードします。
 
 ## 毎回、最初にやること（CONTEXT検証）
 
-ユーザーが「今日の1問」「開始」などと言ったら、**問題を書く前に**次のURLを開いて全文を読みます。
+ユーザーが「今日の1問」「開始」などと言ったら、**問題を書く前に**必ず実際にURLを開くツールを使って（Project の Knowledge ファイル一覧を見て判断しない）、次のURLを読みます。
 
-https://raw.githubusercontent.com/takeo555/engineering-os/main/CONTEXT.md
+1. まず https://raw.githubusercontent.com/takeo555/engineering-os/main/CONTEXT.md を開く
+2. 開けない・404・空・表が壊れている場合は、**すぐに諦めず** https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/CONTEXT.md を開く（jsDelivr のミラー。raw.githubusercontent.com がfetchできない時の代替）
+3. どちらも開けなかった場合にだけ、次が1つでも欠けている、読めない、表が壊れているものとして扱います
 
-次が1つでも欠けている、読めない、表が壊れている場合は、**問題を生成しません。** 欠けている項目名を列挙し、「CONTEXT.mdの中身を貼ってください」と頼みます。推測で埋めません。
+**「Projectのファイルに CONTEXT.md が無い」という理由で止めてはいけません。** CONTEXT.md はKnowledgeにアップロードするファイルではなく、毎回上記URLから直接読みに行くものです（アップロードするのは冒頭の7ファイルのみ）。
+
+両方のURLが失敗した場合のみ、欠けている項目名を列挙し、「CONTEXT.mdの中身を貼ってください」と頼みます。推測で埋めません。
 
 - date（日付）
 - track
@@ -279,10 +283,11 @@ Issue にコメントする機能が無い。試すと必ず失敗し、「接�
 ユーザーが「週次レビュー」と言ったとき、または日曜21:00の定期タスクとして起動したとき。
 CONTEXT.mdは読まない。次を読む。
 
-https://raw.githubusercontent.com/takeo555/engineering-os/main/WEEKLY_CONTEXT.md
+1. まず https://raw.githubusercontent.com/takeo555/engineering-os/main/WEEKLY_CONTEXT.md を開く
+2. 開けなければ https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/WEEKLY_CONTEXT.md を開く（jsDelivr ミラー）
 
 見出しの週がいまの日本時間のISO週と一致し、`生成:` が今日であること。
-違う・読めない場合は講評も投稿もしない。「WEEKLY_CONTEXT.md がまだ今週分ではありません」と返す。
+両方とも違う・読めない場合は講評も投稿もしない。「WEEKLY_CONTEXT.md がまだ今週分ではありません」と返す。
 
 渡された数字だけを根拠に講評を書く。数字にないことを推測しない。
 `base_level` は決定済みなので、変更を提案しない。
