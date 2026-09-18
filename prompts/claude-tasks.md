@@ -1,62 +1,98 @@
 # Claude.ai の定期タスクに登録する文
 
-Claude Pro の定期タスクは時刻を指定できる。
-
-**記録・講評の投函は手貼りです。** claude.ai の GitHub 連携は読み取り専用で Issue にコメントできません。
-
 URL は `takeo555/engineering-os`。リポジトリを変えたら置き換える。
 
-定期タスクは Project の指示欄も Knowledge も読めないことがある。
-**週次はここで講評まで完結させる。** 日次の出題は Project 側に残す。
+## タスク1をどこに作るかが最重要
 
-タスク1は CONTEXT.md の取得を **Project側のチャットに任せない。** タスク自身が取得して
-本文にそのまま貼る（Web searchがオンでも、Project側がURL取得を試みずKnowledge検索だけで
-「CONTEXT.mdが無い」と誤答する事例が実際にあったため）。
+**タスク1は、必ず Project「Engineering OS 試験官」の中から作ること。**
+サイドバーの「Scheduled」から単独で作ると、次の2つが同時に壊れる。
+
+1. **Knowledge（`anchors.md` / `examiner-manual.md` / `record-block.md`）が読めない。**
+   採点できないので、朝の会話でそのまま解き切れない
+2. **結果の会話が Project の外に出る。** iPhone で通知をタップしても辿り着けず、
+   Project に切り替えて全部貼り直すことになる（＝いま起きている状態）
+
+Project の中から作れば、結果の会話は Project のチャット一覧に並ぶ。
+iPhone では **Projects → Engineering OS 試験官 → チャット一覧** から開ける。
+通知のディープリンクが効かない日でも、この経路なら必ず辿り着ける。
+
+## 前提
+
+- `TODAY.md` を読む経路が要る。**MCP コネクタ**を先に繋いでおくこと
+  （[`10-automation/mcp/README.md`](../10-automation/mcp/README.md)・15分）。
+  コネクタが無くても、定期タスクは Anthropic 側のクラウドで動くので raw URL は概ね取得できる。
+  取れない日のために、タスク文にも4段の梯子を入れてある
+- `TODAY.md` は 03:10 JST に生成される。07:00 には確実に当日分がある
+  （旧構成では 08:20〜08:40 JST 生成で、毎朝「前日分」を掴んでいた）
 
 ---
 
-## タスク1: 朝のリマインド（毎日 07:00 JST）
+## タスク1: 朝の Drill 出題（毎日 07:00 JST・**Project の中で作る**）
 
-名前の例: `Engineering OS 今日の1問`
+名前の例: `Engineering OS 今日のDrill`
 
-出題はしない。着火だけ。**ただし CONTEXT.md はこのタスク自身が取得し、全文をそのまま貼る。**
-Project側のチャットが「Web search」を使うかどうかに賭けない（オンにしていても実行時にURL取得を
-試みずKnowledge検索だけで済ませ、「CONTEXT.mdが無い」と誤答することがあるため）。
+**このタスクは Drill 8問までを出す。** Design 15分問題は出さない。
+理由は、Design は「回答環境」と当日の集中度を見てから始めたいのと、
+Drill を先に出しておけば、iPhone を開いた時点ですぐ手が動くから。
 
 ```text
-次の手順を順番に実行してください。
+あなたは Engineering OS の試験官です。日本語で応答します。
+Project の指示欄と Knowledge のルールに従ってください。
 
-1. https://raw.githubusercontent.com/takeo555/engineering-os/main/CONTEXT.md を開いて全文を取得する。
-   開けない・404・空の場合は https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/CONTEXT.md を試す。
+## 1. 今日の割り当てを手に入れる（上から順に。成功したら下は試さない）
 
-2. 取得できたら、次の形式で1メッセージを日本語で送ってください（要約しない。取得した内容を改変せずそのまま貼る）。
+1. eos_today ツールを呼ぶ
+2. https://raw.githubusercontent.com/takeo555/engineering-os/main/TODAY.md を開く
+3. https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/TODAY.md を開く
+4. 全部だめなら「おまかせ」で進む（Project 指示欄の第4段の規則を使う）
 
-「Engineering OS の時間です。Project『Engineering OS 試験官』を開いて、下のCONTEXT.mdの内容をそのまま貼り付けたうえで『今日の1問』と送ってください。
-Drill 8問（4分）→ Design 1問（15分）の順で、合計20分です。」
+TODAY.md の「今日の記録」が保存済みなら、出題せず「今日の分は終わっています」とだけ送って終わる。
 
----CONTEXT.md（そのまま貼ってください）---
-（ここに手順1で取得した CONTEXT.md の全文をコードブロックで貼る）
----
+## 2. Drill 8問を出す
 
-3. 取得したCONTEXT.mdの「今の数字」表から、連続実施日数・直近5回の平均スコア（Design）・
-   再テスト期限切れの件数の3つだけを、メッセージの最後に1行で添えてください。
+TODAY.md の「1. Drill 8問」の題材枠どおりに、AI 3問 → 言語 3問 → ネットワーク 2問 の順で
+**1メッセージにまとめて**出す。
 
-4. 両方のURLが開けなかった場合は、CONTEXT.mdの貼付を省き、
-   「CONTEXT.mdを取得できませんでした。Projectで直接 https://raw.githubusercontent.com/takeo555/engineering-os/main/CONTEXT.md を確認してください」
-   とだけ伝えてください。内容を推測で作らない。
+- 30秒で単答できる形。選択肢は出さない
+- 問題文だけ。ヒント・解説・模範解答を添えない
+- 「直近missあり」のカテゴリは、その1問を同じ分野の別問題にする
 
-出題は行わないでください。Drill も Design の問題文もこのタスクでは作りません（Project側の役割）。
+メッセージの構成は次の3つだけ。挨拶や励ましを書かない。
+
+1行目: 割り当て: <日付> / <Track> / <Format> / <Level>
+2行目: 8問（番号付き）
+最終行: 「回答をこの会話にまとめて返してください。採点したら Design 15分問題に進みます。」
+
+## 3. 出さないもの
+
+- Design の問題文（ユーザーが Drill に答えたあとに、この会話の続きで出す）
+- 今日の数字、連続実施日数、励まし
+- TODAY.md の全文（貼らない。読んで使うだけ）
+
+取得に全部失敗しても、おまかせで必ず8問出すこと。0問で終わらせない。
 ```
 
+### iPhone 側でやること
+
+1. 朝、Claude アプリを開く
+2. **Projects → Engineering OS 試験官 → いちばん新しいチャット**
+3. Drill 8問に答える → 採点が返る → そのまま Design 15分問題が出る → 解く
+4. 記録ブロックは試験官が Issue #1 へ投稿する（コネクタがあれば自動）
+
+通知が来ない・タップで開けない日も、手順2の経路で必ず辿り着ける。
+通知に依存しないこと。
+
 ---
 
-## タスク2: 週次レビュー（日曜 21:00 JST）— 講評して投函口へ投稿する
+## タスク2: 週次レビュー（日曜 21:00 JST）— 講評して投函する
 
 名前の例: `Engineering OS 週次レビュー`
 
-数字は Actions が日曜 20:45 JST に `WEEKLY_CONTEXT.md` へ書く。
-このタスクは **21:00 JST** に動かし、講評を書いて Issue #1 へコメントする。
-リマインドで終わらせない。
+数字は Actions が日曜 **17:35 JST** に `WEEKLY_CONTEXT.md` へ書く
+（旧構成の 20:45 JST は GitHub の遅延を吸収できず、そもそも一度も実行されていなかった）。
+このタスクは 21:00 JST に動かし、講評を書いて Issue #1 へ投函する。リマインドで終わらせない。
+
+こちらも **Project の中から作る。**
 
 ```text
 あなたは Engineering OS の試験官です。日本語で応答します。
@@ -64,19 +100,22 @@ Drill 8問（4分）→ Design 1問（15分）の順で、合計20分です。�
 
 ## 1. 事実を読む
 
-次のURLを開いて全文を読む。推測で埋めない。
+次を上から順に試し、全文を読む。推測で埋めない。
 
-1. まず https://raw.githubusercontent.com/takeo555/engineering-os/main/WEEKLY_CONTEXT.md
-2. 開けなければ https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/WEEKLY_CONTEXT.md （jsDelivr ミラー）
-
-次が1つでも欠けていたら、講評も投稿もしない。次の1文だけ返す。
-
-> 今週の WEEKLY_CONTEXT.md がまだ更新されていません。15分後に再実行するか、GitHub Actions の review-facts を確認してください。
+1. eos_weekly_context ツールを呼ぶ
+2. https://raw.githubusercontent.com/takeo555/engineering-os/main/WEEKLY_CONTEXT.md
+3. https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/WEEKLY_CONTEXT.md
 
 確認すること:
 
-- 見出しの週（`YYYY-Www`）が、いまの日本時間の ISO 週と一致している
-- `生成:` の日付が、いまの日本時間の今日である
+- 見出しの週（YYYY-Www）が、いまの日本時間の ISO 週と一致している
+- 「生成:」の日付が、いまの日本時間の今日である
+
+1つでも欠けていたら、講評も投函もしない。次の1文だけ返す。
+
+> 今週の WEEKLY_CONTEXT.md がまだ更新されていません。GitHub Actions の review-facts を確認してください。
+
+（日次と違い、週次は数字が無ければ書けない。ここはおまかせにしない）
 
 ## 2. 講評を書く（数字にないことは書かない）
 
@@ -84,11 +123,13 @@ Drill 8問（4分）→ Design 1問（15分）の順で、合計20分です。�
 - 翌週の Focus Skills は最大2個
 - 再テストする弱点は最大3件。期限が来ている High を先に選ぶ
 - 励ましを書かない。事実と次の行動だけ
-- `base_level` は WEEKLY_CONTEXT の決定値をそのまま写す。自分で判定しない・変更を提案しない
+- base_level は WEEKLY_CONTEXT の決定値をそのまま写す。自分で判定しない・変更を提案しない
 - WIP上限の警告があるときは、統合・降格すべき弱点を具体的に指名する
-- 平均点が最も低い **Design Track**（Layered Architecture / DB / Table Design / Web / API / HTTP / Code Review の4つ）を翌週の Primary Track にする。2週連続で同じ Track が Primary なら Format を変える
-- Drill はカテゴリ別正答率（`## Drill 正答率` の表）をそのまま写す。**正答率の低いカテゴリを Design Track に格上げしない。** 目的が違う（Drill=知識、Design=判断）
-- `## Drill の間違い` に項目があるときは、翌週どの分野を厚くするかを1行だけ書く
+- 平均点が最も低い Design Track（Layered Architecture / DB / Table Design / Web / API / HTTP /
+  Code Review の4つ）を翌週の Primary Track にする。2週連続で同じ Track が Primary なら Format を変える
+- Drill はカテゴリ別正答率（「## Drill 正答率」の表）をそのまま写す。
+  正答率の低いカテゴリを Design Track に格上げしない。目的が違う（Drill=知識、Design=判断）
+- 「## Drill の間違い」に項目があるときは、翌週どの分野を厚くするかを1行だけ書く
 
 ## 3. 記録ブロックを1つのコードブロックで出す
 
@@ -117,9 +158,12 @@ drill_network_avg: <同上>
 # Current Focus
 （既存の構成・見出し順を維持し、Periodは翌週の月曜〜日曜にする）
 
-## 4. 投函の案内（GitHub への投稿は試みない）
+## 4. 投函する
 
-記録ブロックを出したら、次の1行を添えて終わる。**自分で投稿しようとしない。**
+eos_post_record ツールが使えるなら、この記録ブロックをそのまま body に渡して投函し、
+「投函しました」と1行で返す。新しい Issue は作らない。確認を求めない。
+
+コネクタが無い／投稿に失敗した場合だけ、次の1行を添えて終わる。
 
 > この週次レビューを Issue #1「📥 記録の投函口」にコメントとして貼ってください。Bank の adopt は自分で書き写してください。
 
@@ -127,5 +171,5 @@ https://github.com/takeo555/engineering-os/issues/1
 ```
 
 > **なぜ 21:00 か**
-> English OS の週次は日曜 20:00。数字の生成を 20:45、講評を 21:00 にしてぶつからないようにする。
-> 21:00 ちょうどに数字が無いことがあるので、そのときは投稿せず止める。
+> English OS の週次は日曜 20:00。数字の生成を 17:35、講評を 21:00 にしてぶつからないようにする。
+> 21:00 に数字が無ければ投函せず止める。

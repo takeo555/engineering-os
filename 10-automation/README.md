@@ -7,55 +7,63 @@ Claude Code は使いません。Anthropic API も使いません。
 
 | 項目 | 本構成での前提 |
 |---|---|
-| 試験官 | **Claude.ai Pro**（Project ＋ 定期タスク） |
-| Repository | **Public**（raw URL で CONTEXT.md を読める） |
-| スマホ | Claude アプリ |
-| 追加の課金 | Anthropic API は使わない |
+| 試験官 | **Claude.ai Pro**（Project ＋ **Project内の**定期タスク） |
+| 読み書き | **自前の MCP コネクタ**（[connector.md](connector.md) / [mcp/](mcp/)）。全サーフェスで動く唯一の経路 |
+| Repository | **Public**（コネクタが落ちた日の予備として raw URL を使う） |
+| スマホ | Claude アプリ。Projects → 試験官 → チャット一覧から入る |
+| 追加の課金 | Anthropic API は使わない。GitHub MCP も Copilot 契約は不要 |
+
+**日次が止まるときは、ほぼ必ずこの表の2行目が原因です。** 指示文をいくら強く書いても、
+モバイルの Project チャットは指示欄に書かれただけの URL を取りに行きません。
 
 ## なぜこの構成になるのか
 
 | 役割 | 担当 | 理由 |
 |---|---|---|
 | 今日何を出すか | Actions（`build-context`） | 弱点の再テストを日によって寄せない |
-| 「今日の1問」と送る | Claude 定期タスク 07:00 | 着火だけ。問題は作らない |
-| 問題文・採点 | Claude Project | 対話向き。モバイルで解ける |
+| Drill 8問を出す | **Project内の**定期タスク 07:00 | 開いた瞬間に手が動く状態を作る |
+| Design 問題・採点 | 同じ会話の続き | Knowledge（anchors.md）が要るので Project 内 |
 | 記録の入口 | Issue #1「記録の投函口」 | Importer を通す。直接コミットしない |
 | 記録の正本 | Actions（`save-record`） | 点数固定と弱点の重複防止 |
 
-定期タスクに出題させると、試験官のルールを持たない会話で問題が分かれます。
-出題は Project に寄せます。
+定期タスクは **Project の中から作ります。** サイドバーの「Scheduled」から単独で作ると
+Knowledge が読めず採点できないうえ、結果の会話が Project の外に出てモバイルから辿れません。
 
 ## 構成
 
 ```text
-06:00 JST  Actions: build-context（context.yml）
+03:10 JST  Actions: build-context（context.yml）
              ├─ 弱点・スコア履歴・出題履歴を読む
              ├─ Track / Format / Level / 狙う弱点を決定論的に決める
-             └─ CONTEXT.md と STATUS.md を再生成してコミット
+             └─ TODAY.md / CONTEXT.md / STATUS.md を再生成してコミット
+             （05:40 に予備実行。GitHub の遅延は数時間出るので 07:00 まで余裕を取る）
                                     │
-07:00      Claude 定期タスク
-             └─ 「Projectを開いて『今日の1問』と送って」と通知するだけ
+07:00      Project内の定期タスク「今日のDrill」
+             ├─ eos_today で TODAY.md を読む（だめなら raw → jsDelivr → おまかせ）
+             └─ Drill 8問を1メッセージで出して待つ
                                     │
-           Claude Project「Engineering OS 試験官」
-             ├─ raw の CONTEXT.md を読み、その割り当て通りに出題
-             │        ↓（自分: 30分で解いて、同じ会話に回答を貼る）
+           自分: iPhone で Projects → 試験官 → 最新チャット を開いて回答
+                                    │
+           同じ会話の続き（Knowledge が効く）
+             ├─ Drill 採点 → 間違いの正解を1行ずつ
+             ├─ Design 15分問題を出す → 解く
              ├─ anchors.md を参照して5軸採点
-             ├─ 60秒サマリ → 詳細レビュー → 記録ブロック
-             └─ 記録ブロックを自分で Issue #1 へコメント（手貼り）
+             ├─ 30秒サマリ → 詳細レビュー → 記録ブロック
+             └─ eos_post_record で Issue #1 へ投稿（無ければ手貼り案内）
                                     │
 自動       Actions: save-record（record.yml）
              ├─ 記録ブロックをパース
              ├─ セッション記録を 04-sessions/daily/ へ書く
-             ├─ 弱点の開閉、scores.csv、CONTEXT.md を更新
+             ├─ 弱点の開閉、scores.csv、TODAY.md / CONTEXT.md を更新
              └─ 結果を投函口にコメントで返す
                                     │
-日曜20:45  Actions: review-facts.yml → WEEKLY_CONTEXT.md（数字だけ）
-日曜21:00  Claude定期タスク: 講評を書いて Issue #1 へコメント
-毎月1日21:00                        → MONTHLY_CONTEXT.md
+日曜17:35  Actions: review-facts.yml → WEEKLY_CONTEXT.md（数字だけ）
+日曜21:00  Project内の定期タスク: 講評を書いて Issue #1 へ投稿
+毎月1日18:35                        → MONTHLY_CONTEXT.md
 ```
 
-手で残るのは **「今日の1問」と送る / 解いて回答を貼る / 週1回 Bank の adopt を書き写す** です。
-記録ブロックは自分で投函口へ貼ります（**これが標準**）。手順は [inbox.md](inbox.md)。
+コネクタが繋がっていれば、手で残るのは **解いて回答を書く / 週1回 Bank の adopt を書き写す** の2つです。
+コネクタが落ちた日は記録ブロックを手で投函口へ貼ります。手順は [inbox.md](inbox.md)。
 
 ## なぜ出題内容は試験官、割り当てはActionsなのか
 
@@ -63,8 +71,18 @@ Claude Code は使いません。Anthropic API も使いません。
 しかし **何を出すか（Track / Format / Level / 狙う弱点）はActionsが決めます。**
 
 試験官に選ばせると、日によって好きなTrackに寄り、期限の来た弱点が放置されます。
-`CONTEXT.md` に「今日はこれを出せ」と書いてあり、試験官はその通りに書くだけ、という分担です。
+`TODAY.md` に「今日はこれを出せ」と書いてあり、試験官はその通りに書くだけ、という分担です。
 同じ日に何度実行しても割り当ては変わりません（日付をシードにしています）。
+
+### TODAY.md と CONTEXT.md の使い分け
+
+| ファイル | 大きさ | 誰が読むか |
+|---|---|---|
+| `TODAY.md` | 約30行 | **試験官。毎朝これだけ読めば出題できる** |
+| `CONTEXT.md` | 約7KB | 人間が経緯を追うとき。弱点一覧・履歴14件・Level/Formatの定義まで入った全量版 |
+
+`CONTEXT.md` は静的な定義が大半を占めていて、モバイルで貼るには大きすぎました。
+毎日変わる約30行だけを切り出したのが `TODAY.md` です。
 
 ---
 
@@ -74,7 +92,7 @@ Claude Code は使いません。Anthropic API も使いません。
 
 既にある場合は飛ばす。ブランチ名は `main`。
 
-Publicにするのは、試験官が raw URL で `CONTEXT.md` を読めるようにするためです。これが唯一の GitHub → Claude の経路です。
+Publicにするのは、コネクタが使えない環境でも raw URL で `TODAY.md` を読めるようにするためです。
 会社の情報は書かないでください。
 
 ### 2. Actionsの書き込み権限を有効にする
@@ -82,38 +100,60 @@ Publicにするのは、試験官が raw URL で `CONTEXT.md` を読めるよう
 **Settings → Actions → General → Workflow permissions** で `Read and write permissions` を選びます。
 APIキーの登録は不要です。
 
-### 3. CONTEXT.md を1回作る
+### 3. TODAY.md を1回作る
 
 ```bash
 gh workflow run context.yml
 gh run watch
 ```
 
-`https://raw.githubusercontent.com/takeo555/engineering-os/main/CONTEXT.md` が読めること。
+`https://raw.githubusercontent.com/takeo555/engineering-os/main/TODAY.md` が読めること。
+
+### 3.5. MCP コネクタを繋ぐ（**ここが要**）
+
+[connector.md](connector.md) の理由と、[mcp/README.md](mcp/README.md) の手順（15分）で、
+Cloudflare Workers にツール3つだけの MCP サーバを立て、カスタムコネクタとして登録します。
+
+| ツール | 動作 |
+|---|---|
+| `eos_today` | `TODAY.md` を読む |
+| `eos_weekly_context` | `WEEKLY_CONTEXT.md` を読む |
+| `eos_post_record` | Issue #1 へ投函する |
+
+一度繋げば Web・デスクトップ・**モバイルの全部**で使えます。
+これを飛ばすと、iPhone で「今日の1問」と打っても割り当てを取得できません。
+GitHub 公式のリモートMCPを使わない理由は [connector.md](connector.md)。
 
 ### 4. Claude で Project を作る
 
 サイドバーの **Projects → 新規**、名前は `Engineering OS 試験官`。
 
 1. **指示欄**: [prompts/project-instructions.md](../prompts/project-instructions.md) の `---` 以下を貼る
-2. **ファイル**
-   - `07-scorecard/anchors.md` — **必須**
+2. **ファイル**（7つ）
+   - `07-scorecard/anchors.md` — **必須**。これが無いと採点がドリフトする
    - `prompts/examiner-manual.md`
    - `prompts/record-block.md`
+   - `ROADMAP.md` — **必須**。AIドリルの題材をフェーズで決める
+   - `02-tracks/coding-language.md`
+   - `02-tracks/code-review.md`
    - `01-skill-map/README.md`
-3. **入れないもの**: `weakness-log.md`、`scores.csv`
-4. GitHub コネクタは不要（読み取り専用でIssueに書けないため使わない）
+3. **入れないもの**: `weakness-log.md`、`scores.csv`、`TODAY.md`、`CONTEXT.md`
+   （日々変わるものは Knowledge に入れず、毎回コネクタで取る）
+4. 手順3.5 のコネクタが **この Project で有効になっていることを確認する**
 
 ルールを変えたあとは、指示欄と Knowledge を差し替える。git に書いただけでは Claude 側は変わりません。
 
-### 5. 定期タスクを登録する
+### 5. 定期タスクを登録する（**必ず Project の中から作る**）
 
 文面は [prompts/claude-tasks.md](../prompts/claude-tasks.md)。
 
-- 毎日 07:00 JST: 「今日の1問」と送るよう促す（**出題はさせない**）
-- 日曜 21:00 JST: `WEEKLY_CONTEXT.md` を読み、講評を書いて Issue #1 へコメントする
+- 毎日 07:00 JST: `TODAY.md` を読み、**Drill 8問を出して待つ**
+- 日曜 21:00 JST: `WEEKLY_CONTEXT.md` を読み、講評を書いて Issue #1 へ投函する
 
-週次の数字は 20:45 に Actions が書く。今週分でなければ投稿せず止まる。
+サイドバーの「Scheduled」から単独で作らないこと。Knowledge が読めず採点できないうえ、
+結果の会話が Project の外に出て、iPhone から辿り着けなくなります。
+
+週次の数字は 17:35 に Actions が書く。今週分でなければ投函せず止まる。
 
 ### 5.5. 記録の投函口を作る
 
@@ -126,11 +166,15 @@ gh issue pin <番号>
 
 ### 6. 通しで確認する
 
-1. Projectで「今日の1問」と送る → CONTEXT.mdの割り当て通りの問題が出るか
-2. 適当な回答を送る → 60秒サマリ → 詳細レビュー → 記録ブロックが出るか
-3. 試験官が Issue #1 へコメントしたか（しなければ手貼り）
-4. 1〜2分後、同じIssueに「記録しました」が返るか
-5. `04-sessions/daily/` にコミットが入り、`STATUS.md` が動くか
+**iPhone で通す**（デスクトップで通っても意味がありません。折れているのはモバイルです）。
+
+1. Projects → 試験官 → 「今日の1問」と送る → **Drill 8問**が出るか
+   （「CONTEXT.mdがありません」と言われたら手順3.5のコネクタが効いていない）
+2. まとめて回答 → 正答率1行＋間違いの正解 → 続けて Design 15分問題が出るか
+3. 適当な回答を送る → 30秒サマリ → 詳細レビュー → 記録ブロックが出るか
+4. 試験官が **自分で Issue #1 へ投稿した**か（しなければコネクタを確認。手貼りでも先へ進む）
+5. 1〜2分後、同じIssueに「記録しました」が返るか
+6. `04-sessions/daily/` にコミットが入り、`STATUS.md` が動くか
 
 チェックリストは [setup-checklist.md](setup-checklist.md)。
 
@@ -142,18 +186,23 @@ gh issue pin <番号>
 |---|---|---|
 | 何もコメントが返らない | `type: session` の行がない | 試験官に「記録ブロックを出し直して」と言い、コメントを編集する |
 | 「取り込めませんでした」と返る | ヘッダが崩れている | 原文は `04-sessions/inbox/` にある。ヘッダだけ直して編集する |
-| 試験官がCONTEXT.mdを読めない | raw URLの誤り / Private | URLを開く。読めなければ中身を会話に貼る |
+| モバイルで「CONTEXT.md / TODAY.md がプロジェクトにありません」と言う | コネクタ未接続、またはこのProjectで無効 | [mcp/README.md](mcp/README.md) の確認手順。**指示文の書き方では直らない** |
+| `TODAY.md` の日付が前日 | `build-context` の遅延 | `gh workflow run context.yml`。恒常的なら cron をさらに前倒し |
 | 点数が明らかに甘い | `anchors.md` を参照していない | 「anchors.mdの見本と比べて」と送る |
 | チャットの点とGitHubの点が違う | 記録時に採点し直している | 確定した5軸をそのまま写す |
 | 所要時間がいつも30分 | 制約時間を実測として書いている | 明示された実測だけ。不明なら0 |
 | 記録用の新しいIssueができた | 投函口ではなく新規作成している | 本文を Issue #1 へ移す |
-| 定期タスクが届かない | タスク未登録 / 通知オフ | Projectを開いて「今日の1問」と送る |
-| 試験官が「投稿できません」と言う | 投稿を試みる古い指示が残っている | 指示欄と examiner-manual を最新版に差し替える。投函は手貼りが標準 |
+| 通知は来るが会話が開けない | タスクを Project の外で作っている | Project の中で作り直す。iPhone では Projects → 試験官 → チャット一覧から入る |
+| 定期タスクが採点できない | タスクを Project の外で作っていて Knowledge が読めない | 同上 |
+| 試験官が「投稿できません」と言う | コネクタ未接続 / PAT期限切れ | `curl` で `eos_post_record` を直接叩いて切り分ける。繋ぐまでは手貼りで進める |
+| 週次レビューが書かれない | `review-facts` が動いていない | `gh run list --workflow=review-facts.yml` で確認。0件なら `gh workflow run review-facts.yml` |
 | Workflowが動かなくなった | 60日以上休止すると自動無効化 | `gh workflow enable context.yml` で戻す |
 
 ## この構成が失うもの
 
-- 投函は常に手貼り（1日30秒）
-- 定期タスクが Project の Knowledge を読めないことがあるので、日次の出題は Project 側に残している
+- コネクタという依存が1つ増える（落ちた日は raw URL → 手貼りに落ちる）
+- Design 問題は定期タスクでは出さない。Drill に答えてから会話の続きで出る
 
 失わないものは、**記録すべて**です。Claude 側が使えなくなっても、GitHub にある学習資産は残ります。
+どの経路が落ちても、[connector.md](connector.md) の4段の梯子の最後（おまかせ出題）で
+**その日が0問で終わることはありません。**

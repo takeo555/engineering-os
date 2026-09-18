@@ -2,11 +2,11 @@
 
 | Cadence | When | Who runs it | Output |
 |---|---|---|---|
-| Weekly | 日曜 20:45 数字 / 21:00 講評 | `review-facts.yml` + Claude定期タスク | `weekly/YYYY-Www.md`、`CURRENT_FOCUS.md`、`base_level` |
+| Weekly | 日曜 17:35 数字 / 21:00 講評 | `review-facts.yml` + Claude定期タスク | `weekly/YYYY-Www.md`、`CURRENT_FOCUS.md`、`base_level` |
 | Monthly | 毎月1日 21:00 JST | `review-facts.yml` | `MONTHLY_CONTEXT.md`（講評は別） |
 
 日曜21:00に講評するのは、English OSの週次（日曜20:00 JST）と重ならないようにするためです。
-数字は20:45に出し、21:00の試験官が今週分を読めるようにします。講評は Issue #1 へ自動投稿します。
+数字は17:35に出し、21:00の試験官が今週分を読めるようにします。GitHub のスケジュール遅延を吸収するため、間隔を3時間以上取っています。講評は `eos_post_record` で Issue #1 へ投稿します。
 
 ## Weekly Review
 
