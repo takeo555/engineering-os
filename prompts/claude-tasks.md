@@ -22,10 +22,9 @@ iPhone では **Projects → Engineering OS 試験官 → チャット一覧** �
 
 ## 前提
 
-- `TODAY.md` を読む経路が要る。**MCP コネクタ**を先に繋いでおくこと
-  （[`10-automation/mcp/README.md`](../10-automation/mcp/README.md)・15分）。
-  コネクタが無くても、定期タスクは Anthropic 側のクラウドで動くので raw URL は概ね取得できる。
-  取れない日のために、タスク文にも4段の梯子を入れてある
+- `TODAY.md` は raw URL から取る。**定期タスクは Anthropic 側のクラウドで動くので、
+  ここでの URL 取得は概ね成功する**（モバイルの Project チャットと違う点。これが
+  「タスクに出題まで済ませる」構成にしている理由）。取れない日のために梯子を入れてある
 - `TODAY.md` は 03:10 JST に生成される。07:00 には確実に当日分がある
   （旧構成では 08:20〜08:40 JST 生成で、毎朝「前日分」を掴んでいた）
 
@@ -45,10 +44,9 @@ Project の指示欄と Knowledge のルールに従ってください。
 
 ## 1. 今日の割り当てを手に入れる（上から順に。成功したら下は試さない）
 
-1. eos_today ツールを呼ぶ
-2. https://raw.githubusercontent.com/takeo555/engineering-os/main/TODAY.md を開く
-3. https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/TODAY.md を開く
-4. 全部だめなら「おまかせ」で進む（Project 指示欄の第4段の規則を使う）
+1. https://raw.githubusercontent.com/takeo555/engineering-os/main/TODAY.md を開く
+2. https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/TODAY.md を開く
+3. 全部だめなら「おまかせ」で進む（Project 指示欄の第3段の規則を使う）
 
 TODAY.md の「今日の記録」が保存済みなら、出題せず「今日の分は終わっています」とだけ送って終わる。
 
@@ -81,7 +79,7 @@ TODAY.md の「1. Drill 8問」の題材枠どおりに、AI 3問 → 言語 3�
 1. 朝、Claude アプリを開く
 2. **Projects → Engineering OS 試験官 → いちばん新しいチャット**
 3. Drill 8問に答える → 採点が返る → そのまま Design 15分問題が出る → 解く
-4. 記録ブロックは試験官が Issue #1 へ投稿する（コネクタがあれば自動）
+4. 記録ブロックが出たら、コピーして Issue #1 へ貼る（30秒）
 
 通知が来ない・タップで開けない日も、手順2の経路で必ず辿り着ける。
 通知に依存しないこと。
@@ -106,9 +104,8 @@ TODAY.md の「1. Drill 8問」の題材枠どおりに、AI 3問 → 言語 3�
 
 次を上から順に試し、全文を読む。推測で埋めない。
 
-1. eos_weekly_context ツールを呼ぶ
-2. https://raw.githubusercontent.com/takeo555/engineering-os/main/WEEKLY_CONTEXT.md
-3. https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/WEEKLY_CONTEXT.md
+1. https://raw.githubusercontent.com/takeo555/engineering-os/main/WEEKLY_CONTEXT.md
+2. https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/WEEKLY_CONTEXT.md
 
 確認すること:
 
@@ -162,12 +159,9 @@ drill_network_avg: <同上>
 # Current Focus
 （既存の構成・見出し順を維持し、Periodは翌週の月曜〜日曜にする）
 
-## 4. 投函する
+## 4. 投函の案内（GitHub への投稿は試みない）
 
-eos_post_record ツールが使えるなら、この記録ブロックをそのまま body に渡して投函し、
-「投函しました」と1行で返す。新しい Issue は作らない。確認を求めない。
-
-コネクタが無い／投稿に失敗した場合だけ、次の1行を添えて終わる。
+記録ブロックを出したら、次の1行を添えて終わる。**自分で投稿しようとしない。**
 
 > この週次レビューを Issue #1「📥 記録の投函口」にコメントとして貼ってください。Bank の adopt は自分で書き写してください。
 

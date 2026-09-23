@@ -5,9 +5,8 @@
 
 次を上から順に試し、全文を読む。推測で埋めない。
 
-1. eos_weekly_context ツールを呼ぶ
-2. https://raw.githubusercontent.com/takeo555/engineering-os/main/WEEKLY_CONTEXT.md
-3. https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/WEEKLY_CONTEXT.md
+1. https://raw.githubusercontent.com/takeo555/engineering-os/main/WEEKLY_CONTEXT.md
+2. https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/WEEKLY_CONTEXT.md
 
 確認すること:
 
@@ -61,12 +60,9 @@ drill_network_avg: <同上>
 # Current Focus
 （既存の構成・見出し順を維持し、Periodは翌週の月曜〜日曜にする）
 
-## 4. 投函する
+## 4. 投函の案内（GitHub への投稿は試みない）
 
-eos_post_record ツールが使えるなら、この記録ブロックをそのまま body に渡して投函し、
-「投函しました」と1行で返す。新しい Issue は作らない。確認を求めない。
-
-コネクタが無い／投稿に失敗した場合だけ、次の1行を添えて終わる。
+記録ブロックを出したら、次の1行を添えて終わる。**自分で投稿しようとしない。**
 
 > この週次レビューを Issue #1「📥 記録の投函口」にコメントとして貼ってください。Bank の adopt は自分で書き写してください。
 

@@ -3,10 +3,9 @@ Project の指示欄と Knowledge のルールに従ってください。
 
 ## 1. 今日の割り当てを手に入れる（上から順に。成功したら下は試さない）
 
-1. eos_today ツールを呼ぶ
-2. https://raw.githubusercontent.com/takeo555/engineering-os/main/TODAY.md を開く
-3. https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/TODAY.md を開く
-4. 全部だめなら「おまかせ」で進む（Project 指示欄の第4段の規則を使う）
+1. https://raw.githubusercontent.com/takeo555/engineering-os/main/TODAY.md を開く
+2. https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/TODAY.md を開く
+3. 全部だめなら「おまかせ」で進む（Project 指示欄の第3段の規則を使う）
 
 TODAY.md の「今日の記録」が保存済みなら、出題せず「今日の分は終わっています」とだけ送って終わる。
 
