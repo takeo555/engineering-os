@@ -2,6 +2,10 @@
 
 URL は `takeo555/engineering-os`。リポジトリを変えたら置き換える。
 
+**貼る本文だけを切り出したものが [`paste/task-1-daily.txt`](paste/task-1-daily.txt) と
+[`paste/task-2-weekly.txt`](paste/task-2-weekly.txt) にあります。**
+このファイルを更新したら `python3 scripts/build_paste.py` を実行して一緒にコミットしてください。
+
 ## タスク1をどこに作るかが最重要
 
 **タスク1は、必ず Project「Engineering OS 試験官」の中から作ること。**
