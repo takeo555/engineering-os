@@ -171,26 +171,65 @@ async function handleRpc(env, msg) {
   }
 }
 
+// Streamable HTTP はレスポンスを JSON でも SSE でも返してよいが、
+// claude.ai のクライアントは SSE を期待することがある（「Couldn't reach the MCP server」の
+// 報告の多くがここ）。Accept ヘッダを見て両方に対応する。
+const CORS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "content-type, authorization, mcp-session-id, mcp-protocol-version",
+  "Access-Control-Expose-Headers": "mcp-session-id",
+};
+
+// ステートレスなのでセッションIDは固定でよい。返さないクライアントもあるので常に付ける
+const SESSION_ID = "engineering-os";
+
+function sseResponse(payloads) {
+  const body = payloads.map((p) => `event: message\ndata: ${JSON.stringify(p)}\n\n`).join("");
+  return new Response(body, {
+    headers: {
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache",
+      Connection: "keep-alive",
+      "Mcp-Session-Id": SESSION_ID,
+      ...CORS,
+    },
+  });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: CORS });
+    }
     if (!env.MCP_PATH || url.pathname !== `/${env.MCP_PATH}`) {
       return new Response("Not found", { status: 404 });
     }
+
+    // GET は SSE ストリームの要求。このサーバは自発的な通知を送らないので、
+    // 405 を返すのも仕様上は正しいが、先に GET を試すクライアントがいるため
+    // 空のストリームを 200 で返して接続チェックを通す。
     if (request.method === "GET") {
-      // Streamable HTTP の SSE ストリームは使わない（このサーバは通知を送らない）
-      return new Response("Method not allowed", { status: 405 });
+      return new Response(": ok\n\n", {
+        headers: {
+          "Content-Type": "text/event-stream",
+          "Cache-Control": "no-cache",
+          "Mcp-Session-Id": SESSION_ID,
+          ...CORS,
+        },
+      });
     }
     if (request.method !== "POST") {
-      return new Response("Method not allowed", { status: 405 });
+      return new Response("Method not allowed", { status: 405, headers: CORS });
     }
 
     let payload;
     try {
       payload = await request.json();
     } catch {
-      return Response.json(rpcError(null, -32700, "Parse error"), { status: 400 });
+      return Response.json(rpcError(null, -32700, "Parse error"), { status: 400, headers: CORS });
     }
 
     const messages = Array.isArray(payload) ? payload : [payload];
@@ -201,7 +240,15 @@ export default {
       responses.push(await handleRpc(env, msg));
     }
 
-    if (responses.length === 0) return new Response(null, { status: 202 });
-    return Response.json(Array.isArray(payload) ? responses : responses[0]);
+    if (responses.length === 0) {
+      return new Response(null, { status: 202, headers: { "Mcp-Session-Id": SESSION_ID, ...CORS } });
+    }
+
+    const wantsSse = (request.headers.get("accept") || "").includes("text/event-stream");
+    if (wantsSse) return sseResponse(responses);
+
+    return Response.json(Array.isArray(payload) ? responses : responses[0], {
+      headers: { "Mcp-Session-Id": SESSION_ID, ...CORS },
+    });
   },
 };

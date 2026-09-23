@@ -24,26 +24,35 @@ GitHub → **Settings → Developer settings → Personal access tokens → Fine
 
 **これ以外の権限を付けないこと。** 漏れても「このリポジトリのIssueにコメントできる」以上のことは起きません。
 
-## 2. デプロイする
+## 2. デプロイする（1コマンド）
+
+リポジトリのルートで：
+
+```bash
+bash 10-automation/mcp/setup.sh
+```
+
+Cloudflare へのログイン確認 → PATの入力（画面に出ません）→ PATの有効性チェック →
+secret 登録 → デプロイ → 疎通確認 まで通しで行い、最後に
+**claude.ai に登録するURL**を表示します。
+
+`MCP_PATH`（URLの末尾に付くランダム文字列）はスクリプトが生成します。控える必要はありません。
+
+<details>
+<summary>手で順にやる場合</summary>
 
 ```bash
 cd 10-automation/mcp
-
-# URLパスに使うランダム文字列。これが実質のアクセスキーになる
-openssl rand -hex 16          # 出力を控える（例: 3f9a...）
-
+openssl rand -hex 16                   # 控える
 npx wrangler login
 npx wrangler secret put GITHUB_TOKEN   # 手順1のPATを貼る
-npx wrangler secret put MCP_PATH       # 上で作ったランダム文字列を貼る
+npx wrangler secret put MCP_PATH       # 上のランダム文字列を貼る
 npx wrangler deploy
 ```
 
-デプロイすると `https://eos-mcp.<あなたのサブドメイン>.workers.dev` が出ます。
-**コネクタに登録するURLは、その末尾に MCP_PATH を付けたもの**です。
+コネクタに登録するURLは `https://eos-mcp.<サブドメイン>.workers.dev/<MCP_PATH>`。
 
-```
-https://eos-mcp.<サブドメイン>.workers.dev/<MCP_PATH>
-```
+</details>
 
 ## 3. 動作確認
 
