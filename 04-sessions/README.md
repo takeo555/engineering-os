@@ -19,25 +19,26 @@
 
 | Time | Actor | Action |
 |---|---|---|
-| 06:00 | GitHub Actions（build-context） | `CONTEXT.md` を再生成（Design の Track/Format/Level と狙う弱点、Drill 8問の題材枠を決める） |
-| 07:00 | Claude 定期タスク | 「Projectを開いて『今日の1問』と送って」と通知 |
-| — | You | Projectで「今日の1問」と送る |
-| — | Claude 試験官 | Drill 8問をまとめて出題 |
+| 03:10 | GitHub Actions（build-context） | `TODAY.md` を再生成（Design の Track/Format/Level と狙う弱点、Drill 8問の題材枠を決める）。05:40 に予備実行 |
+| 07:00 | Project内の定期タスク | `TODAY.md` を読み、**Drill 8問をまとめて出して待つ** |
+| — | You | iPhoneで Projects → 試験官 → 最新チャット を開く |
 | 約4分 | You | 回答をまとめて貼る |
 | — | Claude 試験官 | Drill 正誤判定、1行フィードバック、続けて Design 15分問題を出題 |
 | 約15分 | You | 解く。終わらなくてもその時点で止めて回答を貼る |
 | — | You / Claude | 必要ならヒント |
 | — | Claude 試験官 | 30秒サマリ→詳細レビュー→採点確定→**Drill と Design を統合した1つの記録ブロック**をチャットへ出力 |
-| 約30秒 | You | 記録ブロックをコピーして投函口 Issue #1 へコメント |
-| 自動 | GitHub Actions | 記録をコミット、drill-misses.md 追記、弱点の開閉、Scorecard更新、CONTEXT.md 再生成 |
+| — | Claude 試験官 | `eos_post_record` で記録ブロックを投函口 Issue #1 へ投稿（無ければ手貼り案内） |
+| 自動 | GitHub Actions | 記録をコミット、drill-misses.md 追記、弱点の開閉、Scorecard更新、TODAY.md 再生成 |
 
 **合計約20分**。Drill 4分 + Design 15分 + やり取りのオーバーヘッド1分。
 
-記録ブロックは**自分で** Issue #1「📥 記録の投函口」へコメントとして貼ります。claude.ai の GitHub 連携は読み取り専用なので、試験官は投稿できません（試験官側も投稿を試みない設定にしてあります）。新しいIssueは作りません。手順は [10-automation/inbox.md](../10-automation/inbox.md)。
+記録ブロックは試験官が `eos_post_record` で Issue #1「📥 記録の投函口」へ投稿します（設定は [10-automation/connector.md](../10-automation/connector.md)）。コネクタが無い環境では自分で貼ります（手順は [10-automation/inbox.md](../10-automation/inbox.md)）。新しいIssueは作りません。
 
 問題文の「15分以内」は制約です。`time_spent_min` には Design に実際にかかった時間だけを書きます。分からなければ推測しません。
 
 定期タスクの通知が届かなかった日は、Projectを開いて「今日の1問」と送れば同じことが起きます。この仕組みは通知が来なくても壊れません。
+
+割り当てをどうしても取得できない日は、「おまかせ」と送れば曜日から決めた割り当てで出題されます。**0問で終わる日を作らないことを、割り当ての正確さより優先します。**
 
 ## Rules
 

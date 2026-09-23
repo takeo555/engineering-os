@@ -10,11 +10,12 @@ Drill と Design の両方の割り当てを決定する。
 
 - 同じ日に何度実行しても同じ割り当てになる（日付をシードにする）
 - 外部APIは使わない。標準ライブラリのみ
-- 出力: CONTEXT.md, STATUS.md
+- 出力: TODAY.md（始めるのに要るものだけ・貼れる）, CONTEXT.md（全量）, STATUS.md
 """
 import json
 import os
 import random
+import re
 import sys
 from datetime import date, timedelta
 
@@ -113,6 +114,12 @@ def _miss_note(items):
     if m.get("language"):
         label = f"{m['language']}/{label}"
     return f"あり: {label}（{m['date']} miss）"
+
+
+def _miss_suffix(items):
+    """TODAY.md の1行版。miss が無い日は何も足さない。"""
+    note = _miss_note(items)
+    return "" if note == "なし" else f" ／ 直近miss{note[2:]}"
 
 
 def pick_ai_drill(cfg, phase, misses, rnd):
@@ -359,6 +366,75 @@ Drill の記録はカテゴリ別正答率のみ。5軸採点も Weakness Log �
 """
 
     E.write_text(E.CONTEXT_FILE, body)
+
+    # ------------------------------------------------ TODAY.md（始めるのに要るものだけ）
+    # CONTEXT.md は全量（弱点一覧・履歴14件・数字・Level/Formatの定義）で 7KB 近くある。
+    # そのうち毎日変わるのはこの30行だけ。モバイルで貼るのも、定期タスクが丸ごと
+    # 読み込むのもこちらを使う。静的な定義は Project の Knowledge 側に置く。
+    today_targets = "\n".join(
+        f"- `{w['id']}` [{w['priority']}] {w['weakness']}" for w in targets
+    ) or "- なし（今日は新しい題材でよい）"
+
+    # 旧い記録は title に日付が入っているものがある。1行を短く保つため落とす
+    def _short_title(t):
+        return re.sub(r"^\d{4}-\d{2}-\d{2}\s*[—–-]\s*", "", t)[:40]
+
+    today_hist = "\n".join(
+        f"- {s['date']} {s['track']} / {s['format']} — {_short_title(s['title'])}"
+        for s in sessions[:5]) or "- 履歴なし（初回）"
+
+    today_drill = "\n".join([
+        f"- **AI {len(ai_slots)}問**: {'；'.join(ai_slots)}{_miss_suffix(ai_miss)}",
+        f"- **言語 {len(lang_slots)}問**: {'；'.join(lang_slots)}{_miss_suffix(lang_miss)}",
+        f"- **ネットワーク {len(net_slots)}問**: {'；'.join(net_slots)}{_miss_suffix(net_miss)}",
+    ])
+
+    today_body = f"""# TODAY — {today.isoformat()}（{weekday}）
+
+生成: {E.now_jst_str()} JST ／ 自動生成・手で編集しない
+
+> **今日の割り当ての正本はこの1ファイル。** 見出しの日付が今日でなければ使わないこと
+> （前日分を掴んでいる＝生成が遅れている。`build-context` を手動実行する）。
+> 順序は **Drill 8問（30秒・単答）→ Design 1問（{design_minutes}分）**。入れ替えない。
+
+## 1. Drill 8問（合計4分・単答・選択肢なし）
+
+Phase: {phase_line}
+
+{today_drill}
+
+「直近missあり」のカテゴリは、その1問を同じ分野の**別問題**に差し替える。
+
+## 2. Design 1問（{design_minutes}分）
+
+| 項目 | 値 |
+|---|---|
+| Track | **{track}** |
+| Format | **{fmt}** |
+| Level | **{level}** |
+| 回答環境 | {mode} |
+| 想定所要時間 | {design_minutes}分 |
+| 今日はセッション日か | {"はい" if is_session_day else "いいえ（休息日。求められたら出題してよい）"} |
+| 今日の記録 | {"**保存済み。2問目は出さない**" if done_today else "未保存"} |
+
+Track / Format / Level は AI が選び直さない。この表のとおりに出す。
+
+## 3. 今日狙う弱点（1件だけ。問題文に弱点名を書かず、必ず表面化させる）
+
+{today_targets}
+
+## 4. 直近5回（題材の重複を避ける）
+
+{today_hist}
+
+---
+
+<!-- eos:today date={today.isoformat()} track={track} format={fmt} level={level}
+     targets={",".join(w["id"] for w in targets) or "-"}
+     phase={phase["phase"] or "-"} done={"1" if done_today else "0"} -->
+"""
+    E.write_text(E.TODAY_FILE, today_body)
+
     status = E.update_status(cfg)
 
     print(json.dumps({

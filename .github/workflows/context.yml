@@ -5,7 +5,13 @@ name: build-context
 
 on:
   schedule:
-    - cron: "0 21 * * *" # 06:00 JST
+    # GitHub のスケジュール実行は毎時 :00 が最も混み、公開リポジトリでは常習的に遅れる。
+    # 実測（2026-09-11〜09-18）では 21:00 UTC 指定に対して毎日 1h50m〜2h40m 遅れ、
+    # 当日の CONTEXT.md が 08:20〜08:40 JST にしか出来ていなかった。
+    # ＝ 07:00 JST の朝の着火は毎朝「前日の CONTEXT」を掴んでいた。
+    # 3時間遅れても 07:00 に間に合う時刻へ前倒しし、:00 も避ける。
+    - cron: "10 18 * * *" # 03:10 JST（本命）
+    - cron: "40 20 * * *" # 05:40 JST（予備。本命が丸ごとスキップされた日の保険）
   workflow_dispatch:
   push:
     branches: [main]
@@ -35,7 +41,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add CONTEXT.md STATUS.md
+          git add TODAY.md CONTEXT.md STATUS.md
           if git diff --cached --quiet; then
             echo "変更なし"
             exit 0

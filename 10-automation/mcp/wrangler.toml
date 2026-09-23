@@ -1,0 +1,13 @@
+name = "eos-mcp"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+# 秘密ではない設定
+[vars]
+GITHUB_REPO = "takeo555/engineering-os"
+GITHUB_BRANCH = "main"
+ISSUE_NUMBER = "1"
+
+# secret はここに書かない。次の2つを wrangler secret put で入れる:
+#   GITHUB_TOKEN  fine-grained PAT（このリポジトリの Issues: Read and write だけ）
+#   MCP_PATH      推測できないURLパス（openssl rand -hex 16）

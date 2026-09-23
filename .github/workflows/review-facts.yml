@@ -3,13 +3,16 @@ name: review-facts
 # 週次・月次レビュー用の「事実」を書き出す。講評は試験官（Claude）が書く。
 # APIキーは使わない。
 #
-# 週次の数字は日曜 20:45 JST。講評の定期タスクは 21:00 JST。
-# 同じ21:00だと、まだ先週の WEEKLY_CONTEXT.md を読んでしまう。
+# 週次の数字は日曜 17:35 JST。講評の定期タスクは 21:00 JST。
+# GitHub のスケジュールは数時間遅れることがあるので、差を15分ではなく3時間以上取る。
 
 on:
   schedule:
-    - cron: "45 11 * * 0" # 日曜 20:45 JST — 週次の数字
-    - cron: "0 12 1 * *" # 毎月1日 21:00 JST — 月次
+    # 2026-09-18 時点で、このワークフローは一度も実行されていない（週次レビューが死んでいた）。
+    # 旧: 日曜 12:00 UTC ちょうど → GitHub で最も混む枠でドロップされていた。
+    # 講評の定期タスク（日曜 21:00 JST）まで3時間以上の余裕を取り、:00 を避ける。
+    - cron: "35 08 * * 0" # 日曜 17:35 JST — 週次の数字
+    - cron: "35 09 1 * *" # 毎月1日 18:35 JST — 月次
   workflow_dispatch:
     inputs:
       period:
@@ -33,7 +36,7 @@ jobs:
       - name: Decide period
         id: p
         run: |
-          if [ "${{ github.event.schedule }}" = "0 12 1 * *" ]; then
+          if [ "${{ github.event.schedule }}" = "35 09 1 * *" ]; then
             echo "period=month" >> $GITHUB_OUTPUT
           else
             echo "period=${{ inputs.period || 'week' }}" >> $GITHUB_OUTPUT

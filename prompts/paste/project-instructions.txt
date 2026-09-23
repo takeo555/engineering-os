@@ -1,39 +1,3 @@
-# Claude.ai Project の指示欄に貼る文
-
-Claude.ai で **Project「Engineering OS 試験官」** を作り、その「指示」欄に下の `---` 以下を貼ります。
-定期タスクの文面は [`claude-tasks.md`](claude-tasks.md)。
-
-**投函は MCP コネクタがあれば自動、無ければ手貼りです。** 設定は
-[`10-automation/connector.md`](../10-automation/connector.md)。
-claude.ai 標準の「GitHub 連携」は読み取り専用で Issue にコメントできません。
-[`10-automation/mcp/`](../10-automation/mcp/) の自前コネクタはコメントできます。
-試験官はまず `eos_post_record` を試み、使えなければ貼り先を案内します。
-
-Projectには次の7ファイルをアップロードします。
-
-1. `07-scorecard/anchors.md` — **必須**。採点の見本。これが無いと点数が月をまたいでドリフトする
-2. `prompts/examiner-manual.md` — 出題と採点の詳細ルール
-3. `prompts/record-block.md` — 記録ブロックの雛形
-4. `01-skill-map/README.md` — 鍛える能力の定義
-5. `ROADMAP.md` — 学習フェーズ（AI ドリルの題材がどのフェーズのものか判定する）
-6. `02-tracks/coding-language.md` — 言語ドリルの題材一覧
-7. `02-tracks/code-review.md` — Code Review Track の定義
-
-`weakness-log.md` や `scores.csv` は**アップロードしないこと。** Knowledgeは静的なスナップショットなので、
-日々変わるファイルを入れると実態とズレます。動く数字は毎回 `TODAY.md` を読んで取ります
-（`TODAY.md` も `CONTEXT.md` もアップロード対象ではありません）。
-
-**貼る本文だけを切り出したものが [`paste/project-instructions.txt`](paste/project-instructions.txt) にあります。**
-raw で開いて全選択すればそのまま貼れます（説明文を目で除く必要がありません）。
-
-このファイルを更新したら `python3 scripts/build_paste.py` を実行して一緒にコミットしてください。
-
-このファイルを更新したら、**Projectの指示欄を貼り直し**、Knowledgeの7ファイルのうち
-更新されたもの（多くは `examiner-manual.md` と `record-block.md`）を**差し替えて**ください。
-git にコミットしただけでは Claude 側は一切変わりません。
-
----
-
 あなたはEngineering OSの試験官です。日本語で応答します。毎日、**Drill 8問（30秒・単答）と Design 1問（15分・5軸採点）** をこの順で出し、採点し、両者を統合した1つの記録ブロックを出力します。
 
 **状態は会話の中の SESSION を正本にします。** 割り当てを読むのは **1日1回、Drill を出す直前だけ**です。Design 出題時・採点時・記録時に TODAY.md / CONTEXT.md を読み直して上書きしてはいけません。

@@ -51,6 +51,7 @@ CURRENT_FOCUS = os.path.join(ROOT, "CURRENT_FOCUS.md")
 CONFIG = os.path.join(ROOT, "eos.config.json")
 STATUS_FILE = os.path.join(ROOT, "STATUS.md")
 CONTEXT_FILE = os.path.join(ROOT, "CONTEXT.md")
+TODAY_FILE = os.path.join(ROOT, "TODAY.md")
 WEEKLY_CONTEXT_FILE = os.path.join(ROOT, "WEEKLY_CONTEXT.md")
 PROMOTION_QUEUE = os.path.join(ROOT, "03-banks", "promotion-queue.md")
 INBOX_DIR = os.path.join(ROOT, "04-sessions", "inbox")
@@ -60,6 +61,11 @@ ROADMAP = os.path.join(ROOT, "ROADMAP.md")
 
 def today_jst():
     return datetime.now(JST).date()
+
+
+def now_jst_str():
+    """TODAY.md の鮮度判定に使う。生成が朝の着火より遅れていないかを目で見る。"""
+    return datetime.now(JST).strftime("%Y-%m-%d %H:%M")
 
 
 def load_config():

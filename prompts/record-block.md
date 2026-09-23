@@ -1,7 +1,7 @@
 # 記録ブロックの雛形
 
 **このファイルが日次記録のフォーマット正本。** 試験官はレビューの最後にこの形で1つのコードブロックをチャットへ出す。独自フォーマットは作らない。
-出したあと、**ユーザーが Issue #1「📥 記録の投函口」へコメントとして貼る。** 試験官は投稿を試みない（claude.ai の GitHub 連携は読み取り専用）。記録のために新しいIssueは作らない。
+出したあと、**試験官が `eos_post_record` で Issue #1「📥 記録の投函口」へコメントとして投稿する。** コネクタが無い環境では、ユーザーが手で貼る。どちらの場合も記録のために新しいIssueは作らない。
 
 ## 崩してはいけない点
 
@@ -109,7 +109,7 @@ next_hint: 次はロックの粒度を問う
 | Key | 必須 | 内容 |
 |---|---|---|
 | `type` | ✓ | `session` 固定 |
-| `date` | ✓ | CONTEXT.mdの日付（Asia/Tokyo） |
+| `date` | ✓ | TODAY.mdの日付（Asia/Tokyo） |
 | `track` | ✓ | Design 4Track のいずれか（`Layered Architecture` `DB / Table Design` `Web / API / HTTP` `Code Review`）。`DB` `API` のような略称でも読める |
 | `format` / `level` | ✓ | SESSION（出題時のCONTEXT）をそのまま。採点時に読み直さない |
 | `title` | ✓ | 20〜40字。体言止め。日付は入れない |
