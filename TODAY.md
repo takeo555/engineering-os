@@ -1,6 +1,6 @@
-# TODAY — 2026-09-23（Wed）
+# TODAY — 2026-09-24（Thu）
 
-生成: 2026-09-23 17:12 JST ／ 自動生成・手で編集しない
+生成: 2026-09-24 06:27 JST ／ 自動生成・手で編集しない
 
 > **今日の割り当ての正本はこの1ファイル。** 見出しの日付が今日でなければ使わないこと
 > （前日分を掴んでいる＝生成が遅れている。`build-context` を手動実行する）。
@@ -10,9 +10,9 @@
 
 Phase: Phase 1（生成AIパスポート期・2026-09-14〜2026-10-19）
 
-- **AI 3問**: 業務利用の注意点；生成AIの仕組み概要（Transformer, LLM, RAG, ファインチューニング）；リスク（幻覚、著作権、秘密漏洩、バイアス）
-- **言語 3問**: Go / context；Python / 型ヒント；Go / error handling
-- **ネットワーク 2問**: 5章 ファイアウォール・キャッシュ・負荷分散；4章 アクセス回線とプロバイダ
+- **AI 3問**: リスク（幻覚、著作権、秘密漏洩、バイアス）；生成AIの仕組み概要（Transformer, LLM, RAG, ファインチューニング）；業務利用の注意点
+- **言語 3問**: Next.js / Server Actions；Go / goroutine/channel；Next.js / fetch のキャッシュ
+- **ネットワーク 2問**: 2章 プロトコル・スタックとLANアダプタ；4章 アクセス回線とプロバイダ
 
 「直近missあり」のカテゴリは、その1問を同じ分野の**別問題**に差し替える。
 
@@ -21,9 +21,9 @@ Phase: Phase 1（生成AIパスポート期・2026-09-14〜2026-10-19）
 | 項目 | 値 |
 |---|---|
 | Track | **DB / Table Design** |
-| Format | **Review** |
+| Format | **Explain** |
 | Level | **L1** |
-| 回答環境 | キーボード想定 |
+| 回答環境 | モバイル想定 |
 | 想定所要時間 | 15分 |
 | 今日はセッション日か | はい |
 | 今日の記録 | 未保存 |
@@ -44,6 +44,6 @@ Track / Format / Level は AI が選び直さない。この表のとおりに�
 
 ---
 
-<!-- eos:today date=2026-09-23 track=DB / Table Design format=Review level=L1
+<!-- eos:today date=2026-09-24 track=DB / Table Design format=Explain level=L1
      targets=W001
      phase=1 done=0 -->
