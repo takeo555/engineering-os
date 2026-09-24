@@ -33,7 +33,7 @@ Knowledge が読めず採点できないうえ、結果の会話が Project の�
 ## 構成
 
 ```text
-03:10 JST  Actions: build-context（context.yml）
+00:50 JST  Actions: build-context（context.yml）
              ├─ 弱点・スコア履歴・出題履歴を読む
              ├─ Track / Format / Level / 狙う弱点を決定論的に決める
              └─ TODAY.md / CONTEXT.md / STATUS.md を再生成してコミット

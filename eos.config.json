@@ -3,7 +3,7 @@
   "base_level": "L1",
   "target_minutes_design": 15,
   "target_seconds_drill": 30,
-  "generate_time_jst": "03:10",
+  "generate_time_jst": "00:50",
   "session_days": [
     "Mon",
     "Tue",

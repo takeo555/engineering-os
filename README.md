@@ -44,7 +44,7 @@ Session RecordがGitHubへ保存され、再テストの合否が判定される
 毎朝7時に、Projectの定期タスクが Drill 8問を出しておきます。iPhoneで Projects → 試験官 → 最新チャット を開いて答えると、採点のあと Design 15分問題が出ます。合計20分。試験官が記録ブロックを Issue #1「📥 記録の投函口」へ投稿すれば、あとは自動です。新しいIssueは作りません。
 
 ```text
-03:10 GitHub Actions（build-context）：弱点と履歴から、今日のTrack / Format / Level / 狙う弱点を決めて
+00:50 GitHub Actions（build-context）：弱点と履歴から、今日のTrack / Format / Level / 狙う弱点を決めて
       TODAY.md に書く（問題文は作らない）。05:40 に予備実行
   ↓
 07:00 Projectの定期タスク：TODAY.md を読んで Drill 8問を出し、そのまま待つ
