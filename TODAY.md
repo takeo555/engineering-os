@@ -1,6 +1,6 @@
-# TODAY — 2026-09-27（Sun）
+# TODAY — 2026-09-28（Mon）
 
-生成: 2026-09-27 08:08 JST ／ 自動生成・手で編集しない
+生成: 2026-09-28 04:18 JST ／ 自動生成・手で編集しない
 
 > **今日の割り当ての正本はこの1ファイル。** 見出しの日付が今日でなければ使わないこと
 > （前日分を掴んでいる＝生成が遅れている。`build-context` を手動実行する）。
@@ -10,9 +10,9 @@
 
 Phase: Phase 1（生成AIパスポート期・2026-09-14〜2026-10-19）
 
-- **AI 3問**: 業務利用の注意点；法制度と倫理（EU AI Act, 日本の指針、ガバナンス）；リスク（幻覚、著作権、秘密漏洩、バイアス）
-- **言語 3問**: Go / struct タグとJSON；Next.js / revalidate；Next.js / Middleware
-- **ネットワーク 2問**: 4章 アクセス回線とプロバイダ；1章 Webブラウザがメッセージを作る
+- **AI 3問**: 生成AIの仕組み概要（Transformer, LLM, RAG, ファインチューニング）；業務利用の注意点；法制度と倫理（EU AI Act, 日本の指針、ガバナンス）
+- **言語 3問**: Go / slice/map の挙動；Terraform / workspace；Python / dataclass/Pydantic
+- **ネットワーク 2問**: 6章 Webサーバ側の処理；5章 ファイアウォール・キャッシュ・負荷分散
 
 「直近missあり」のカテゴリは、その1問を同じ分野の**別問題**に差し替える。
 
@@ -20,10 +20,10 @@ Phase: Phase 1（生成AIパスポート期・2026-09-14〜2026-10-19）
 
 | 項目 | 値 |
 |---|---|
-| Track | **DB / Table Design** |
-| Format | **Explain** |
+| Track | **Layered Architecture** |
+| Format | **Design** |
 | Level | **L1** |
-| 回答環境 | モバイル想定 |
+| 回答環境 | キーボード想定 |
 | 想定所要時間 | 15分 |
 | 今日はセッション日か | はい |
 | 今日の記録 | 未保存 |
@@ -32,7 +32,7 @@ Track / Format / Level は AI が選び直さない。この表のとおりに�
 
 ## 3. 今日狙う弱点（1件だけ。問題文に弱点名を書かず、必ず表面化させる）
 
-- `W001` [High] 論理削除と一意制約の衝突に気づけない
+- `W005` [High] HandlerとDomainの責務境界を正しく分離できない
 
 ## 4. 直近5回（題材の重複を避ける）
 
@@ -44,6 +44,6 @@ Track / Format / Level は AI が選び直さない。この表のとおりに�
 
 ---
 
-<!-- eos:today date=2026-09-27 track=DB / Table Design format=Explain level=L1
-     targets=W001
+<!-- eos:today date=2026-09-28 track=Layered Architecture format=Design level=L1
+     targets=W005
      phase=1 done=0 -->
