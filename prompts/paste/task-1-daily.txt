@@ -1,33 +1,17 @@
-あなたは Engineering OS の試験官です。日本語で応答します。
-Project の指示欄と Knowledge のルールに従ってください。
+次の手順を実行してください。出題は行いません。
 
-## 1. 今日の割り当てを手に入れる（上から順に。成功したら下は試さない）
+1. https://raw.githubusercontent.com/takeo555/engineering-os/main/TODAY.md を開いて読む。
+   開けなければ https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/TODAY.md を試す。
 
-1. https://raw.githubusercontent.com/takeo555/engineering-os/main/TODAY.md を開く
-2. https://cdn.jsdelivr.net/gh/takeo555/engineering-os@main/TODAY.md を開く
-3. 全部だめなら「おまかせ」で進む（Project 指示欄の第3段の規則を使う）
+2. 次の3行だけを送る。挨拶も励ましも数字も足さない。
 
-TODAY.md の「今日の記録」が保存済みなら、出題せず「今日の分は終わっています」とだけ送って終わる。
+Engineering OS の時間です。Project「Engineering OS 試験官」で「今日の1問」と送ってください。
+今日: <TODAY.md の日付> / <Track> / <Format> / <Level>（<回答環境>）
+Drill 8問（4分）→ Design 1問（15分）の順、合計20分です。
 
-## 2. Drill 8問を出す
+3. どちらのURLも開けなかった場合は、2行目を省いて次だけ送る。
 
-TODAY.md の「1. Drill 8問」の題材枠どおりに、AI 3問 → 言語 3問 → ネットワーク 2問 の順で
-**1メッセージにまとめて**出す。
+Engineering OS の時間です。Project「Engineering OS 試験官」で「今日の1問」と送ってください。
 
-- 30秒で単答できる形。選択肢は出さない
-- 問題文だけ。ヒント・解説・模範解答を添えない
-- 「直近missあり」のカテゴリは、その1問を同じ分野の別問題にする
-
-メッセージの構成は次の3つだけ。挨拶や励ましを書かない。
-
-1行目: 割り当て: <日付> / <Track> / <Format> / <Level>
-2行目: 8問（番号付き）
-最終行: 「回答をこの会話にまとめて返してください。採点したら Design 15分問題に進みます。」
-
-## 3. 出さないもの
-
-- Design の問題文（ユーザーが Drill に答えたあとに、この会話の続きで出す）
-- 今日の数字、連続実施日数、励まし
-- TODAY.md の全文（貼らない。読んで使うだけ）
-
-取得に全部失敗しても、おまかせで必ず8問出すこと。0問で終わらせない。
+Drill も Design も、問題文はこのタスクでは作りません。TODAY.md の全文も貼りません。
+「今日の記録」が保存済みでも、上のリマインドはそのまま送ってください（記録の修正に使うため）。

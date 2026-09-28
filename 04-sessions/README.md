@@ -20,8 +20,9 @@
 | Time | Actor | Action |
 |---|---|---|
 | 00:50 | GitHub Actions（build-context） | `TODAY.md` を再生成（Design の Track/Format/Level と狙う弱点、Drill 8問の題材枠を決める）。05:40 に予備実行 |
-| 07:00 | Project内の定期タスク | `TODAY.md` を読み、**Drill 8問をまとめて出して待つ** |
-| — | You | iPhoneで Projects → 試験官 → 最新チャット を開く |
+| 07:00 | Project内の定期タスク | 今日の割り当てを1行で通知（**出題しない**） |
+| — | You | iPhoneで Projects → 試験官 を開き「今日の1問」と送る |
+| — | Claude 試験官 | Drill 8問をまとめて出題 |
 | 約4分 | You | 回答をまとめて貼る |
 | — | Claude 試験官 | Drill 正誤判定、1行フィードバック、続けて Design 15分問題を出題 |
 | 約15分 | You | 解く。終わらなくてもその時点で止めて回答を貼る |
