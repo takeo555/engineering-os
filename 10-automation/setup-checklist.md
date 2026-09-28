@@ -96,7 +96,7 @@ Project で「今日の1問」と送り、raw URL の取得に失敗したとき
 - [ ] 翌日の `TODAY.md` の Drill 題材枠に「直近miss」が出た
 - [ ] `07-scorecard/scores.csv` の `drill_*` 列が埋まっている
 - [ ] `weakness-log.md` に Closed が1件以上ある
-- [ ] 日曜17:35に `WEEKLY_CONTEXT.md` が更新された（`gh run list --workflow=review-facts.yml` で実行を確認）
+- [ ] 日曜11:35に `WEEKLY_CONTEXT.md` が更新された（`gh run list --workflow=review-facts.yml` で実行を確認）
 - [ ] 日曜21:00に Claude が講評を投函口へ投稿した
 - [ ] 新しいIssueが立っていない
 

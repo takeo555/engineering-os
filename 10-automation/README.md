@@ -60,9 +60,9 @@ Knowledge が読めず採点できないうえ、結果の会話が Project の�
              ├─ 弱点の開閉、scores.csv、TODAY.md / CONTEXT.md を更新
              └─ 結果を投函口にコメントで返す
                                     │
-日曜17:35  Actions: review-facts.yml → WEEKLY_CONTEXT.md（数字だけ）
+日曜11:35  Actions: review-facts.yml → WEEKLY_CONTEXT.md（数字だけ）
 日曜21:00  Project内の定期タスク: 講評を書いて Issue #1 へ投稿
-毎月1日18:35                        → MONTHLY_CONTEXT.md
+毎月1日11:35                        → MONTHLY_CONTEXT.md
 ```
 
 手で残るのは **解いて回答を書く / 記録ブロックを貼る / 週1回 Bank の adopt を書き写す** の3つです。
@@ -149,7 +149,7 @@ gh run watch
 サイドバーの「Scheduled」から単独で作らないこと。Knowledge が読めず採点できないうえ、
 結果の会話が Project の外に出て、iPhone から辿り着けなくなります。
 
-週次の数字は 17:35 に Actions が書く。今週分でなければ投函せず止まる。
+週次の数字は 11:35 に Actions が書く。今週分でなければ投函せず止まる。
 
 ### 5.5. 記録の投函口を作る
 

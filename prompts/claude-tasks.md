@@ -90,7 +90,7 @@ TODAY.md の「1. Drill 8問」の題材枠どおりに、AI 3問 → 言語 3�
 
 名前の例: `Engineering OS 週次レビュー`
 
-数字は Actions が日曜 **17:35 JST** に `WEEKLY_CONTEXT.md` へ書く
+数字は Actions が日曜 **11:35 JST** に `WEEKLY_CONTEXT.md` へ書く
 （旧構成の 20:45 JST は GitHub の遅延を吸収できず、そもそも一度も実行されていなかった）。
 このタスクは 21:00 JST に動かし、講評を書いて Issue #1 へ投函する。リマインドで終わらせない。
 
@@ -169,5 +169,5 @@ https://github.com/takeo555/engineering-os/issues/1
 ```
 
 > **なぜ 21:00 か**
-> English OS の週次は日曜 20:00。数字の生成を 17:35、講評を 21:00 にしてぶつからないようにする。
+> English OS の週次は日曜 20:00。数字の生成を 11:35、講評を 21:00 にしてぶつからないようにする。
 > 21:00 に数字が無ければ投函せず止める。

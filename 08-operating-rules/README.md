@@ -32,7 +32,7 @@
 
 ### Weekly
 
-- 日曜17:35 `WEEKLY_CONTEXT.md`（数字だけ）が再生成される
+- 日曜11:35 `WEEKLY_CONTEXT.md`（数字だけ）が再生成される
 - 日曜21:00 Claude定期タスクが講評を書き、Issue #1「📥 記録の投函口」へ投稿する（English OSの週次20:00と重ならない）
 - 投函口の「記録しました」と `CURRENT_FOCUS.md` の書き換えを確認する
 - [Bank Promotion Queue](../03-banks/promotion-queue.md)の`adopt`を該当Bankへ書き写し、行を削除する（3分。ここだけ手動）
