@@ -1,6 +1,6 @@
-# TODAY — 2026-10-13（Tue）
+# TODAY — 2026-10-14（Wed）
 
-生成: 2026-10-13 11:14 JST ／ 自動生成・手で編集しない
+生成: 2026-10-14 05:49 JST ／ 自動生成・手で編集しない
 
 > **今日の割り当ての正本はこの1ファイル。** 見出しの日付が今日でなければ使わないこと
 > （前日分を掴んでいる＝生成が遅れている。`build-context` を手動実行する）。
@@ -10,9 +10,9 @@
 
 Phase: Phase 1（生成AIパスポート期・2026-09-14〜2026-10-19）
 
-- **AI 3問**: 法制度と倫理（EU AI Act, 日本の指針、ガバナンス）；リスク（幻覚、著作権、秘密漏洩、バイアス）；業務利用の注意点
-- **言語 3問**: Next.js / ルーティング；Terraform / workspace；Next.js / revalidate
-- **ネットワーク 2問**: 1章 Webブラウザがメッセージを作る；6章 Webサーバ側の処理
+- **AI 3問**: リスク（幻覚、著作権、秘密漏洩、バイアス）；法制度と倫理（EU AI Act, 日本の指針、ガバナンス）；生成AIの仕組み概要（Transformer, LLM, RAG, ファインチューニング）
+- **言語 3問**: Next.js / Middleware；Next.js / Server Actions；Python / generator
+- **ネットワーク 2問**: 5章 ファイアウォール・キャッシュ・負荷分散；1章 Webブラウザがメッセージを作る
 
 「直近missあり」のカテゴリは、その1問を同じ分野の**別問題**に差し替える。
 
@@ -21,9 +21,9 @@ Phase: Phase 1（生成AIパスポート期・2026-09-14〜2026-10-19）
 | 項目 | 値 |
 |---|---|
 | Track | **Layered Architecture** |
-| Format | **Debug** |
+| Format | **Design** |
 | Level | **L1** |
-| 回答環境 | モバイル想定 |
+| 回答環境 | キーボード想定 |
 | 想定所要時間 | 15分 |
 | 今日はセッション日か | はい |
 | 今日の記録 | 未保存 |
@@ -44,6 +44,6 @@ Track / Format / Level は AI が選び直さない。この表のとおりに�
 
 ---
 
-<!-- eos:today date=2026-10-13 track=Layered Architecture format=Debug level=L1
+<!-- eos:today date=2026-10-14 track=Layered Architecture format=Design level=L1
      targets=W005
      phase=1 done=0 -->
