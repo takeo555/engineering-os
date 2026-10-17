@@ -1,6 +1,6 @@
-# TODAY — 2026-10-17（Sat）
+# TODAY — 2026-10-18（Sun）
 
-生成: 2026-10-17 08:01 JST ／ 自動生成・手で編集しない
+生成: 2026-10-18 02:57 JST ／ 自動生成・手で編集しない
 
 > **今日の割り当ての正本はこの1ファイル。** 見出しの日付が今日でなければ使わないこと
 > （前日分を掴んでいる＝生成が遅れている。`build-context` を手動実行する）。
@@ -11,8 +11,8 @@
 Phase: Phase 1（生成AIパスポート期・2026-09-14〜2026-10-19）
 
 - **AI 3問**: リスク（幻覚、著作権、秘密漏洩、バイアス）；生成AIの仕組み概要（Transformer, LLM, RAG, ファインチューニング）；法制度と倫理（EU AI Act, 日本の指針、ガバナンス）
-- **言語 3問**: Python / dataclass/Pydantic；Python / context manager；Python / generator
-- **ネットワーク 2問**: 3章 ハブ・スイッチ・ルータ；4章 アクセス回線とプロバイダ
+- **言語 3問**: Go / error handling；Next.js / fetch のキャッシュ；Next.js / ルーティング
+- **ネットワーク 2問**: 3章 ハブ・スイッチ・ルータ；1章 Webブラウザがメッセージを作る
 
 「直近missあり」のカテゴリは、その1問を同じ分野の**別問題**に差し替える。
 
@@ -44,6 +44,6 @@ Track / Format / Level は AI が選び直さない。この表のとおりに�
 
 ---
 
-<!-- eos:today date=2026-10-17 track=DB / Table Design format=Explain level=L1
+<!-- eos:today date=2026-10-18 track=DB / Table Design format=Explain level=L1
      targets=W001
      phase=1 done=0 -->
