@@ -1,4 +1,4 @@
-# CONTEXT — 2026-10-19（Mon）
+# CONTEXT — 2026-10-20（Tue）
 
 > **自動生成。手で編集しないこと。** 毎朝00:50 JSTと、
 > 記録が保存されるたびに再生成されます。
@@ -7,7 +7,7 @@
 
 ## 今日のフェーズ
 
-Phase 1（生成AIパスポート期・2026-09-14〜2026-10-19）
+Phase 2（CCAO-F期・2026-10-20〜2027-01-31）
 
 AI ドリルの題材はこのフェーズに従います。詳細は `ROADMAP.md`。
 
@@ -15,9 +15,9 @@ AI ドリルの題材はこのフェーズに従います。詳細は `ROADMAP.m
 
 | カテゴリ | 問題数 | 分野の枠 | 直近のmiss類題 |
 |---|---|---|---|
-| AI | 3 | 法制度と倫理（EU AI Act, 日本の指針、ガバナンス）；生成AIの仕組み概要（Transformer, LLM, RAG, ファインチューニング）；リスク（幻覚、著作権、秘密漏洩、バイアス） | なし |
-| 言語 | 3 | Go / context；Next.js / ルーティング；Go / context | なし |
-| ネットワーク | 2 | 3章 ハブ・スイッチ・ルータ；4章 アクセス回線とプロバイダ | なし |
+| AI | 3 | Domain 1: Prompting and Task Execution（14%）；Domain 6: Governance, Risk, and Responsible Use（15%）；Domain 4: Workflow Integration and Solution Design（16%） | なし |
+| 言語 | 3 | Terraform / state と backend；Next.js / revalidate；Go / struct タグとJSON | なし |
+| ネットワーク | 2 | 4章 アクセス回線とプロバイダ；2章 プロトコル・スタックとLANアダプタ | なし |
 
 （試験官はこの枠に沿って具体的な問題文を生成する。30秒で単答できる形にし、選択肢は出さない。
 「直近のmiss類題」が「あり」のカテゴリは、そのカテゴリの1問を同じ分野の**別問題**に差し替える）
@@ -28,11 +28,11 @@ Drill の記録はカテゴリ別正答率のみ。5軸採点も Weakness Log �
 
 | 項目 | 値 |
 |---|---|
-| 日付 | 2026-10-19（Mon） |
+| 日付 | 2026-10-20（Tue） |
 | Track | **DB / Table Design** |
-| Format | **Design** |
+| Format | **Explain** |
 | Level | **L1** |
-| 回答環境 | キーボード想定 |
+| 回答環境 | モバイル想定 |
 | 想定所要時間 | 15分 |
 | 今日はセッション日か | はい |
 | 今日の記録 | 未保存 |
@@ -40,8 +40,8 @@ Drill の記録はカテゴリ別正答率のみ。5軸採点も Weakness Log �
 選定理由（本人向け。問題文には書かない）
 
 - Track: 重み・弱点・連続回避から選択
-- Level: 38日空いたが L1 が最下位のため据え置き
-- Format: キーボード想定のためDesignを選択
+- Level: 39日空いたが L1 が最下位のため据え置き
+- Format: モバイル想定のためExplainを選択
 
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
@@ -129,6 +129,6 @@ Drill の記録はカテゴリ別正答率のみ。5軸採点も Weakness Log �
 
 ---
 
-<!-- eos:context date=2026-10-19 track=DB / Table Design format=Design level=L1
+<!-- eos:context date=2026-10-20 track=DB / Table Design format=Explain level=L1
      targets=W001
-     phase=1 drill=ai:3,lang:3,network:2 -->
+     phase=2 drill=ai:3,lang:3,network:2 -->

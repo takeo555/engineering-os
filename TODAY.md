@@ -1,6 +1,6 @@
-# TODAY — 2026-10-19（Mon）
+# TODAY — 2026-10-20（Tue）
 
-生成: 2026-10-19 07:36 JST ／ 自動生成・手で編集しない
+生成: 2026-10-20 05:43 JST ／ 自動生成・手で編集しない
 
 > **今日の割り当ての正本はこの1ファイル。** 見出しの日付が今日でなければ使わないこと
 > （前日分を掴んでいる＝生成が遅れている。`build-context` を手動実行する）。
@@ -8,11 +8,11 @@
 
 ## 1. Drill 8問（合計4分・単答・選択肢なし）
 
-Phase: Phase 1（生成AIパスポート期・2026-09-14〜2026-10-19）
+Phase: Phase 2（CCAO-F期・2026-10-20〜2027-01-31）
 
-- **AI 3問**: 法制度と倫理（EU AI Act, 日本の指針、ガバナンス）；生成AIの仕組み概要（Transformer, LLM, RAG, ファインチューニング）；リスク（幻覚、著作権、秘密漏洩、バイアス）
-- **言語 3問**: Go / context；Next.js / ルーティング；Go / context
-- **ネットワーク 2問**: 3章 ハブ・スイッチ・ルータ；4章 アクセス回線とプロバイダ
+- **AI 3問**: Domain 1: Prompting and Task Execution（14%）；Domain 6: Governance, Risk, and Responsible Use（15%）；Domain 4: Workflow Integration and Solution Design（16%）
+- **言語 3問**: Terraform / state と backend；Next.js / revalidate；Go / struct タグとJSON
+- **ネットワーク 2問**: 4章 アクセス回線とプロバイダ；2章 プロトコル・スタックとLANアダプタ
 
 「直近missあり」のカテゴリは、その1問を同じ分野の**別問題**に差し替える。
 
@@ -21,9 +21,9 @@ Phase: Phase 1（生成AIパスポート期・2026-09-14〜2026-10-19）
 | 項目 | 値 |
 |---|---|
 | Track | **DB / Table Design** |
-| Format | **Design** |
+| Format | **Explain** |
 | Level | **L1** |
-| 回答環境 | キーボード想定 |
+| 回答環境 | モバイル想定 |
 | 想定所要時間 | 15分 |
 | 今日はセッション日か | はい |
 | 今日の記録 | 未保存 |
@@ -44,6 +44,6 @@ Track / Format / Level は AI が選び直さない。この表のとおりに�
 
 ---
 
-<!-- eos:today date=2026-10-19 track=DB / Table Design format=Design level=L1
+<!-- eos:today date=2026-10-20 track=DB / Table Design format=Explain level=L1
      targets=W001
-     phase=1 done=0 -->
+     phase=2 done=0 -->
