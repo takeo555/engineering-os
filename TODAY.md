@@ -1,6 +1,6 @@
-# TODAY — 2026-10-21（Wed）
+# TODAY — 2026-10-22（Thu）
 
-生成: 2026-10-21 08:24 JST ／ 自動生成・手で編集しない
+生成: 2026-10-22 04:39 JST ／ 自動生成・手で編集しない
 
 > **今日の割り当ての正本はこの1ファイル。** 見出しの日付が今日でなければ使わないこと
 > （前日分を掴んでいる＝生成が遅れている。`build-context` を手動実行する）。
@@ -10,9 +10,9 @@
 
 Phase: Phase 2（CCAO-F期・2026-10-20〜2027-01-31）
 
-- **AI 3問**: Domain 5: Configuration and Knowledge Management（12%）；CCAO-F の7ドメイン；Domain 3: Product and Model Selection（12%）
-- **言語 3問**: Next.js / Middleware；Next.js / Server Actions；Go / goroutine/channel
-- **ネットワーク 2問**: 6章 Webサーバ側の処理；2章 プロトコル・スタックとLANアダプタ
+- **AI 3問**: Domain 2: Output Evaluation and Validation（21%・最重要）；CCAO-F の7ドメイン；Domain 5: Configuration and Knowledge Management（12%）
+- **言語 3問**: Next.js / revalidate；Next.js / revalidate；Go / error handling
+- **ネットワーク 2問**: 6章 Webサーバ側の処理；4章 アクセス回線とプロバイダ
 
 「直近missあり」のカテゴリは、その1問を同じ分野の**別問題**に差し替える。
 
@@ -20,10 +20,10 @@ Phase: Phase 2（CCAO-F期・2026-10-20〜2027-01-31）
 
 | 項目 | 値 |
 |---|---|
-| Track | **Web / API / HTTP** |
-| Format | **Explain** |
+| Track | **DB / Table Design** |
+| Format | **Debug** |
 | Level | **L1** |
-| 回答環境 | キーボード想定 |
+| 回答環境 | モバイル想定 |
 | 想定所要時間 | 15分 |
 | 今日はセッション日か | はい |
 | 今日の記録 | 未保存 |
@@ -32,7 +32,7 @@ Track / Format / Level は AI が選び直さない。この表のとおりに�
 
 ## 3. 今日狙う弱点（1件だけ。問題文に弱点名を書かず、必ず表面化させる）
 
-- なし（今日は新しい題材でよい）
+- `W001` [High] 論理削除と一意制約の衝突に気づけない
 
 ## 4. 直近5回（題材の重複を避ける）
 
@@ -44,6 +44,6 @@ Track / Format / Level は AI が選び直さない。この表のとおりに�
 
 ---
 
-<!-- eos:today date=2026-10-21 track=Web / API / HTTP format=Explain level=L1
-     targets=-
+<!-- eos:today date=2026-10-22 track=DB / Table Design format=Debug level=L1
+     targets=W001
      phase=2 done=0 -->
