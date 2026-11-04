@@ -1,6 +1,6 @@
-# TODAY — 2026-11-04（Wed）
+# TODAY — 2026-11-05（Thu）
 
-生成: 2026-11-04 09:53 JST ／ 自動生成・手で編集しない
+生成: 2026-11-05 06:31 JST ／ 自動生成・手で編集しない
 
 > **今日の割り当ての正本はこの1ファイル。** 見出しの日付が今日でなければ使わないこと
 > （前日分を掴んでいる＝生成が遅れている。`build-context` を手動実行する）。
@@ -10,9 +10,9 @@
 
 Phase: Phase 2（CCAO-F期・2026-10-20〜2027-01-31）
 
-- **AI 3問**: Domain 2: Output Evaluation and Validation（21%・最重要）；Domain 7: Troubleshooting and Optimization（10%）；Domain 3: Product and Model Selection（12%）
-- **言語 3問**: Go / goroutine/channel；Go / error handling；Go / goroutine/channel
-- **ネットワーク 2問**: 2章 プロトコル・スタックとLANアダプタ；6章 Webサーバ側の処理
+- **AI 3問**: Domain 5: Configuration and Knowledge Management（12%）；Domain 2: Output Evaluation and Validation（21%・最重要）；Domain 7: Troubleshooting and Optimization（10%）
+- **言語 3問**: Next.js / Server/Client Component；Next.js / Server/Client Component；Next.js / ルーティング
+- **ネットワーク 2問**: 2章 プロトコル・スタックとLANアダプタ；3章 ハブ・スイッチ・ルータ
 
 「直近missあり」のカテゴリは、その1問を同じ分野の**別問題**に差し替える。
 
@@ -20,10 +20,10 @@ Phase: Phase 2（CCAO-F期・2026-10-20〜2027-01-31）
 
 | 項目 | 値 |
 |---|---|
-| Track | **Layered Architecture** |
-| Format | **Design** |
+| Track | **DB / Table Design** |
+| Format | **Debug** |
 | Level | **L1** |
-| 回答環境 | キーボード想定 |
+| 回答環境 | モバイル想定 |
 | 想定所要時間 | 15分 |
 | 今日はセッション日か | はい |
 | 今日の記録 | 未保存 |
@@ -32,7 +32,7 @@ Track / Format / Level は AI が選び直さない。この表のとおりに�
 
 ## 3. 今日狙う弱点（1件だけ。問題文に弱点名を書かず、必ず表面化させる）
 
-- `W005` [High] HandlerとDomainの責務境界を正しく分離できない
+- `W001` [High] 論理削除と一意制約の衝突に気づけない
 
 ## 4. 直近5回（題材の重複を避ける）
 
@@ -44,6 +44,6 @@ Track / Format / Level は AI が選び直さない。この表のとおりに�
 
 ---
 
-<!-- eos:today date=2026-11-04 track=Layered Architecture format=Design level=L1
-     targets=W005
+<!-- eos:today date=2026-11-05 track=DB / Table Design format=Debug level=L1
+     targets=W001
      phase=2 done=0 -->
