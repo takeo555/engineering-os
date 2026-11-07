@@ -1,4 +1,4 @@
-# CONTEXT — 2026-11-07（Sat）
+# CONTEXT — 2026-11-08（Sun）
 
 > **自動生成。手で編集しないこと。** 毎朝00:50 JSTと、
 > 記録が保存されるたびに再生成されます。
@@ -15,9 +15,9 @@ AI ドリルの題材はこのフェーズに従います。詳細は `ROADMAP.m
 
 | カテゴリ | 問題数 | 分野の枠 | 直近のmiss類題 |
 |---|---|---|---|
-| AI | 3 | Domain 5: Configuration and Knowledge Management（12%）；Domain 4: Workflow Integration and Solution Design（16%）；Domain 1: Prompting and Task Execution（14%） | なし |
-| 言語 | 3 | Go / slice/map の挙動；Next.js / Middleware；Terraform / resource と data source | なし |
-| ネットワーク | 2 | 1章 Webブラウザがメッセージを作る；2章 プロトコル・スタックとLANアダプタ | なし |
+| AI | 3 | Domain 5: Configuration and Knowledge Management（12%）；Domain 3: Product and Model Selection（12%）；Domain 6: Governance, Risk, and Responsible Use（15%） | なし |
+| 言語 | 3 | Python / generator；Go / struct タグとJSON；Go / slice/map の挙動 | なし |
+| ネットワーク | 2 | 3章 ハブ・スイッチ・ルータ；4章 アクセス回線とプロバイダ | なし |
 
 （試験官はこの枠に沿って具体的な問題文を生成する。30秒で単答できる形にし、選択肢は出さない。
 「直近のmiss類題」が「あり」のカテゴリは、そのカテゴリの1問を同じ分野の**別問題**に差し替える）
@@ -28,9 +28,9 @@ Drill の記録はカテゴリ別正答率のみ。5軸採点も Weakness Log �
 
 | 項目 | 値 |
 |---|---|
-| 日付 | 2026-11-07（Sat） |
+| 日付 | 2026-11-08（Sun） |
 | Track | **DB / Table Design** |
-| Format | **Review** |
+| Format | **Explain** |
 | Level | **L1** |
 | 回答環境 | モバイル想定 |
 | 想定所要時間 | 15分 |
@@ -40,8 +40,8 @@ Drill の記録はカテゴリ別正答率のみ。5軸採点も Weakness Log �
 選定理由（本人向け。問題文には書かない）
 
 - Track: 週内未出題かつ再テスト期限のDesign Trackを優先
-- Level: 57日空いたが L1 が最下位のため据え置き
-- Format: モバイル想定のためReviewを選択
+- Level: 58日空いたが L1 が最下位のため据え置き
+- Format: モバイル想定のためExplainを選択
 
 ## 今日狙う弱点（問題文に弱点名を書かず、必ず表面化させること）
 
@@ -129,6 +129,6 @@ Drill の記録はカテゴリ別正答率のみ。5軸採点も Weakness Log �
 
 ---
 
-<!-- eos:context date=2026-11-07 track=DB / Table Design format=Review level=L1
+<!-- eos:context date=2026-11-08 track=DB / Table Design format=Explain level=L1
      targets=W001
      phase=2 drill=ai:3,lang:3,network:2 -->
