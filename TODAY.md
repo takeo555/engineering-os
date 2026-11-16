@@ -1,6 +1,6 @@
-# TODAY — 2026-11-16（Mon）
+# TODAY — 2026-11-17（Tue）
 
-生成: 2026-11-16 09:22 JST ／ 自動生成・手で編集しない
+生成: 2026-11-17 08:51 JST ／ 自動生成・手で編集しない
 
 > **今日の割り当ての正本はこの1ファイル。** 見出しの日付が今日でなければ使わないこと
 > （前日分を掴んでいる＝生成が遅れている。`build-context` を手動実行する）。
@@ -10,9 +10,9 @@
 
 Phase: Phase 2（CCAO-F期・2026-10-20〜2027-01-31）
 
-- **AI 3問**: Domain 5: Configuration and Knowledge Management（12%）；Domain 1: Prompting and Task Execution（14%）；Domain 7: Troubleshooting and Optimization（10%）
-- **言語 3問**: Next.js / Middleware；Python / async/await；Go / error handling
-- **ネットワーク 2問**: 1章 Webブラウザがメッセージを作る；5章 ファイアウォール・キャッシュ・負荷分散
+- **AI 3問**: Domain 2: Output Evaluation and Validation（21%・最重要）；Domain 6: Governance, Risk, and Responsible Use（15%）；Domain 5: Configuration and Knowledge Management（12%）
+- **言語 3問**: Python / decorator；Go / slice/map の挙動；Go / slice/map の挙動
+- **ネットワーク 2問**: 3章 ハブ・スイッチ・ルータ；5章 ファイアウォール・キャッシュ・負荷分散
 
 「直近missあり」のカテゴリは、その1問を同じ分野の**別問題**に差し替える。
 
@@ -21,9 +21,9 @@ Phase: Phase 2（CCAO-F期・2026-10-20〜2027-01-31）
 | 項目 | 値 |
 |---|---|
 | Track | **DB / Table Design** |
-| Format | **Design** |
+| Format | **Debug** |
 | Level | **L1** |
-| 回答環境 | キーボード想定 |
+| 回答環境 | モバイル想定 |
 | 想定所要時間 | 15分 |
 | 今日はセッション日か | はい |
 | 今日の記録 | 未保存 |
@@ -44,6 +44,6 @@ Track / Format / Level は AI が選び直さない。この表のとおりに�
 
 ---
 
-<!-- eos:today date=2026-11-16 track=DB / Table Design format=Design level=L1
+<!-- eos:today date=2026-11-17 track=DB / Table Design format=Debug level=L1
      targets=W001
      phase=2 done=0 -->
